@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'home',
-    'userauths'
+    'userauths',
+    'product'
 ]
 CHANNEL_LAYERS = {
     "default": {
@@ -171,7 +172,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 JAZZMIN_SETTINGS = {
-    "site_logo":"assets/imgs/theme/loading.gif"
+    "site_logo":"assets/imgs/loading.gif"
 }
 AUTH_USER_MODEL = 'userauths.User'
 X_FRAME_OPTIONS = 'SAMEORIGIN'
