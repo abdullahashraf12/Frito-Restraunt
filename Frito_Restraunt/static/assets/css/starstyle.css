@@ -1,0 +1,73 @@
+.rating{
+  display : flex;
+}
+
+.rating label{
+  width      : 48px;
+  height     : 48px;
+  padding    : 48px 0 0;
+  background: url('star_icons/stars.svg' ) no-repeat top left;
+
+}
+
+.rating input:checked ~ input + label{
+  background: url('star_icons/starblack.svg') no-repeat top left;
+
+
+}
+
+.silver{
+display : flex;
+
+background: url('star_icons/starblack.svg')  no-repeat top left;
+
+
+}
+.gold{
+display : flex;
+background: url('star_icons/gold.svg')  no-repeat top left;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* .rating{
+    display : flex;
+  }
+  
+  .rating label{
+    width      : 48px;
+    height     : 48px;
+    padding    : 48px 0 0;
+    background: url({% static 'assets/css/star_icons/stars.svg' %}) no-repeat top left;
+
+  }
+  
+  .rating input:checked ~ input + label{
+    background: url({% static 'assets/css/star_icons/starblack.svg' %}) no-repeat top left;
+
+
+  }
+  
+.silver{
+  display : flex;
+  
+  background: url({% static 'assets/css/star_icons/starblack.svg' %})  no-repeat top left;
+
+
+}
+.gold{
+  display : flex;
+  background: url({% static 'assets/css/star_icons/gold.svg' %})  no-repeat top left;
+
+} */

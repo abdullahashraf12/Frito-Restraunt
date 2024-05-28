@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    {% load static %}
+<head>
+    <title>Frito Restaurant</title>
+    <link rel="stylesheet" href="{% static '/assets/css/bootstrap.min.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static '/assets/imgs/fr.ico' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/index.css' %}">
+
+<style>
+
+</style>
+</head>
+<body>
+    <!-- Head -->
+    <div>
+        <img src="{% static '/assets/imgs/Frito-noBackgroundpreview.png' %}" height="85px" width="180px" style="float: left; margin-top: 10px;">
+        <div style="margin-top: 45px; float: left;">
+            <form>
+
+            <div style="display: flex; margin-left: 150px;">
+                <select class="form-control amazing-font tight-bond listoption" style="font-size: 14px; width: 200px; height: 40px;">
+                    <option value="default" class="listoption" selected>DEFAULT</option>
+                    <option value="one" class="listoption">One: All Categories</option>
+                    <option value="two" class="listoption">Two: All Categories</option>
+                    <option value="three" class="listoption">Three: All Categories</option>
+                </select>
+                <input type="text" class="search_input" placeholder="  Search For Anything You Like...">
+                <button type="button" class="searchbutton">Search</button>
+            </div>
+        </form>
+        </div>
+        <div style="float: left; margin-left: 150px; margin-top: 45px; margin-right: 2px;">
+            <div style="color: red;">
+                <!-- Wishlist -->
+
+                    <a href="#" class="Wish_And_Card">
+                        <div class="card-container" id = "MyCard">
+                            <img src='{% static "/assets/imgs/shopwishlist.png" %}' width="50px" height="50px" >
+                            <!-- <span class="product-count">0</span> -->
+                        </div>
+                        Wishlist
+                    </a>
+                    <!-- Card -->
+                    <a href="#" class="Wish_And_Card">
+                        <div class="card-container" id="MyWishlist">
+                            <img src='{% static "/assets/imgs/ShopCard2.png" %}' width="50px" height="50px">
+                            <!-- <span class="product-count">0</span> -->
+                        </div>
+                        Card
+                    </a>
+                <!-- Account -->
+                {% if user.is_authenticated %}
+
+                <a href="{% url 'userauths:logout' %}" class="Auth" >
+                    <img src='{% static "/assets/imgs/pers.png" %}' width="50px" height="50px" >
+    
+                    Logout</a>
+                {% else %}
+
+            <a href="{% url 'userauths:register' %}" class="Auth" >
+                <img src='{% static "/assets/imgs/pers.png" %}' width="50px" height="50px" >
+
+                Login</a>
+                {% endif %}
+
+        </div>
+        </div>
+    </div>
+    <div style="height: 50px;"></div>
+    <div>
+    <ul class="horizontal" id="nav" >
+        <li><a href="#" class="active" >Home</a></li>
+        <li><a href="#">Our Products</a></li>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+</div>
+    <script src="{% static 'assets/js/jquery-3.5.1.slim.min.js' %}"></script>
+    <script src="{% static 'assets/js/popper.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+</body>
+</html>
