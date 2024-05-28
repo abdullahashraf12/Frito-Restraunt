@@ -5,6 +5,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.conf import settings
 from bs4 import BeautifulSoup
 from .models import User as us
+from django.http import JsonResponse
 
 def set_error(request, error_type, message):
     request.session[error_type] = message
@@ -21,6 +22,7 @@ def clear_errors(request):
 User = settings.AUTH_USER_MODEL
 
 def register_or_login_user(request):
+    print("here 19")
     form = UserRegisterForms()
     context = {
         "form": form,
@@ -37,9 +39,17 @@ def register_or_login_user(request):
         if 'action' in request.POST:
             action = request.POST['action']
             if action == 'Register':
+                print("here 20")
+
                 return register_user(request, context)
             elif action == 'Login':
+                print("here 21")
+
                 return login_view(request, context)
+            else:
+                print("here 22")
+                return login_view(request, context)
+
 
     return render(request, "login.html", context=context)
 
@@ -109,6 +119,27 @@ def logout_view(request):
     logout(request)
     messages.warning(request, message="User logged out")
     return redirect("home:home")
+
+
+def fetch_img(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        print(email)
+        try:
+            user = us.objects.get(email=email)
+            if user.profile_picture:
+                return JsonResponse({"img": user.profile_picture.url})
+            else:
+                print("here 1 ")
+
+                return JsonResponse({"img": ""})
+        except us.DoesNotExist:
+            print("here 2 ")
+
+            return JsonResponse({"img": ""})
+    else:
+        return JsonResponse({"error": "Invalid request method"})
+
 
 # from django.shortcuts import render, redirect
 # from userauths.forms import UserRegisterForms

@@ -39,6 +39,7 @@ transform: rotateY(180deg);
 
 
 body {
+    zoom: 100%;
     background-image: url('../imgs/img.png'); 
     position: relative;
 }

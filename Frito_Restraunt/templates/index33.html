@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+    {% load static %}
+<head>
+    <title>Frito Restaurant</title>
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/imgs/fr.ico' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/index.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .hamburger {
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            margin: 5px 0;
+        }
+
+        .horizontal {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .horizontal li {
+            margin: 0 15px;
+        }
+
+        .horizontal a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .vertical-nav {
+            display: none;
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background-color: white;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 200px;
+            z-index: 1000;
+        }
+
+        .vertical-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .vertical-nav li {
+            padding: 10px;
+        }
+
+        .vertical-nav a {
+            text-decoration: none;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+
+        .vertical-nav img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Head -->
+    <div>
+        <img src="{% static 'assets/imgs/Frito-noBackgroundpreview.png' %}" height="85px" width="180px" style="float: left; margin-top: 10px;">
+        <div style="margin-top: 45px; float: left;">
+            <form>
+                <div style="display: flex; margin-left: 150px;">
+                    <select class="form-control amazing-font tight-bond listoption" style="font-size: 14px; width: 200px; height: 40px;">
+                        <option value="default" class="listoption" selected>DEFAULT</option>
+                        <option value="one" class="listoption">One: All Categories</option>
+                        <option value="two" class="listoption">Two: All Categories</option>
+                        <option value="three" class="listoption">Three: All Categories</option>
+                    </select>
+                    <input type="text" class="search_input" placeholder="  Search For Anything You Like...">
+                    <button type="button" class="searchbutton">Search</button>
+                </div>
+            </form>
+        </div>
+        <div style="float: left; margin-left: 150px; margin-top: 45px; margin-right: 2px;">
+            <div style="color: red;">
+                <!-- Wishlist -->
+                <a href="#" class="Wish_And_Card">
+                    <div class="card-container" id="MyCard">
+                        <img src="{% static 'assets/imgs/shopwishlist.png' %}" width="50px" height="50px">
+                        <!-- <span class="product-count">0</span> -->
+                    </div>
+                    Wishlist
+                </a>
+                <!-- Card -->
+                <a href="#" class="Wish_And_Card">
+                    <div class="card-container" id="MyWishlist">
+                        <img src="{% static 'assets/imgs/ShopCard2.png' %}" width="50px" height="50px">
+                        <!-- <span class="product-count">0</span> -->
+                    </div>
+                    Card
+                </a>
+                <!-- Account -->
+                {% if user.is_authenticated %}
+                <a href="{% url 'userauths:logout' %}" class="Auth">
+                    <img src="{{ prof_img }}" width="50px" height="50px">
+                    Logout
+                </a>
+                {% else %}
+                <a href="{% url 'userauths:register' %}" class="Auth">
+                    <img src="{% static 'assets/imgs/pers.png' %}" width="50px" height="50px">
+                    Login
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div style="height: 50px;"></div>
+    <div>
+        <div class="nav-container">
+            <div class="hamburger" id="hamburger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <ul class="horizontal" id="nav">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#">Our Products</a></li>
+                <li><a href="#">FAQs</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+        <div class="vertical-nav" id="verticalNav">
+            <ul>
+                <li class="parent">
+                    <a href="#"><img src="{% static 'assets/imgs/parent1.jpg' %}" alt="Parent 1">Parent 1</a>
+                    <ul>
+                        <li><a href="#"><img src="{% static 'assets/imgs/child1.jpg' %}" alt="Child 1">Child 1</a></li>
+                        <li><a href="#"><img src="{% static 'assets/imgs/child2.jpg' %}" alt="Child 2">Child 2</a></li>
+                        <li><a href="#"><img src="{% static 'assets/imgs/child3.jpg' %}" alt="Child 3">Child 3</a></li>
+                    </ul>
+                </li>
+                <li class="parent">
+                    <a href="#"><img src="{% static 'assets/imgs/parent2.jpg' %}" alt="Parent 2">Parent 2</a>
+                    <ul>
+                        <li><a href="#"><img src="{% static 'assets/imgs/child1.jpg' %}" alt="Child 1">Child 1</a></li>
+                        <li><a href="#"><img src="{% static 'assets/imgs/child2.jpg' %}" alt="Child 2">Child 2</a></li>
+                        <li><a href="#"><img src="{% static 'assets/imgs/child3.jpg' %}" alt="Child 3">Child 3</a></li>
+                    </ul>
+                </li>
+                <li class="parent">
+                    <a href="#"><img src="{% static 'assets/imgs/parent3.jpg' %}" alt="Parent 3">Parent 3</a>
+                    <ul>
+                        <li><a href="#"><img src="{% static 'assets/imgs/child1.jpg' %}" alt="Child 1">Child 1</a></li>
+                        <li><a href="#"><img src="{% static 'assets/imgs/child2.jpg' %}" alt="Child 2">Child 2</a></li>
+                        <li><a href="#"><img src="{% static 'assets/imgs/child3.jpg' %}" alt="Child 3">Child 3</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.getElementById('hamburger');
+            const verticalNav = document.getElementById('verticalNav');
+
+            hamburger.addEventListener('click', () => {
+                verticalNav.style.display = verticalNav.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+    </script>
+    <script src="{% static 'assets/js/jquery-3.5.1.slim.min.js' %}"></script>
+    <script src="{% static 'assets/js/popper.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+</body>
+</html>

@@ -384,6 +384,7 @@
 
 
    body {
+    zoom: 100%;
     font-family: Arial, sans-serif; /* Specify your desired font family */
     background-color: black;
     background-image: url(../imgs/img.png);
