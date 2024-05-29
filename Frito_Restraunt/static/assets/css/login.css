@@ -38,6 +38,33 @@ transform: rotateY(180deg);
 }
 
 
+
+
+@keyframes animate_img {
+    0%, 100% {
+        transform: scaleX(1);
+        transform-origin: 35% center; /* Adjust percentage based on where "i" is */
+    }
+    50% {
+        transform: scaleX(-1);
+        transform-origin: 35% center; /* Same adjustment here */
+    }
+}
+
+
+
+@keyframes flipRight {
+    0%, 100% {
+        transform: scaleX(1);
+        transform-origin: 65% center; /* Adjust percentage based on where "i" is */
+    }
+    50% {
+        transform: scaleX(-1);
+        transform-origin: 65% center; /* Same adjustment here */
+    }
+}
+
+
 body {
     zoom: 100%;
     background-image: url('../imgs/img.png'); 
@@ -46,25 +73,34 @@ body {
 
 
 .left-image, .right-image {
-    top: 145%;
+    top: 170%;
     position: absolute;
     height: 200%;
     width: 15%;
     background-repeat: no-repeat;
     background-size: 60%;
+
+
 }
 
 .left-image {
     background-image: url('../imgs/Frito-Left.png');
     background-position: top left;
+    margin-left: -25px;
     left: 8%;
+    animation: animate_img 3s linear infinite;
+
+
 }
 
 .right-image {
     background-image: url('../imgs/Frito-Right.png');
     background-position: top right;
     right: 8%;
+    margin-right: -25px;
+    animation: flipRight 3s linear infinite;
 
+    
 }
 
 .center-content {

@@ -79,9 +79,16 @@ def register_user(request, context):
             elif i == "User with this Email already exists.":
                 context["error_account"] = i
                 set_error(request, "error_account", i)
+            elif i =="The password is too similar to the username.":
+                context["error_password"] = "The password is too similar to the username"
+                set_error(request, "error_password", i)
+            elif i=="User with this Username already exists.":
+                context["error_account"] = i
+                set_error(request, "error_account", i)
             else:
                 set_error(request, "error_account", "Error Account")
                 set_error(request, "error_password", "Error Password")
+
 
         return render(request, "login.html", context=context)
 
