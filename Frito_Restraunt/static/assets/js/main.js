@@ -6,11 +6,11 @@
 
 
         
-        $("#preloader-active").delay(450).fadeOut("slow");
-        $("body").delay(450).css({
-            overflow: "visible"
-        });
-        $("#onloadModal").modal("show");
+        // $("#preloader-active").delay(450).fadeOut("slow");
+        // $("body").delay(450).css({
+        //     overflow: "visible"
+        // });
+        // $("#onloadModal").modal("show");
     
         
 
@@ -745,11 +745,11 @@
 
 
     /*--- VSticker ----*/
-    $("#news-flash").vTicker({
-        speed: 500,
-        pause: 3000,
-        animation: "fade",
-        mousePause: false,
-        showItems: 1
-    });
+    // $("#news-flash").vTicker({
+    //     speed: 500,
+    //     pause: 3000,
+    //     animation: "fade",
+    //     mousePause: false,
+    //     showItems: 1
+    // });
 })(jQuery);

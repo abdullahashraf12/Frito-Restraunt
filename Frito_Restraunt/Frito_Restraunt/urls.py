@@ -25,7 +25,10 @@ urlpatterns = [
 path('admin/', admin.site.urls),
 re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
-path("",include("home.urls")),
+path("",include('home.urls', namespace='home')),
+path('core/', include('core.urls', namespace='core')),
+
 path('userauths/', include('userauths.urls')),
+    path('product/', include('product.urls')),  # Include the product app URLs
 
 ]

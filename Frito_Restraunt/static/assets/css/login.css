@@ -64,6 +64,33 @@ transform: rotateY(180deg);
     }
 }
 
+@keyframes zoomInOut {
+    0%, 100% {
+        transform: scale(1); 
+        transform-origin: center; 
+    }
+    50% {
+        transform: scale(1.5); 
+        transform-origin: center; 
+    }
+}
+@keyframes zoomOutIn {
+    0% {
+        transform: scale(1); /* Original size */
+        transform-origin: center; /* Center of the element */
+        opacity: 1; /* Fully visible */
+    }
+    50% {
+        transform: scale(0); /* Completely disappear */
+        transform-origin: center; /* Center of the element */
+        opacity: 0; /* Fully transparent */
+    }
+    100% {
+        transform: scale(1); /* Back to original size */
+        transform-origin: center; /* Center of the element */
+        opacity: 1; /* Fully visible */
+    }
+}
 
 body {
     zoom: 100%;
@@ -73,12 +100,13 @@ body {
 
 
 .left-image, .right-image {
-    top: 170%;
+    top: 175%;
     position: absolute;
     height: 200%;
     width: 15%;
     background-repeat: no-repeat;
-    background-size: 60%;
+    background-size: 80%;
+    animation: zoomOutIn 3s infinite; 
 
 
 }
@@ -88,8 +116,9 @@ body {
     background-position: top left;
     margin-left: -25px;
     left: 8%;
-    animation: animate_img 3s linear infinite;
+    /* animation: animate_img 3s linear infinite; */
 
+    /* animation: zoomInOut 3s infinite;  */
 
 }
 
@@ -98,9 +127,10 @@ body {
     background-position: top right;
     right: 8%;
     margin-right: -25px;
-    animation: flipRight 3s linear infinite;
+    /* animation: flipRight 3s linear infinite; */
 
-    
+    /* animation: zoomInOut 3s infinite; */
+
 }
 
 .center-content {

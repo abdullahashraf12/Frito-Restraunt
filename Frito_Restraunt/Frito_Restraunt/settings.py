@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'home',
     'userauths',
-    'product'
+    'product',
+    'core'
 ]
 CHANNEL_LAYERS = {
     "default": {

@@ -317,6 +317,7 @@
 .search_input:focus {
   border-color: blue;
   outline-color: blue ;
+  background-color: white;
   /* outline: none; */
 
 }
@@ -327,9 +328,7 @@
 
   }
   
-.searchbutton {
-    margin-left: -95px;
-
+.sebtn {
     width: 15%;
     height: 40px;
     background-color: yellow; 
@@ -337,7 +336,7 @@
     font-weight: bold;
     border-color: transparent;
     font-size: 20px;
-    /* Additional button styles */
+    align-content: center;
 }
 
 
@@ -384,10 +383,11 @@
 
 
    body {
-    zoom: 100%;
+    zoom: 80%;
     font-family: Arial, sans-serif; /* Specify your desired font family */
     background-color: black;
     background-image: url(../imgs/img.png);
+
 }
 .tight-bond {
     margin: 0;
