@@ -709,8 +709,16 @@
 
     $(".more_slide_open_m").slideUp();
     $(".more_categories_m").on("click", function () {
+        if( $("#Change_Show_More").html().toString() =="Show more..."){
+        $("#Change_Show_More").html("Show less...")
         $(this).toggleClass("show");
         $(".more_slide_open_m").slideToggle();
+    }else{
+        $("#Change_Show_More").html("Show more...")
+        $(this).toggleClass("show");
+        $(".more_slide_open_m").slideToggle(); 
+    }
+        
     });
 
 
