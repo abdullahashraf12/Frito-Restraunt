@@ -385,8 +385,8 @@
    body {
     zoom: 80%;
     font-family: Arial, sans-serif; /* Specify your desired font family */
-    background-color: black;
-    background-image: url(../imgs/img.png);
+    background-color: white;
+    /* background-image: url(../imgs/img.png); */
 
 }
 .tight-bond {
