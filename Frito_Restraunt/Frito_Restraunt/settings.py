@@ -167,7 +167,8 @@ else:
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
+# SECURE_CROSS_ORIGIN_OPENER_POLICY = None
+# SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin"
 # MEDIA_ROOT = os.path.join(BASE_DIR,"media")
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
