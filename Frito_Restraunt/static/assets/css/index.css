@@ -446,16 +446,18 @@ border-color: transparent;
 font-weight: bold;
 }
 .Auth{
-color: yellow;
+color: darkblue;
 border-color: transparent;
 font-weight: bold;
 text-decoration: none; /* Remove underline on hover */
+font-size: larger;
 
 }
 .Wish_And_Card{
 position: relative;
+font-size: larger;
 
-color: yellow;
+color: darkblue;
 border-color: transparent;
 font-weight: bold;
 text-decoration: none; /* Remove underline on hover */
