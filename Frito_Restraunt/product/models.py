@@ -37,7 +37,24 @@ RATING_CHOICES = [
     (6, '6 Stars'),
     (7, '7 Stars'),
 ]
+OFFERS = [
 
+    ("Default","Default"),
+    ("Exclusive","Exclusive"),
+    ("For 1 Person","For 1 Person"),
+    ("For Share","For Share"),
+    ("Side dishes and desserts","Side dishes and desserts"),
+    ("Beverages","Beverages")
+    
+    ]
+class Offers(models.Model):
+    oid = ShortUUIDField(unique=True,length=10,max_length= 20,prefix="off",alphabet="abcdefgh12345")
+    product_offers = models.CharField(choices=OFFERS,max_length=30,default="processing")
+    gallery_image = models.ImageField(upload_to="global_/off/",default="product.jpg")
+    offer_image = models.ImageField(upload_to="off_/off/",default="product.jpg")
+
+    def __str__(self):
+        return str(self.product_offers)
 
 
 def user_directory_path(instance,filename):
@@ -97,6 +114,8 @@ class Products(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, editable=False) 
     category = models.ForeignKey(Category,on_delete=models.SET_NULL,null=True,related_name="category")
     vendor = models.ForeignKey(Vendor,on_delete=models.SET_NULL,null=True,related_name = "vendor")
+    offers = models.ForeignKey(Offers,on_delete=models.SET_NULL,null=True,related_name = "offers")
+
     price = models.DecimalField(max_digits=9999999999999,decimal_places = 2,default="1.99")
     old_Price = models.DecimalField(max_digits=9999999999999,decimal_places = 2,default="2.99")
     spescification = models.TextField(null=True,blank=True)
