@@ -49,7 +49,7 @@ OFFERS = [
     ]
 class Offers(models.Model):
     oid = ShortUUIDField(unique=True,length=10,max_length= 20,prefix="off",alphabet="abcdefgh12345")
-    product_offers = models.CharField(choices=OFFERS,max_length=30,default="processing")
+    product_offers = models.CharField(choices=OFFERS,max_length=30,default="Default")
     gallery_image = models.ImageField(upload_to="global_/off/",default="product.jpg")
     offer_image = models.ImageField(upload_to="off_/off/",default="product.jpg")
 

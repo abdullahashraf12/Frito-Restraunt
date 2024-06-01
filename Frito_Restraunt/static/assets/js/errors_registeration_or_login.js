@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log(accountError.toString())
     console.log(passwordError.toString())
 
-    if ((currentURL.toString().includes("userauths/register") && accountError.toString()=="User Not Registered") || passwordError.toString()== "The two password fields didn’t match." ) {
+    if ((currentURL.toString().includes("userauths/register") && accountError.toString()=="User Not Registered") || passwordError.toString()== "The two password fields didn’t match." ||accountError.toString() =="Enter a valid email address." ) {
         card.classList.toggle("flipped");
     }else{
 
