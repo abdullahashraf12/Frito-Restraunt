@@ -23,12 +23,16 @@
     <!-- <link rel="stylesheet" type="text/css" href="{% static 'assets/css/font-awesome.css' %}" > -->
     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/base.css' %}" >
 
+<style>
 
+
+</style>
 </head>
-<body style="  overflow-y: auto;">
+<body style=" zoom: 90%;  overflow-y: auto;">
+    <!-- <div class="container" style="max-width: 100%; padding: 0 10px;">
     <div style="position: relative; z-index: 2; height: 120px; width: max-content;">
-        <img src="{% static '/assets/imgs/Frito-noBackgroundpreview.png' %}" height="120px" width="280px" style="float: left; margin-top: 10px;">
-        <div style="margin-top: 45px; float: left; margin-left: 220px; ">
+        <img src="{% static '/assets/imgs/Frito-noBackgroundpreview.png' %}" height="100px" width="200px" style="float: left; margin-top: 10px;">
+        <div style="margin-top: 45px; float: left; ">
             <form action="{% url 'product:search' %}" method="GET" >
             <div style="display: flex; margin-left: 150px;">
                 <select  name="category_category" style="font-size: 14px; width: 200px; height: 50px; background-color: yellow; border-radius: 5%; color: black; font-size: medium; font-style: italic; font-weight: bold;">
@@ -43,7 +47,7 @@
             </div>
         </form>
         </div>
-        <div style="float: left; margin-left: 200px; margin-top: 45px; margin-right: 2px;">
+        <div style="float: left; margin-left: 100px; margin-top: 45px; margin-right: 2px;">
             <div style="color: red;">
 
                     <a href="#" class="Wish_And_Card">
@@ -75,6 +79,88 @@
         </div>
         </div>
     </div>
+</div> -->
+
+
+
+
+<!-- <div class="container" style="max-width: 100%; padding: 0 10px;">
+    <div style="display: flex; align-items: center;">
+        <img src="{% static '/assets/imgs/Frito-noBackgroundpreview.png' %}" height="100px" width="200px" style="margin-top: 10px; margin-bottom: 10px;">
+        <form action="{% url 'product:search' %}" method="GET" style="margin-left: 20px; display: flex; align-items: center;">
+            <select name="category_category" style="font-size: 14px; width: 200px; height: 50px; background-color: yellow; border-radius: 5%; color: black; font-size: medium; font-style: italic; font-weight: bold;">
+                <option value="" style="color:black; text-align: center; font-size: medium; background-color: yellow; font-style: italic;  font-weight: bold;">All Categories</option>
+                {% for i in categ %}
+                <option value="{{ i.cid }}" name="search_categ" style="color: black; text-align: center; font-size: medium; background-color: yellow; font-style: italic;  font-weight: bold;">{{ i.title }}</option>
+                {% endfor %}
+            </select>
+            <input type="text" name="search_text" class="search_input" placeholder="Search For Anything You Like..." style="margin-right: 10px;">
+            <button type="submit" class="sebtn" style="border-radius: 5%; font-style: italic;  font-weight: bold;">Search</button>
+        </form>
+        <div style="margin-left: 100px;">
+            <a href="#" class="Wish_And_Card">
+                <img src='{% static "/assets/imgs/shopwishlist.png" %}' width="50px" height="50px">
+                Wishlist
+            </a>
+            <a href="#" class="Wish_And_Card" style="margin-left: 20px;">
+                <img src='{% static "/assets/imgs/ShopCard2.png" %}' width="50px" height="50px">
+                Card
+            </a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'userauths:logout' %}" class="Auth" style="margin-left: 20px;">
+                <img src='{{ prof_img }}' width="50px" height="50px" style="border-radius: 50%;">
+                Logout
+            </a>
+            {% else %}
+            <a href="{% url 'userauths:register' %}" class="Auth" style="margin-left: 20px;">
+                <img src='{% static "/assets/imgs/pers.png" %}' width="50px" height="50px">
+                Login
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div> -->
+
+
+
+<div class="container" style="max-width: 100%; padding: 0 10px; position: relative;">
+    <div style="display: flex; align-items: center;">
+        <img src="{% static '/assets/imgs/Frito-noBackgroundpreview.png' %}" height="100px" width="200px" style="margin-top: 10px; margin-bottom: 10px;">
+        <form action="{% url 'product:search' %}" method="GET" style="margin-left: 3%; display: flex; align-items: center;">
+            <select name="category_category" style="font-size: 14px; width: 200px; height: 50px; background-color: yellow; border-radius: 5%; color: black; font-size: medium; font-style: italic; font-weight: bold;">
+                <option value="" style="color:black; text-align: center; font-size: medium; background-color: yellow; font-style: italic;  font-weight: bold;">All Categories</option>
+                {% for i in categ %}
+                <option value="{{ i.cid }}" name="search_categ" style="color: black; text-align: center; font-size: medium; background-color: yellow; font-style: italic;  font-weight: bold;">{{ i.title }}</option>
+                {% endfor %}
+            </select>
+            <input type="text" name="search_text" class="search_input" placeholder="Search For Anything You Like..." style="margin-right: 10px;">
+            <button type="submit" class="sebtn" style="border-radius: 5%; font-style: italic;  font-weight: bold;">Search</button>
+        </form>
+        <div style="margin-left: 8%;">
+            <a href="#" class="Wish_And_Card">
+                <img src='{% static "/assets/imgs/shopwishlist.png" %}' width="50px" height="50px">
+                Wishlist
+            </a>
+            <a href="#" class="Wish_And_Card" style="margin-left: 20px;">
+                <img src='{% static "/assets/imgs/ShopCard2.png" %}' width="50px" height="50px">
+                Card
+            </a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'userauths:logout' %}" class="Auth" style="margin-left: 20px;">
+                <img src='{{ prof_img }}' width="50px" height="50px" style="border-radius: 50%;">
+                Logout
+            </a>
+            {% else %}
+            <a href="{% url 'userauths:register' %}" class="Auth" style="margin-left: 20px;">
+                <img src='{% static "/assets/imgs/pers.png" %}' width="50px" height="50px">
+                Login
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
 <div style="height: 20px;"></div>
 
 

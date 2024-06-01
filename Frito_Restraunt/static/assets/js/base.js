@@ -1,4 +1,8 @@
-$('.responsive').slick({
+$(document).ready(function(){
+  
+  $('.responsive').slick({
+  prevArrow: $('.custom-prev'),
+  nextArrow: $('.custom-next'),
     lazyLoad: false, 
     dots: false,
     infinite: true,
@@ -37,3 +41,4 @@ $('.responsive').slick({
     ]
   });
   
+});
