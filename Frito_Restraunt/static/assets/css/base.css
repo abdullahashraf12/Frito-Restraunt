@@ -11,9 +11,11 @@
 
 .slick-prev:before,
 .slick-next:before {
-    color: blue;
-    background-color: transparent;
-    font-size: xx-large !important;
+    color: white;
+    background-color: blue;
+    font-size: 30px !important;
+    border-radius: 50%;
+    font-weight: bolder;
 }
 .slick-prev {
     font-size: xx-large !important;
