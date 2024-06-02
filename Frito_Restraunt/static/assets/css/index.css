@@ -343,17 +343,18 @@
 
 
 .fr_ico_home {
-    /* position: relative;  */
+    position: relative; 
     background-image: url(../imgs/fr.png);
-    background-size: 30%;
+    background-size: contain;
     background-color: transparent;
-    width: 5%; 
-    height: 25%;
+    width: 10%; 
+    height: 10%;
     background-repeat: no-repeat;
-    margin-left: 1%;
     border-color: transparent;
-    margin-bottom:50%;
-    margin-top: 1%;
+    margin-bottom: 50%;
+    margin-top: 8%;
+    left: 3%;
+}
     /* background-repeat: no-repeat;
     background-size: 70px 70px; 
     border-color: transparent;
@@ -361,7 +362,7 @@
     outline: none;
     margin-left:5%;
     margin-top:-5%; */
-}
+
 
 
 

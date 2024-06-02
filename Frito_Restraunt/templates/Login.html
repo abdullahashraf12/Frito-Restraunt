@@ -1,6 +1,8 @@
 <html>
     {% load static%}
     <head>
+        <!--         <link rel="stylesheet" href="{% static '/assets/css/bootstrap.min.css' %}">
+ -->
         <link rel="stylesheet" href="{% static '/assets/css/index.css' %}">
         <link rel="stylesheet" href="{% static '/assets/css/login.css' %}">
         <title>Login Page</title>
@@ -10,92 +12,81 @@
 
         </style>
     </head>
-    <body style="height: 200px;">
-        <span style="width: 2%; height: 2%;">
-        <a href="{% url 'home:home' %}">
+    <body >
+        <a class="fr_ico_home" href="{% url 'home:home' %}">
+            <!-- <div class="fr_ico_home"></div> -->
 
-    <div class="fr_ico_home"></div>
     </a>
-</span>
-    <div class="left-image"></div>
+        <div style="height:200px;  margin-left: 10%;">
+            <div class="left-image"></div>
+            <div class="right-image"></div>
+        </div>
+
+
+      
     <div id="errors" data-errors='{"error_account":"{{ error_account }}","error_password": "{{ error_password }}"}'></div>
     <div id="alert-container" style="position: fixed; top: 20px; right: 20px; z-index: 1050;"></div>
     
-    </div>
+        <div class="flip-card-inner " style="height: 20%; margin-top: 10%; margin-left: -20%;">
 
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <div class="flip-card center-content" style=" top: -450%; width: 55%; height: 400%;   background-color: rgba(0, 0, 0, 0.5); justify-content: center; flex-direction: column; border-radius: 20%;   ">
+          <div class="flip-card-front" style="margin-top: 25%; ">
 
-        <div style="height: 20px;"></div>
-        <img src="{% static 'assets/imgs/S.png' %}" width="300px" height="300px" id="Login_img" style=" margin-left: 0%;  border-radius: 100%; " alt="Cinque Terre">
-        <div style="height: 5%;">
-</div>
-<form action="{% url 'userauths:login' %}" id="Login_Form" method="POST">
-    {% csrf_token %}
+            <form action="{% url 'userauths:login' %}" id="Login_Form" method="POST">
+                <div class="flip-card center-content" style=" top: -450%; width: 55%; height: 400%;   background-color: rgba(0, 0, 0, 0.5); justify-content: center; flex-direction: column; border-radius: 20%;   ">
 
-<div class="row" style="display: flex; align-items: center; margin-bottom: 15px;">
-    <div class="col-1"></div>
-    <div class="text-center" style="margin-right: 5px;">
-        <p style="color: white; margin: 0; font-size: xx-large;">Account&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;</p>
-    </div>
-    <div style="margin-right: 5px;">
-        <p style="color: red; margin: 0;">*</p>
-    </div>
-    <div style="flex-grow: 1; position: relative;">
-        <input type="email" name="email" id="email" style=" height: 50px;  background-color: white; border: 1px solid aqua; width: 100%; box-sizing: border-box; color: black;" placeholder="Your Account">
-    </div>
-    <div class="col-1"></div>
-</div>
-<div style="height: 15px;"></div>
-<div class="row" style="display: flex; align-items: center;">
+                    <div style="height: 20px;"></div>
+                    <img src="{% static 'assets/imgs/S.png' %}" width="300px" height="300px" id="Login_img" style=" margin-left: 0%;  border-radius: 100%; " alt="Cinque Terre">
+                    <div style="height: 5%;">
+            </div>
+                {% csrf_token %}
 
-    <div class="col-1"></div>
-    <div class="text-center" style="margin-right: 5px;">
-        <p style="color: white; margin: 0; font-size: xx-large;">Password&nbsp;:&nbsp;</p>
-    </div>
-    <div style="margin-right: 5px;">
-        <p style="color: red; margin: 0;">*</p>
-    </div>
-    <div style="flex-grow: 1; position: relative;">
-        <input type="password" name="password" id="password" style=" height: 50px;  background-color: white; border: 1px solid aqua; width: 100%; box-sizing: border-box; color: black;" placeholder="Your Password">
-    </div>
-    <div class="col-1"></div>
-</div>
-<div style="height: 10px;"></div>
-<div class="row" style="display: flex; justify-content: center; align-items: center;">
-    <!-- <div class="col-1"></div> -->
-    <div style="width: 15px;"></div>
-    <button type="button" id="Login_Flip_Card" class="SignUp" style="width: 40%; height: 10%;">Register</button>
+            <div class="row" style="display: flex; align-items: center; margin-bottom: 15px;">
+                <div class="col-1"></div>
+                <div class="text-center" style="margin-right: 5px;">
+                    <p style="color: white; margin: 0; font-size: xx-large;">Account&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                </div>
+                <div style="margin-right: 5px;">
+                    <p style="color: red; margin: 0;">*</p>
+                </div>
+                <div style="flex-grow: 1; position: relative;">
+                    <input type="email" name="email" id="email" style=" height: 50px;  background-color: white; border: 1px solid aqua; width: 98%; margin-right: 70%; box-sizing: border-box; color: black;  " placeholder="Your Account">
+                </div>
+                <div class="col-1"></div>
+            </div>
+            <div style="height: 15px;"></div>
+            <div class="row" style="display: flex; align-items: center;">
 
-    <!-- Using a div with flex-grow to act as a spacer between buttons -->
-    <div style="flex-grow: 0; width: 3ch;"></div>
-    
-    <button type="submit" class="SignUp_login" id="login_submit_button" style="width: 40%; height: 10%;"  name="action" value="Login">Login</button>
-    
-    <div class="col-1"></div>
-</div>
-</form>
+                <div class="col-1"></div>
+                <div class="text-center" style="margin-right: 5px;">
+                    <p style="color: white; margin: 0; font-size: xx-large;">Password&nbsp;:&nbsp;</p>
+                </div>
+                <div style="margin-right: 5px;">
+                    <p style="color: red; margin: 0;">*</p>
+                </div>
+                <div style="flex-grow: 1; position: relative;">
+                    <input type="password" name="password" id="password" style=" height: 50px;  background-color: white; border: 1px solid aqua; width: 98%; margin-right: 70%; box-sizing: border-box; color: black;" placeholder="Your Password">
+                </div>
+                <div class="col-1"></div>
+            </div>
+            <div style="height: 10px;"></div>
+            <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                <div style="width: 15px;"></div>
+                <button type="button" id="Login_Flip_Card" class="SignUp" style="width: 40%; height: 10%;">Register</button>
 
-
-
-
-<!-- <div class="row" style="display: flex; justify-content: center; align-items: center;">
-    <div style="width: 15px;"></div>
-    
-    <div style="flex-grow: 0; width: 3ch;"></div>
-    
-    <button class="SignUp_login" style="width: 40%; height: 10%;">Login</button>
-    
-    <div class="col-1"></div>
-</div> -->
+                <div style="flex-grow: 0; width: 3ch;"></div>
+                
+                <button type="submit" class="SignUp_login" id="login_submit_button" style="width: 40%; height: 10%;"  name="action" value="Login">Login</button>
+                
+                <div class="col-1"></div>
+            </div>
+            </div>
+            </form>
+        </div>
 
 
 
-        <!-- Your center content here -->
-    </div>
-    </div>
-    <div class="flip-card-back">
+
+    <div class="flip-card-back"  style="margin-top: 25%;">
         <form method="POST" action="{% url 'userauths:register' %}" enctype="multipart/form-data" id="Register_Form">
             {% csrf_token %}
             <div class="flip-card center-content" style=" top: -450%; width: 55%; height: 400%;   background-color: rgba(0, 0, 0, 0.5); justify-content: center; flex-direction: column; border-radius: 20%;   ">
@@ -143,8 +134,9 @@
         <div class="col-1"></div>
     </div>
     <div style="height: 15px;"></div>
-    <div class="row" style="display: flex; align-items: center;">
-    
+
+
+    <div class="row" style="display: flex; align-items: center; margin-bottom: 15px;">
         <div class="col-1"></div>
         <div class="text-center" style="margin-right: 5px;">
             <p style="color: white; margin: 0; font-size: xx-large;">Password&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -157,6 +149,18 @@
         </div>
         <div class="col-1"></div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
     <div style="height: 15px;"></div>
 
     <div class="row" style="display: flex; align-items: center;">
@@ -189,7 +193,6 @@
     
     
     
-            <!-- Your center content here -->
         </div>
     
 
@@ -215,8 +218,10 @@
 
       </div>
       </div>
-      <div class="right-image"></div>
+  
+      </div>
 
+    
       <script>
         var btn = document.getElementById("Login_Flip_Card");
         var card = document.querySelector(".flip-card-inner");
