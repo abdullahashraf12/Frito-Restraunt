@@ -1,8 +1,8 @@
 <html>
     {% load static%}
     <head>
-        <!--         <link rel="stylesheet" href="{% static '/assets/css/bootstrap.min.css' %}">
- -->
+        <link rel="stylesheet" href="{% static '/assets/css/bootstrap.min.css' %}">
+
         <link rel="stylesheet" href="{% static '/assets/css/index.css' %}">
         <link rel="stylesheet" href="{% static '/assets/css/login.css' %}">
         <title>Login Page</title>
@@ -27,9 +27,9 @@
     <div id="errors" data-errors='{"error_account":"{{ error_account }}","error_password": "{{ error_password }}"}'></div>
     <div id="alert-container" style="position: fixed; top: 20px; right: 20px; z-index: 1050;"></div>
     
-        <div class="flip-card-inner " style="height: 20%; margin-top: 10%; margin-left: -20%;">
+        <div class="flip-card-inner " style="height: 25%; width: 200%;  margin-top: -20%; margin-left: -20%;">
 
-          <div class="flip-card-front" style="margin-top: 25%; ">
+          <div class="flip-card-front" style="margin-top: 50%; ">
 
             <form action="{% url 'userauths:login' %}" id="Login_Form" method="POST">
                 <div class="flip-card center-content" style=" top: -450%; width: 55%; height: 400%;   background-color: rgba(0, 0, 0, 0.5); justify-content: center; flex-direction: column; border-radius: 20%;   ">
@@ -86,7 +86,7 @@
 
 
 
-    <div class="flip-card-back"  style="margin-top: 25%;">
+    <div class="flip-card-back"  style="margin-top: 50%;">
         <form method="POST" action="{% url 'userauths:register' %}" enctype="multipart/form-data" id="Register_Form">
             {% csrf_token %}
             <div class="flip-card center-content" style=" top: -450%; width: 55%; height: 400%;   background-color: rgba(0, 0, 0, 0.5); justify-content: center; flex-direction: column; border-radius: 20%;   ">
@@ -234,7 +234,7 @@
           card.classList.toggle("flipped");
         });
         </script>
-        
+
 
     <!-- <script src="{% static 'assets/js/jquery-3.5.1.slim.min.js' %}"></script> -->
     <script src="{% static 'assets/js/jquery-3.7.1.min.js' %}"></script>

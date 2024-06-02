@@ -353,12 +353,13 @@
                 Card
             </a>
             {% if user.is_authenticated %}
+            <div style="width: 15px;"></div>
             <a href="{% url 'userauths:logout' %}" class="Auth">
                 <img src='{{ prof_img }}' alt="User Profile" width="50px" height="50px" class="profile-img">
                 Logout
             </a>
             {% else %}
-            <a href="{% url 'userauths:register' %}" class="Auth">
+            <a href="{% url 'userauths:register' %}">
                 <img src='{% static "/assets/imgs/pers.png" %}' alt="User Profile" width="50px" height="50px">
                 Login
             </a>

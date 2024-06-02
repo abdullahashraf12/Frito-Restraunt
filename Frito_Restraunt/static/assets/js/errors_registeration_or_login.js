@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     var errorDiv = document.createElement('div');
                     errorDiv.setAttribute('class', 'alert alert-danger alert-dismissible fade show');
                     errorDiv.setAttribute('role', 'alert');
-                    errorDiv.setAttribute('style', 'width:250px; height:20px; background-color: rgba(248,215,218,255);   font-size: 18px;       ');
+                    // errorDiv.setAttribute('style', 'width:250px; height:20px; background-color: rgba(248,215,218,255);   font-size: 18px;       ');
 
                     errorDiv.innerHTML = `
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
