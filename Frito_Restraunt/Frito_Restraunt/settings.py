@@ -179,4 +179,5 @@ JAZZMIN_SETTINGS = {
     "site_logo":"assets/imgs/loading.gif"
 }
 AUTH_USER_MODEL = 'userauths.User'
-X_FRAME_OPTIONS = 'SAMEORIGIN'
+# X_FRAME_OPTIONS = 'SAMEORIGIN'
+X_FRAME_OPTIONS = 'ALLOW-FROM *'
