@@ -47,6 +47,32 @@ OFFERS = [
     ("Beverages","Beverages")
     
     ]
+
+
+PRODUCT_Meal_TYPE = [
+
+    ("Normal","Normal"),
+    ("Hot","Hot"),
+    ("Mix","Mix"),
+    
+    ]
+PRODUCT_SIDE_DISH = [
+
+    ("Normal Sized Potatos","Normal Sized Potatos"),
+    ("Coleslaw Salade","Coleslaw Salade"),
+    ("Risotto","Risotto")
+
+    ]
+PRODUCTS_additions=[
+      ("Chicken Strips (Normal)","Chicken Strips (Normal)"),
+      ("Chicken Strips (Spicy)","Chicken Strips (Spicy)"),
+      ('lettuce','lettuce'),
+      ('Tomato','Tomato'),
+      ('American Cheese','American Cheese'),
+      ('Smoked turkey','Smoked turkey')
+]
+
+
 class Offers(models.Model):
     oid = ShortUUIDField(unique=True,length=10,max_length= 20,prefix="off",alphabet="abcdefgh12345")
     product_offers = models.CharField(choices=OFFERS,max_length=30,default="Default")
@@ -123,7 +149,8 @@ class Products(models.Model):
     products_status = models.CharField(choices=STATUS,max_length=30,default="in_review")
     status=models.BooleanField(default=True)
     in_stock=models.BooleanField(default=True)
-    digital=models.BooleanField(default=False)
+
+    # digital=models.BooleanField(default=False)
     featured = models.BooleanField(default=True)
     sku=ShortUUIDField(unique=True,length=10,max_length= 20,alphabet="abcdefgh12345")
     date=models.DateTimeField(auto_now_add=True)
@@ -176,6 +203,57 @@ class ProductImages(models.Model):
     date=models.DateTimeField(auto_now_add=True)
     class Meta:
         verbose_name_plural = "Products images"
+
+
+class PRODUCT_Meal_TYPE(models.Model):
+    # images = models.ImageField(upload_to="product-images",default="product.jpg")
+    product_Meal_TYPE = models.CharField(choices=PRODUCT_Meal_TYPE,max_length=30,default="Default")
+    product = models.ForeignKey(Products,on_delete=models.SET_NULL,null=True,related_name="PRODUCT_Meal_TYPE")
+    date=models.DateTimeField(auto_now_add=True)
+    class Meta:
+        verbose_name_plural = "PRODUCT Meal TYPE"
+    
+
+
+
+
+
+class PRODUCT_SIDE_DISH(models.Model):
+    # images = models.ImageField(upload_to="product-images",default="product.jpg")
+    product_SIDE_DISH = models.CharField(choices=PRODUCT_SIDE_DISH,max_length=30,default="Default")
+    product = models.ForeignKey(Products,on_delete=models.SET_NULL,null=True,related_name="PRODUCT_SIDE_DISH")
+    date=models.DateTimeField(auto_now_add=True)
+    class Meta:
+        verbose_name_plural = "PRODUCT SIDE DISH"
+    
+
+
+
+
+
+
+
+
+
+
+
+class PRODUCTS_additions(models.Model):
+    # images = models.ImageField(upload_to="product-images",default="product.jpg")
+    product_additions = models.CharField(choices=PRODUCTS_additions,max_length=30,default="Default")
+    product = models.ForeignKey(Products,on_delete=models.SET_NULL,null=True,related_name="PRODUCTS_additions")
+    date=models.DateTimeField(auto_now_add=True)
+    class Meta:
+        verbose_name_plural = "PRODUCTS additions"
+    
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Products,Category,Vendor,CardOrder,CardOrderItems,ProductImages,ProductReview,WishList,Address,Tags, UserOrderCard,Offers
+from .models import Products,Category,Vendor,CardOrder,CardOrderItems,ProductImages,ProductReview,WishList,Address,Tags, UserOrderCard,Offers ,PRODUCT_Meal_TYPE,PRODUCT_SIDE_DISH,PRODUCTS_additions
 import logging
 # Register your models here.
 logger = logging.getLogger(__name__)
@@ -7,9 +7,26 @@ logger = logging.getLogger(__name__)
 class ProductImagesAdmin(admin.TabularInline):
     model=ProductImages
 
+
+class PRODUCT_Meal_TYPEAdmin(admin.TabularInline):
+    model=PRODUCT_Meal_TYPE
+
+
+
+class PRODUCT_SIDE_DISHAdmin(admin.TabularInline):
+    model=PRODUCT_SIDE_DISH
+
+
+
+class PRODUCTS_additionsAdmin(admin.TabularInline):
+    model=PRODUCTS_additions
+
+
+
+
 class ProductAdmin(admin.ModelAdmin):
     exclude = ('user',)  # Exclude the user field from the admin form
-    inlines = [ProductImagesAdmin]
+    inlines = [ProductImagesAdmin,PRODUCT_Meal_TYPEAdmin,PRODUCT_SIDE_DISHAdmin,PRODUCTS_additionsAdmin]
     list_display= ["user","title","product_image","price","featured","status"]
 
     def save_model(self, request, obj, form, change):
