@@ -277,6 +277,94 @@ body, html {
 
 
 
+.container_check {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container_check input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark_check {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: silver;
+}
+
+/* On mouse-over, add a grey background color */
+.container_check:hover input ~ .checkmark_check {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container_check input:checked ~ .checkmark_check {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark_check:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container_check input:checked ~ .checkmark_check:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container_check .checkmark_check:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -291,7 +379,9 @@ body, html {
 
 <div class="container">
     <div class="header-content">
+        <a href="/" style="text-decoration: none;">
         <img src="{% static '/assets/imgs/Frito-noBackgroundpreview.png' %}" width="200px" height="100px" class="logo" alt="Logo">
+    </a>
         <form action="{% url 'core:get_products_name'  %}" method="GET" class="search-form">
             <select name="category_category" class="category-select">
                 <option value="" class="category-select" style="text-align:  center;">All Categories</option>
@@ -303,23 +393,23 @@ body, html {
             <button type="submit" class="search-btn">Search</button>
         </form>
         <div class="user-actions">
-            <a href="#" class="Wish_And_Card">
+            <!-- <a href="#" class="Wish_And_Card">
                 <img src='{% static "/assets/imgs/shopwishlist.png" %}' alt="Wishlist" width="50px" height="50px">
                 Wishlist
-            </a>
-            <a href="#" class="Wish_And_Card">
+            </a> -->
+            <a href="#" class="Wish_And_Card"  style="margin-left: 50px;">
                 <img src='{% static "/assets/imgs/ShopCard2.png" %}' alt="Shopping Card" width="50px" height="50px">
                 Card
             </a>
             <div style="width: 15px;"></div>
 
             {% if user.is_authenticated %}
-            <a href="{% url 'userauths:logout' %}" class="Auth">
+            <a href="{% url 'userauths:logout' %}" class="Auth" style="margin-left: 50px;">
                 <img src='{{ prof_img }}' alt="User Profile" width="50px" height="50px" class="profile-img">
                 Logout
             </a>
             {% else %}
-            <a href="{% url 'userauths:register' %}" class="Auth">
+            <a href="{% url 'userauths:register' %}" class="Auth" style="margin-right: 50px;">
                 <img src='{% static "/assets/imgs/pers.png" %}' alt="User Profile" width="50px" height="50px">
                 Login
             </a>
@@ -579,10 +669,14 @@ body, html {
                 <li>
                     <span style="display: flex; align-items: center;">
                         <img src="{{ i.images.url }}" width="200px" height="200px" alt="" style="margin-right: 10px;">
-                        {{ i.product_Meal_TYPE }}
+                        <!-- {{ i.product_Meal_TYPE }} -->
                     </span>
-                    <span class="count">
+                    <span>
                         <!-- radio button here -->
+                        <label class="container__"> {{ i.product_Meal_TYPE }}
+                            <input type="radio" name="radio1">
+                            <span class="checkmark"></span>
+                        </label>
                     </span>
                 </li>
             </ul>
@@ -610,9 +704,13 @@ body, html {
                 <li>
                     <span style="display: flex; align-items: center;">
                         <img src="{{ i.images.url }}" width="200px" height="200px" alt="" style="margin-right: 10px;">
-                        {{ i.product_Meal_TYPE }}
+                        <!-- {{ i.product_Meal_TYPE }} -->
                     </span>
-                    <span class="count">
+                    <span >
+                        <label class="container_check">{{ i.product_SIDE_DISH }}
+                            <input type="checkbox">
+                            <span class="checkmark_check"></span>
+                          </label>
                         <!-- radio button here -->
                     </span>
                 </li>
@@ -642,9 +740,13 @@ body, html {
                 <li>
                     <span style="display: flex; align-items: center;">
                         <img src="{{ i.images.url }}" width="200px" height="200px" alt="" style="margin-right: 10px;">
-                        {{ i.product_Meal_TYPE }}
+                        <!-- {{ i.product_Meal_TYPE }} -->
                     </span>
-                    <span class="count">
+                    <span>
+                        <label class="container_check">{{ i.product_additions }}
+                            <input type="checkbox">
+                            <span class="checkmark_check"></span>
+                          </label>
                         <!-- radio button here -->
                     </span>
                 </li>

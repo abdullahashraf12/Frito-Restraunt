@@ -1,8 +1,9 @@
 from userauths.models import User
-from product.models import Category
+from product.models import Category,Offers,Products
 def default(request):
     category = Category.objects.all().order_by('title')
-
+    offers = Offers.objects.all().order_by('product_offers')
+    all_products_featured = Products.objects.filter(featured=True)
     if request.user.is_authenticated:
         print(request.user.profile_picture == "")
         if request.user.profile_picture != "":
@@ -10,14 +11,20 @@ def default(request):
             image = request.user.profile_picture.url
             return {
                     "prof_img":image,
-                    "categ": category
+                    "categ": category,
+                    "offers":offers,
+                    "all_products_featured":all_products_featured
                 }
         else:
             return{
-                    "categ": category
+                    "categ": category,
+                    "offers":offers,
+                    "all_products_featured":all_products_featured
             }
     else:
             return {
                  
-                    "categ": category
+                    "categ": category,
+                    "offers":offers,
+                    "all_products_featured":all_products_featured
             }

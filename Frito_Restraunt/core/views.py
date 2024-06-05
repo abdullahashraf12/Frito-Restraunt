@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render ,redirect
 from rest_framework.response import Response
-from product.models import Products,Category,CardOrder,CardOrderItems,ProductImages,ProductReview,WishList,Address,Tags,UserOrderCard,WishList,ProductReview,ProductMealTYPE,ProductSideDish,ProdutsAdditions
+from product.models import Products,Category,CardOrder,CardOrderItems,ProductImages,ProductReview,WishList,Address,Tags,UserOrderCard,WishList,ProductReview,ProductMealTYPE,ProductSideDish,ProdutsAdditions,Offers
 from rest_framework.views import APIView
 from rest_framework import status
 from django.db.models import Q
@@ -44,6 +44,30 @@ def category_product_list_view(request,cid):
         "categ_all":categ_all
     }
     return render(request=request,template_name="shop-grid-left.html",context=context)
+
+
+def offers_product_list_view(request,oid):
+    offer = Offers.objects.get(oid=oid)
+    products = Products.objects.filter(products_status="published",offers=offer)
+    categ_all = Category.objects.all()
+    context={
+        "products":products,
+        "categ_all":categ_all
+    }
+    return render(request=request,template_name="shop-offer.html",context=context)
+
+
+
+
+
+
+
+
+
+
+
+
+
 # def show_vendor_list(request):
 #     vendor  = Vendor.objects.all()
 #     context = {

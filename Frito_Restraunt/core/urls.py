@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import include,path
-from core.views import index,product_list,category_list,category_product_list_view,get_product_by_id,get_products_name,AddToCardView,show_card,RemoveFromCardView,wishlist,AddToWishCardView,RemoveFromWishCardView,AddReview,message_socket
+from core.views import index,product_list,category_list,category_product_list_view,get_product_by_id,get_products_name,AddToCardView,show_card,RemoveFromCardView,wishlist,AddToWishCardView,RemoveFromWishCardView,AddReview,message_socket,offers_product_list_view
 app_name = "core"
 urlpatterns = [
 path("",include("home.urls", namespace='home')),
@@ -22,6 +22,8 @@ path("products/",product_list,name="product_list"),
 
 path("category/",category_list,name="category_list"),
 path("category/<cid>/",category_product_list_view,name="category_product_list"),
+path("offers/<oid>/",offers_product_list_view,name="offers_product_list_view"),
+
 path('admin/', admin.site.urls),
 path("user/",include("userauths.urls"))
 ]
