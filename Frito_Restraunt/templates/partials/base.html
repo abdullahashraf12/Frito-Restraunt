@@ -653,9 +653,7 @@ body, html {
 
 
 
-
-
-
+        {% if ProductMealTYPE  %}
     {% for i in ProductMealTYPE %}
     {% if forloop.first %}
         <h5 class="section-title style-1 mb-30" style="margin-left: 50px;">Product Meal Type</h5>
@@ -689,7 +687,9 @@ body, html {
         <img src="/static/assets/imgs/banner/banner-11.png" alt="">
     </div>
 {% endfor %}
+{% endif %}
 
+{% if ProductSideDish  %}
 
 {% for i in ProductSideDish %}
     {% if forloop.first %}
@@ -724,8 +724,10 @@ body, html {
         <img src="/static/assets/imgs/banner/banner-11.png" alt="">
     </div>
 {% endfor %}
+{% endif %}
 
 
+{% if ProdutsAdditions  %}
 
 {% for i in ProdutsAdditions %}
     {% if forloop.first %}
@@ -760,6 +762,7 @@ body, html {
         <img src="/static/assets/imgs/banner/banner-11.png" alt="">
     </div>
 {% endfor %}
+{% endif %}
 
 
 

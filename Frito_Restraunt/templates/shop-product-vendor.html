@@ -279,10 +279,12 @@
                             
                           
                             <div class="row mt-60">
+                                {% if related_products %}
+
                                 <div class="col-12">
                                     <h2 class="section-title style-1 mb-30">Related products</h2>
                                 </div>
-                                
+                                {% endif %}
                                 <div class="col-12">
                                     <div class="row related-products">
                                         {% for i  in related_products %}
