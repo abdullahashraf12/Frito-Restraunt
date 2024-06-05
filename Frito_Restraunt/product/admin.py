@@ -1,32 +1,42 @@
 from django.contrib import admin
-from .models import Products,Category,Vendor,CardOrder,CardOrderItems,ProductImages,ProductReview,WishList,Address,Tags, UserOrderCard,Offers ,PRODUCT_Meal_TYPE,PRODUCT_SIDE_DISH,PRODUCTS_additions
+from .models import Products,Category,Vendor,CardOrder,CardOrderItems,ProductImages,ProductReview,WishList,Address,Tags, UserOrderCard,Offers ,ProductMealTYPE,ProductSideDish,ProdutsAdditions
 import logging
+from django.forms.models import BaseInlineFormSet
+
 # Register your models here.
 logger = logging.getLogger(__name__)
+class BaseProductMealTYPEFormSet(BaseInlineFormSet):
+    def clean(self):
+        super().clean()
+        # custom validation
 
 class ProductImagesAdmin(admin.TabularInline):
     model=ProductImages
 
 
-class PRODUCT_Meal_TYPEAdmin(admin.TabularInline):
-    model=PRODUCT_Meal_TYPE
+
+class PMealAdmin(admin.TabularInline):
+    model=ProductMealTYPE
+    formset = BaseProductMealTYPEFormSet
 
 
 
-class PRODUCT_SIDE_DISHAdmin(admin.TabularInline):
-    model=PRODUCT_SIDE_DISH
+class PeodSidedmin(admin.TabularInline):
+    model=ProductSideDish
+    formset = BaseProductMealTYPEFormSet
 
 
 
-class PRODUCTS_additionsAdmin(admin.TabularInline):
-    model=PRODUCTS_additions
+class ProdutsAdditions(admin.TabularInline):
+    model=ProdutsAdditions
+    formset = BaseProductMealTYPEFormSet
 
 
 
 
 class ProductAdmin(admin.ModelAdmin):
     exclude = ('user',)  # Exclude the user field from the admin form
-    inlines = [ProductImagesAdmin,PRODUCT_Meal_TYPEAdmin,PRODUCT_SIDE_DISHAdmin,PRODUCTS_additionsAdmin]
+    inlines = [ProductImagesAdmin,PMealAdmin,PeodSidedmin,ProdutsAdditions]
     list_display= ["user","title","product_image","price","featured","status"]
 
     def save_model(self, request, obj, form, change):

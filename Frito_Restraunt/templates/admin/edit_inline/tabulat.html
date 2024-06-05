@@ -1,0 +1,46 @@
+{% load i18n admin_urls admin_static %}
+
+<table id="{{ inline_admin_formset.formset.prefix }}-group" class="inline-related tabular inline-related-{{ model_name }} {{ 'is-stacked' if inline_admin_formset.is_stacked else '' }}">
+    <thead>
+        <tr>
+            {% for field in inline_admin_formset.fields %}
+                <th{% if field.name %} class="required"{% endif %}>{% if field.is_checkbox %}{% trans "Delete" %}{% else %}{{ field.label }}{% endif %}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for inline_admin_form in inline_admin_formset %}
+            {{ inline_admin_form }}
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="{{ inline_admin_formset.fields|length }}">
+                <a href="javascript:void(0)" class="add-row" id="add-{{ inline_admin_formset.formset.prefix }}">
+                    {% blocktrans %}Add another {{ inline_admin_formset.opts.verbose_name }}{% endblocktrans %}
+                </a>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+<script type="text/javascript">
+    (function($) {
+        $(document).ready(function() {
+            var prefix = "{{ inline_admin_formset.formset.prefix }}";
+            var addRowButton = $("#add-" + prefix);
+            addRowButton.click(function() {
+                var template = $('#' + prefix + '-empty');
+                var row = template.clone(true);
+                row.removeClass('empty-form').addClass('dynamic-form');
+                row.insertBefore(template);
+                row.show();
+            });
+
+            $('.delete-row').click(function() {
+                var row = $(this).closest('tr');
+                row.remove();
+            });
+        });
+    })(django.jQuery);
+</script>

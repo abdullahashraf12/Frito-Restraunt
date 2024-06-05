@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render ,redirect
 from rest_framework.response import Response
-from product.models import Products,Category,CardOrder,CardOrderItems,ProductImages,ProductReview,WishList,Address,Tags,UserOrderCard,WishList,ProductReview
+from product.models import Products,Category,CardOrder,CardOrderItems,ProductImages,ProductReview,WishList,Address,Tags,UserOrderCard,WishList,ProductReview,ProductMealTYPE,ProductSideDish,ProdutsAdditions
 from rest_framework.views import APIView
 from rest_framework import status
 from django.db.models import Q
@@ -72,12 +72,22 @@ def get_product_by_id(request,pid):
     related_products = Products.objects.filter(category=product.category).exclude(pid=pid)
     category =Category.objects.all();
     latest_products = Products.objects.filter(category=product.category).exclude(pid=pid).order_by('date')
+    ProductMealTYPE = product.ProductMealTYPE.all()
+    ProductSideDish = product.ProductSideDish.all()
+    ProdutsAdditions = product.ProdutsAdditions.all()
+    print(ProductMealTYPE)
+    print(ProductSideDish)
+    print(ProdutsAdditions)
     context = {
         "product":product,
         "p_images":p_images,
         "related_products":related_products,
         "category":category,
-        "latest_products":latest_products
+        "latest_products":latest_products,
+        "ProductMealTYPE":ProductMealTYPE,
+        "ProductSideDish":ProductSideDish,
+        "ProdutsAdditions":ProdutsAdditions,
+        'is_product_page': True
     }
     return render(request,template_name="shop-product-vendor.html",context=context)
 

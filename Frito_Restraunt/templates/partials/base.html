@@ -191,142 +191,101 @@
     border-radius: 50%;
 }
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.header {
+    background-color: #333;
+    padding: 10px;
+}
+
+.hamburger-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.nav-menu {
+    position: fixed;
+    top: 0;
+    right: -1000px; /* Initially hidden off-screen */
+    width: 1000px; /* Increased width */
+    height: 100%;
+    background-color:snow;
+    padding-top: 60px;
+    transition: right 0.3s ease;
+    overflow-y: auto; /* Added overflow-y property */
+
+}
+
+
+.nav-menu a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+}
+
+.content {
+    padding: 20px;
+    transition: margin-right 0.3s ease;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </style>
 </head>
 <body style=" zoom: 90%;  overflow-y: auto;">
-    <!-- <div class="container" style="max-width: 100%; padding: 0 10px;">
-    <div style="position: relative; z-index: 2; height: 120px; width: max-content;">
-        <img src="{% static '/assets/imgs/Frito-noBackgroundpreview.png' %}" height="100px" width="200px" style="float: left; margin-top: 10px;">
-        <div style="margin-top: 45px; float: left; ">
-            <form action="{% url 'product:search' %}" method="GET" >
-            <div style="display: flex; margin-left: 150px;">
-                <select  name="category_category" style="font-size: 14px; width: 200px; height: 50px; background-color: yellow; border-radius: 5%; color: black; font-size: medium; font-style: italic; font-weight: bold;">
-                    <option value="" style="color:black; text-align: center; font-size: medium; background-color: yellow; font-style: italic;  font-weight: bold;">All Categories</option>
-                    {% for i in categ %}
-                    <option value="{{ i.cid }}" name="search_categ" style="color: black; text-align: center; font-size: medium; background-color: yellow; font-style: italic;  font-weight: bold;">{{ i.title }}</option>
-
-                    {% endfor %}
-                </select>
-                <input type="text" name="search_text" class="search_input" placeholder="  Search For Anything You Like...">
-                <button type="submit" class="sebtn" style="border-radius: 5%; font-style: italic;  font-weight: bold;">Search</button>
-            </div>
-        </form>
-        </div>
-        <div style="float: left; margin-left: 100px; margin-top: 45px; margin-right: 2px;">
-            <div style="color: red;">
-
-                    <a href="#" class="Wish_And_Card">
-                        <div class="card-container" id = "MyCard">
-                            <img src='{% static "/assets/imgs/shopwishlist.png" %}' width="50px" height="50px" >
-                        </div>
-                        Wishlist
-                    </a>
-                    <a href="#" class="Wish_And_Card" style="margin-left: 20px;">
-                        <div class="card-container" id="MyWishlist">
-                            <img src='{% static "/assets/imgs/ShopCard2.png" %}' width="50px" height="50px">
-                        </div>
-                        Card
-                    </a>
-                    
-                {% if user.is_authenticated %}
-                <a href="{% url 'userauths:logout' %}" class="Auth" style="margin-left: 20px;">
-                    <img src='{{ prof_img }}' width="50px" height="50px" style="border-radius: 50%;" >
-    
-                    Logout</a>
-                {% else %}
-                
-            <a href="{% url 'userauths:register' %}" class="Auth" style="margin-left: 20px;" >
-                <img src='{% static "/assets/imgs/pers.png" %}' width="50px" height="50px" >
-
-                Login</a>
-                {% endif %}
-
-        </div>
-        </div>
-    </div>
-</div> -->
-
-
-
-
-<!-- <div class="container" style="max-width: 100%; padding: 0 10px;">
-    <div style="display: flex; align-items: center;">
-        <img src="{% static '/assets/imgs/Frito-noBackgroundpreview.png' %}" height="100px" width="200px" style="margin-top: 10px; margin-bottom: 10px;">
-        <form action="{% url 'product:search' %}" method="GET" style="margin-left: 20px; display: flex; align-items: center;">
-            <select name="category_category" style="font-size: 14px; width: 200px; height: 50px; background-color: yellow; border-radius: 5%; color: black; font-size: medium; font-style: italic; font-weight: bold;">
-                <option value="" style="color:black; text-align: center; font-size: medium; background-color: yellow; font-style: italic;  font-weight: bold;">All Categories</option>
-                {% for i in categ %}
-                <option value="{{ i.cid }}" name="search_categ" style="color: black; text-align: center; font-size: medium; background-color: yellow; font-style: italic;  font-weight: bold;">{{ i.title }}</option>
-                {% endfor %}
-            </select>
-            <input type="text" name="search_text" class="search_input" placeholder="Search For Anything You Like..." style="margin-right: 10px;">
-            <button type="submit" class="sebtn" style="border-radius: 5%; font-style: italic;  font-weight: bold;">Search</button>
-        </form>
-        <div style="margin-left: 100px;">
-            <a href="#" class="Wish_And_Card">
-                <img src='{% static "/assets/imgs/shopwishlist.png" %}' width="50px" height="50px">
-                Wishlist
-            </a>
-            <a href="#" class="Wish_And_Card" style="margin-left: 20px;">
-                <img src='{% static "/assets/imgs/ShopCard2.png" %}' width="50px" height="50px">
-                Card
-            </a>
-            {% if user.is_authenticated %}
-            <a href="{% url 'userauths:logout' %}" class="Auth" style="margin-left: 20px;">
-                <img src='{{ prof_img }}' width="50px" height="50px" style="border-radius: 50%;">
-                Logout
-            </a>
-            {% else %}
-            <a href="{% url 'userauths:register' %}" class="Auth" style="margin-left: 20px;">
-                <img src='{% static "/assets/imgs/pers.png" %}' width="50px" height="50px">
-                Login
-            </a>
-            {% endif %}
-        </div>
-    </div>
-</div> -->
-
-
-
-<!-- <div class="container" style="max-width: 100%; padding: 0 10px; position: relative;">
-    <div style="display: flex; align-items: center;">
-        <img src="{% static '/assets/imgs/Frito-noBackgroundpreview.png' %}" height="100px" width="200px" style="margin-top: 10px; margin-bottom: 10px;">
-        <form action="{% url 'product:search' %}" method="GET" style="margin-left: 3%; display: flex; align-items: center;">
-            <select name="category_category" style="font-size: 14px; width: 200px; height: 50px; background-color: yellow; border-radius: 5%; color: black; font-size: medium; font-style: italic; font-weight: bold;">
-                <option value="" style="color:black; text-align: center; font-size: medium; background-color: yellow; font-style: italic;  font-weight: bold;">All Categories</option>
-                {% for i in categ %}
-                <option value="{{ i.cid }}" name="search_categ" style="color: black; text-align: center; font-size: medium; background-color: yellow; font-style: italic;  font-weight: bold;">{{ i.title }}</option>
-                {% endfor %}
-            </select>
-            <input type="text" name="search_text" class="search_input" placeholder="Search For Anything You Like..." style="margin-right: 10px;">
-            <button type="submit" class="sebtn" style="border-radius: 5%; font-style: italic;  font-weight: bold;">Search</button>
-        </form>
-        <div style="margin-left: 8%;">
-            <a href="#" class="Wish_And_Card">
-                <img src='{% static "/assets/imgs/shopwishlist.png" %}' width="50px" height="50px">
-                Wishlist
-            </a>
-            <a href="#" class="Wish_And_Card" style="margin-left: 20px;">
-                <img src='{% static "/assets/imgs/ShopCard2.png" %}' width="50px" height="50px">
-                Card
-            </a>
-            {% if user.is_authenticated %}
-            <a href="{% url 'userauths:logout' %}" class="Auth" style="margin-left: 20px;">
-                <img src='{{ prof_img }}' width="50px" height="50px" style="border-radius: 50%;">
-                Logout
-            </a>
-            {% else %}
-            <a href="{% url 'userauths:register' %}" class="Auth" style="margin-left: 20px;">
-                <img src='{% static "/assets/imgs/pers.png" %}' width="50px" height="50px">
-                Login
-            </a>
-            {% endif %}
-        </div>
-    </div>
-</div> -->
-
-
-
 
 
 
@@ -391,7 +350,6 @@
 
  
  <div style="width: 100%; background-color:white ; border-color: wheat;">
-    <!-- <header class="header-area header-style-1 header-height-2"> -->
 
                 
                 <div class="header-bottom header-bottom-bg-color sticky-bar">
@@ -521,131 +479,219 @@
                                     </nav>
                                 </div>
                             </div>
+
+                            <!-- <div class="hotline d-none d-lg-flex">
+                                <img src="{% static 'assets/imgs/theme/icons/icon-headphone.svg' %}" alt="hotline" />
+                                <p>1900 - 888<span>24/7 Support Center</span></p>
+                            </div>
+                            {% if is_product_page %}
+
+                            <div class="header" style="background-color: red; color: whitesmoke;">
+                                <button class="hamburger-btn" onclick="toggleNav()" style="background-color: red; color: whitesmoke; font-weight: bold;">☰ Special Order For This Product</button>
+                            </div>
+                            {% endif %} -->
+                            {% if is_product_page %}
+
+                            <div class="header" style="display: flex; align-items: center; background-color: white;">
+                                <div class="hotline d-none d-lg-flex" style="margin-right: 50px; " style="max-height: 100px;">
+                                    <img src="{% static 'assets/imgs/theme/icons/icon-headphone.svg' %}" alt="hotline" />
+                                    <p>1900 - 888<span>24/7 Support Center</span></p>
+                                </div>
+                                <button class="hamburger-btn" onclick="toggleNav()" style="background-color: red; color: whitesmoke; font-weight: bold; height: 70px;">☰ Special Order For This Product</button>
+                            </div>
+                            
+                            {% else %}
                             <div class="hotline d-none d-lg-flex">
                                 <img src="{% static 'assets/imgs/theme/icons/icon-headphone.svg' %}" alt="hotline" />
                                 <p>1900 - 888<span>24/7 Support Center</span></p>
                             </div>
-                            <div class="header-action-icon-2 d-block d-lg-none">
-                                <div class="burger-icon burger-icon-white">
-                                    <span class="burger-icon-top"></span>
-                                    <span class="burger-icon-mid"></span>
-                                    <span class="burger-icon-bottom"></span>
-                                </div>
-                            </div>
+                            {% endif %}
+
+                            
+                            
+                          
+<div id="navMenu" class="nav-menu">
+    <!-- <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Services</a>
+    <a href="#">Contact</a> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {% for i in ProductMealTYPE %}
+    {% if forloop.first %}
+        <h5 class="section-title style-1 mb-30" style="margin-left: 50px;">Product Meal Type</h5>
+    {% endif %}
+    {% if forloop.counter0|divisibleby:2 %}
+        <div style="display: flex;">
+    {% endif %}
+    <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none; max-width: 450px; margin-right: 25px;">
+        <div class="sidebar-widget widget-category-2 mb-30">
+            <ul>
+                <li>
+                    <span style="display: flex; align-items: center;">
+                        <img src="{{ i.images.url }}" width="200px" height="200px" alt="" style="margin-right: 10px;">
+                        {{ i.product_Meal_TYPE }}
+                    </span>
+                    <span class="count">
+                        <!-- radio button here -->
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {% if forloop.last or forloop.counter0|add:1|divisibleby:2 %}
+        </div>
+    {% endif %}
+    <div class="banner-img wow fadeIn mb-lg-0 animated d-lg-block d-none animated" style="visibility: visible;">
+        <img src="/static/assets/imgs/banner/banner-11.png" alt="">
+    </div>
+{% endfor %}
+
+
+{% for i in ProductSideDish %}
+    {% if forloop.first %}
+        <h5 class="section-title style-1 mb-30" style="margin-left: 50px;">Product Side Dish</h5>
+    {% endif %}
+    {% if forloop.counter0|divisibleby:2 %}
+        <div style="display: flex;">
+    {% endif %}
+    <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none; max-width: 550px; margin-right: 25px;">
+        <div class="sidebar-widget widget-category-2 mb-30">
+            <ul>
+                <li>
+                    <span style="display: flex; align-items: center;">
+                        <img src="{{ i.images.url }}" width="200px" height="200px" alt="" style="margin-right: 10px;">
+                        {{ i.product_Meal_TYPE }}
+                    </span>
+                    <span class="count">
+                        <!-- radio button here -->
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {% if forloop.last or forloop.counter0|add:1|divisibleby:2 %}
+        </div>
+    {% endif %}
+    <div class="banner-img wow fadeIn mb-lg-0 animated d-lg-block d-none animated" style="visibility: visible;">
+        <img src="/static/assets/imgs/banner/banner-11.png" alt="">
+    </div>
+{% endfor %}
+
+
+
+{% for i in ProdutsAdditions %}
+    {% if forloop.first %}
+        <h5 class="section-title style-1 mb-30" style="margin-left: 50px;">Products Additions</h5>
+    {% endif %}
+    {% if forloop.counter0|divisibleby:2 %}
+        <div style="display: flex;">
+    {% endif %}
+    <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none; max-width: 550px; margin-right: 25px;">
+        <div class="sidebar-widget widget-category-2 mb-30">
+            <ul>
+                <li>
+                    <span style="display: flex; align-items: center;">
+                        <img src="{{ i.images.url }}" width="200px" height="200px" alt="" style="margin-right: 10px;">
+                        {{ i.product_Meal_TYPE }}
+                    </span>
+                    <span class="count">
+                        <!-- radio button here -->
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {% if forloop.last or forloop.counter0|add:1|divisibleby:2 %}
+        </div>
+    {% endif %}
+    <div class="banner-img wow fadeIn mb-lg-0 animated d-lg-block d-none animated" style="visibility: visible;">
+        <img src="/static/assets/imgs/banner/banner-11.png" alt="">
+    </div>
+{% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
                             <div class="header-action-right d-block d-lg-none">
                                 <div class="header-action-2">
-                                    <!-- <div class="header-action-icon-2">
-                        
-                                        
-        
-        
-                                        <a class="icon-change" href="{% url 'core:wishlist' %}">
-                                            <img class="svgInject" alt="Nest" src="{% static 'assets/imgs/theme/icons/icon-heart.svg' %}" />
-                                            <span class="pro-count blue" name="number_of_products_in_card_wish">0</span>
-                                        </a>
-                                        <a href="{% url 'core:wishlist' %}"><span class="lable">Wishlist</span></a>
-                                        <div class="cart-dropdown-wrap cart-dropdown-hm2">
-                                            <ul name="Shopping_card_wish">
-        
-                                            </ul>
-        
-                                            <div class="shopping-cart-footer">
-                                                {% if request.user.is_authenticated %}
-        
-                                                <div class="shopping-cart-total">
-        
-                                                    <h4>Total <span name="total_product_price_card_wish">$0.00</span></h4>
-                                                </div>
-                                                <div class="shopping-cart-button">
-                                                    <a href="{% url 'core:wishlist' %}" class="outline">View WishList</a>
-                                                </div>
-                                                {% else %}
-                                                <div class="shopping-cart-total">
-        
-                                                    <h4><span style="margin-right: 70px;">Nothing To Show</span></h4>
-                                                </div>
-                                                {% endif %}
-        
-                                            </div>
-                                        </div>
-                                        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-                                    
-                                    
-                                    
-                                    
-                                    </div>
-                                    <div class="header-action-icon-2">
-                                        <a class="mini-cart-icon" href="{% url 'core:show_card' %}">
-                                            <img alt="Nest" src="{% static 'assets/imgs/theme/icons/icon-cart.svg' %}" />
-                                            <span class="pro-count blue" name="number_of_products_in_card">0</span>
-                                        </a>
-                                        <a href="{% url 'core:show_card' %}"><span class="lable">Cart</span></a>
-                                        <div class="cart-dropdown-wrap cart-dropdown-hm2">
-                                            <ul name="Shopping_card">
-                                    
-                                            </ul>
-        
-        
-                                            <div class="shopping-cart-footer">
-                                                {% if request.user.is_authenticated %}
-        
-                                                <div class="shopping-cart-total">
-        
-                                                    <h4>Total <span name="total_product_price_card">$0.00</span></h4>
-                                                </div>
-                                                <div class="shopping-cart-button">
-                                                    <a href="{% url 'core:show_card' %}" class="outline">View cart</a>
-                                                    <a href="shop-checkout.html">Checkout</a>
-                                                </div>
-                                                {% else %}
-                                                <div class="shopping-cart-total">
-        
-                                                    <h4><span style="margin-right: 70px;">Nothing To Show</span></h4>
-                                                </div>
-                                                {% endif %}
-        
-                                            </div>
-                                        </div>
-                                    </div> -->
-                                    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+                               
                                     
                                 </div>
                             </div>
@@ -655,16 +701,6 @@
 
             </div>
 
-    
- <!-- <div id="preloader-active">
-    <div class="preloader d-flex align-items-center justify-content-center">
-        <div class="preloader-inner position-relative">
-            <div class="text-center">
-                <img src="{% static 'assets/imgs/theme/loading.gif' %}" alt="" />
-            </div>
-        </div>
-    </div>
-</div> -->
 
     {% block content %}
 
@@ -739,5 +775,29 @@
     <script src="{% static 'assets/js/star.js' %}"></script>
     <!-- <script src="{% static 'assets/js/add_client_review.js' %}"></script> -->
     <!-- <script src="{% static 'assets/js/get_review.js' %}"></script> -->
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Define the toggleNav function
+    function toggleNav() {
+        var navMenu = document.getElementById('navMenu');
+        var body = document.querySelector('body');
+        if (navMenu.style.right === '0px') {
+            navMenu.style.right = '-1000px';
+            body.style.marginRight = '0';
+        } else {
+            navMenu.style.right = '0px';
+            body.style.marginRight = '1000px';
+        }
+    }
+
+    // Add an event listener to the hamburger button
+    var hamburgerBtn = document.querySelector('.hamburger-btn');
+    if (hamburgerBtn) {
+        hamburgerBtn.addEventListener('click', toggleNav);
+    }
+});
+
+
+    </script>
     </body>
     </html>

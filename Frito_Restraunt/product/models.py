@@ -205,10 +205,10 @@ class ProductImages(models.Model):
         verbose_name_plural = "Products images"
 
 
-class PRODUCT_Meal_TYPE(models.Model):
-    # images = models.ImageField(upload_to="product-images",default="product.jpg")
+class ProductMealTYPE(models.Model):
+    images = models.ImageField(upload_to="product-images/pmt",default="product.jpg")
     product_Meal_TYPE = models.CharField(choices=PRODUCT_Meal_TYPE,max_length=30,default="Default")
-    product = models.ForeignKey(Products,on_delete=models.SET_NULL,null=True,related_name="PRODUCT_Meal_TYPE")
+    product = models.ForeignKey(Products,on_delete=models.SET_NULL,null=True,related_name="ProductMealTYPE")
     date=models.DateTimeField(auto_now_add=True)
     class Meta:
         verbose_name_plural = "PRODUCT Meal TYPE"
@@ -218,10 +218,10 @@ class PRODUCT_Meal_TYPE(models.Model):
 
 
 
-class PRODUCT_SIDE_DISH(models.Model):
-    # images = models.ImageField(upload_to="product-images",default="product.jpg")
+class ProductSideDish(models.Model):
+    images = models.ImageField(upload_to="product-images/psd",default="product.jpg")
     product_SIDE_DISH = models.CharField(choices=PRODUCT_SIDE_DISH,max_length=30,default="Default")
-    product = models.ForeignKey(Products,on_delete=models.SET_NULL,null=True,related_name="PRODUCT_SIDE_DISH")
+    product = models.ForeignKey(Products,on_delete=models.SET_NULL,null=True,related_name="ProductSideDish")
     date=models.DateTimeField(auto_now_add=True)
     class Meta:
         verbose_name_plural = "PRODUCT SIDE DISH"
@@ -237,10 +237,10 @@ class PRODUCT_SIDE_DISH(models.Model):
 
 
 
-class PRODUCTS_additions(models.Model):
-    # images = models.ImageField(upload_to="product-images",default="product.jpg")
+class ProdutsAdditions(models.Model):
+    images = models.ImageField(upload_to="product-images/pa",default="product.jpg")
     product_additions = models.CharField(choices=PRODUCTS_additions,max_length=30,default="Default")
-    product = models.ForeignKey(Products,on_delete=models.SET_NULL,null=True,related_name="PRODUCTS_additions")
+    product = models.ForeignKey(Products,on_delete=models.SET_NULL,null=True,related_name="ProdutsAdditions")
     date=models.DateTimeField(auto_now_add=True)
     class Meta:
         verbose_name_plural = "PRODUCTS additions"
