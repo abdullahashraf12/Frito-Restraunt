@@ -103,6 +103,8 @@
 
          <div class="row responsive justify-content-center container" style="margin-left: 200px; max-width: 85%; margin-top: -50px;">
             {% for i in offers %}
+            {% if i.offer_image.url != '/media/product.jpg' %}
+
         <div class="col-lg-3 d-flex justify-content-center">
             <div class="card" style="border-color: transparent; background-color: transparent; max-width: 400px;">
                 <a href="{% url 'core:offers_product_list_view' i.oid %}" style="text-decoration: none;">
@@ -115,7 +117,7 @@
 
             </div>
         </div>
-        
+        {% endif %}
         {% endfor %}
         <!-- <div class="col-lg-3 d-flex justify-content-center">
             <div class="card" style="border-color: transparent; background-color: transparent; max-width: 400px;">
