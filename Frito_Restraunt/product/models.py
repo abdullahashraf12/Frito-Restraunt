@@ -87,6 +87,8 @@ PRODUCTS_additions=[
 ]
 class OffersNames(models.Model):
     product_offers = models.CharField(max_length=300,default="Default",primary_key=True)
+    def __str__(self):
+        return str(self.product_offers)
 
 
 
@@ -222,6 +224,8 @@ class ProductImages(models.Model):
         verbose_name_plural = "Products images"
 class ProductMealTypeNames(models.Model):
     product_Meal_TYPE = models.CharField(max_length=500,default="Default",primary_key=True)
+    def __str__(self):
+        return str(self.product_Meal_TYPE)
 
 
 
@@ -243,6 +247,8 @@ class ProductMealType(models.Model):
 class ProductSideDishNames(models.Model):
     product_SIDE_DISH = models.CharField(max_length=500,default="Default",primary_key=True)
 
+    def __str__(self):
+        return str(self.product_SIDE_DISH)
 
 class ProductSideDish(models.Model):
     images = models.ImageField(upload_to="product-images/psd",default="product.jpg")
@@ -266,6 +272,8 @@ class ProductSideDish(models.Model):
 class ProductAdditionsNames(models.Model):
     product_additions = models.CharField(max_length=500,default="Default",primary_key=True)
 
+    def __str__(self):
+        return str(self.product_additions)
 
 
 
