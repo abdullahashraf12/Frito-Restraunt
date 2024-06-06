@@ -54,13 +54,22 @@ PRODUCT_Meal_TYPE = [
     ("Normal","Normal"),
     ("Hot","Hot"),
     ("Mix","Mix"),
-    
+    ("Single","Single"),
+    ("Double","Double"),
+
+
     ]
 PRODUCT_SIDE_DISH = [
 
     ("Normal Sized Potatos","Normal Sized Potatos"),
     ("Coleslaw Salade","Coleslaw Salade"),
-    ("Risotto","Risotto")
+    ("Cheesy Fries","Cheesy Fries"),
+    ("Cheesy Fries Halibeno","Cheesy Fries Halibeno"),
+    ("Risotto","Risotto"),
+    ("Boom Frite Potato Fries","Boom Frite Potato Fries"),
+    ("Double Boom Frite Potato Fries","Double Boom Frite Potato Fries"),
+
+    
 
     ]
 PRODUCTS_additions=[
@@ -69,7 +78,12 @@ PRODUCTS_additions=[
       ('lettuce','lettuce'),
       ('Tomato','Tomato'),
       ('American Cheese','American Cheese'),
-      ('Smoked turkey','Smoked turkey')
+      ('Smoked turkey','Smoked turkey'),
+      ('Pickle','Pickle'),
+      ('Garlicky','Garlicky'),
+      
+
+
 ]
 
 

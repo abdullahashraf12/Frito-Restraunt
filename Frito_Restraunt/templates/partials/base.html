@@ -661,41 +661,40 @@ body, html {
     {% if forloop.counter0|divisibleby:2 %}
         <div style="display: flex;">
     {% endif %}
-    <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none; max-width: 650px; margin-right: 25px;">
+    <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none; max-width: 550px; margin-right: 35px;">
         <div class="sidebar-widget widget-category-2 mb-30">
             <ul>
                 <li>
                     <span style="display: flex; align-items: center;">
-                        <img src="{{ i.images.url }}" width="200px" height="200px" alt="" style="margin-right: 10px;">
-                        <!-- {{ i.product_Meal_TYPE }} -->
+                        <img src="{{ i.images.url }}" width="150px" height="150px" alt="" style="margin-right: 10px;">
                     </span>
                     <span>
-                        <!-- radio button here -->
 
                         <div style="float: left;">
-                        <label class="container_check"> {{ i.product_Meal_TYPE }}<p></p>
+                        <label class="container_check"> <p style="margin-left: 10px; font-weight: bold; margin-right: 10px; color: black;">{{ i.product_Meal_TYPE }}</p>
                        
                             {% if i.default %}
-                            <input type="checkbox" name="checkbox1" checked="checked">
-                            <span class="checkmark_check"></span>
+                            <input type="checkbox" name="checkbox1" checked="checked"  style=" margin-left: 10px; margin-right: 10px;">
+                            <span class="checkmark_check"  style=" margin-left: 10px; margin-right: 10px;"></span>
                         {% else %}
-                            <input type="checkbox" name="checkbox1">
-                            <span class="checkmark_check"></span>
+                            <input type="checkbox" name="checkbox1"  style=" margin-left: 10px; margin-right: 10px;">
+                            <span class="checkmark_check"  style="  margin-left: 10px; margin-right: 10px;"></span>
                         {% endif %}
                         </label>
                     </div>
                   
                     </span>
-                    <div style="float: left; margin-right: -65px; margin-left: 1; margin-top: 25px;">
-                        <h6 style="font-weight: bold;">Price<b style="color: red;">{{ i.price }} L.E</b></h6>
-                </div>
-                <div class="detail-qty border radius" style="width: 80px; height:60px; margin-top: 110px;">
-                    <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                    <input name="prod_quantity_n" class="qty-val" value="1">
-                    <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                </div>
-
-
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div class="detail-qty border radius" style="width: 80px; height: 60px; margin-bottom: auto;">
+                            <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
+                            <input name="prod_quantity_n" class="qty-val" value="1">
+                            <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                        </div>
+                        <div style="margin-top: 10px; text-align: center;">
+                            <h6 style="font-weight: bold; white-space: nowrap; min-width: 150px;">Price<b style="color: red;">{{ i.price }} L.E</b></h6>
+                        </div>
+                    </div>
+                    
 
 
 
@@ -712,7 +711,7 @@ body, html {
 {% endfor %}
 {% endif %}
 
-{% if ProductSideDish  %}
+<!-- {% if ProductSideDish  %}
 
 {% for i in ProductSideDish %}
     {% if forloop.first %}
@@ -721,15 +720,14 @@ body, html {
     {% if forloop.counter0|divisibleby:2 %}
         <div style="display: flex;">
     {% endif %}
-    <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none; max-width: 550px; margin-right: 25px;">
+    <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none; max-width: 550px;  margin-right: 35px;">
         <div class="sidebar-widget widget-category-2 mb-30">
             <ul>
                 <li>
                     <span style="display: flex; align-items: center;">
-                        <img src="{{ i.images.url }}" width="200px" height="200px" alt="" style="margin-right: 10px;">
-                        <!-- {{ i.product_SIDE_DISH }} -->
+                        <img src="{{ i.images.url }}" width="150px" height="150px" alt="">
                     </span>
-                    <div style="float: left;">
+                    <div style="float: left; width: max-content">
                         <label class="container_check"> {{ i.product_SIDE_DISH }}<p></p>
                             {% if i.default %}
                             <input type="checkbox" name="checkbox1" checked="checked">
@@ -742,14 +740,22 @@ body, html {
                     </div>
                   
                     </span>
-                    <div style="float: left; margin-right: -65px; margin-left: 1; margin-top: 25px;">
-                        <h6 style="font-weight: bold;">Price<b style="color: red;">{{ i.price }} L.E</b></h6>
-                </div>
-                <div class="detail-qty border radius" style="width: 80px; height:60px; margin-top: 110px;">
-                    <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                    <input name="prod_quantity_n" class="qty-val" value="1">
-                    <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                </div>
+
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div class="detail-qty border radius" style="width: 80px; height: 60px; margin-bottom: auto;">
+                            <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
+                            <input name="prod_quantity_n" class="qty-val" value="1">
+                            <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                        </div>
+                        <div style="margin-top: 10px; text-align: center;">
+                            <h6 style="font-weight: bold; white-space: nowrap; min-width: 150px;">Price<b style="color: red;">{{ i.price }} L.E</b></h6>
+                        </div>
+                    </div>
+                    
+                    
+                    
+
+
                 </li>
                                                 
                 
@@ -761,10 +767,90 @@ body, html {
     {% endif %}
 
 {% endfor %}
+
+{% endif %} -->
+
+
+
+
+{% if ProductSideDish %}
+    {% for i in ProductSideDish %}
+        {% if forloop.first %}
+            <h5 class="section-title style-1 mb-30" style="margin-left: 50px;">Product Side Dish</h5>
+        {% endif %}
+        {% if forloop.counter0|divisibleby:2 %}
+            <div style="display: flex;">
+        {% endif %}
+        <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none; max-width: 550px; margin-right: 35px;">
+            <div class="sidebar-widget widget-category-2 mb-30">
+                <ul>
+                    <li>
+                        <span style="display: flex; align-items: center;">
+                            <img src="{{ i.images.url }}" width="150px" height="150px" alt="">
+                        </span>
+                        <div style="margin-left: 10px;">
+                            <label class="container_check"> <p style="margin-left: 10px; font-weight: bold; margin-right: 10px; color: black;">{{ i.product_SIDE_DISH }}</p>
+
+                                <p></p>
+                                {% if i.default %}
+                                    <input type="checkbox" name="checkbox1" checked="checked">
+                                {% else %}
+                                    <input type="checkbox" name="checkbox1">
+                                {% endif %}
+                                <span class="checkmark_check"></span>
+                            </label>
+                        </div>
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <div class="detail-qty border radius" style="width: 80px; height: 60px; margin-bottom: auto;">
+                                <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
+                                <input name="prod_quantity_n" class="qty-val" value="1">
+                                <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                            </div>
+                            <div style="margin-top: 10px; text-align: center;">
+                                <h6 style="font-weight: bold; white-space: nowrap; min-width: 150px;">Price<b style="color: red;">{{ i.price }} L.E</b></h6>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {% if forloop.last or forloop.counter0|add:1|divisibleby:2 %}
+            </div>
+        {% endif %}
+    {% endfor %}
 {% endif %}
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {% if ProdutsAdditions  %}
+
 
 {% for i in ProdutsAdditions %}
     {% if forloop.first %}
@@ -773,18 +859,19 @@ body, html {
     {% if forloop.counter0|divisibleby:2 %}
         <div style="display: flex;">
     {% endif %}
-    <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none; max-width: 550px; margin-right: 25px;">
+    <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none; max-width: 550px; margin-right: 35px;">
         <div class="sidebar-widget widget-category-2 mb-30">
             <ul>
        
 
                 <li>
                     <span style="display: flex; align-items: center;">
-                        <img src="{{ i.images.url }}" width="200px" height="200px" alt="" style="margin-right: 10px;">
+                        <img src="{{ i.images.url }}" width="150px" height="150px" alt="">
                         <!-- {{ i.product_additions }}} -->
                     </span>
                     <div style="float: left;">
-                        <label class="container_check"> {{ i.product_additions }}<p></p>
+                            <label class="container_check"> <p style="margin-left: 10px; font-weight: bold; margin-right: 10px; color: black;">{{ i.product_additions }}</p>
+
                             {% if i.default %}
                             <input type="checkbox" name="checkbox1" checked="checked">
                             <span class="checkmark_check"></span>
@@ -797,14 +884,18 @@ body, html {
                     </div>
                   
                     </span>
-                    <div style="float: left; margin-right: -65px; margin-left: 1; margin-top: 25px;">
-                    <h6 style="font-weight: bold;">Price<b style="color: red;">{{ i.price }} L.E</b></h6>
-                </div>
-                <div class="detail-qty border radius" style="width: 80px; height:60px; margin-top: 110px;">
-                    <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                    <input name="prod_quantity_n" class="qty-val" value="1">
-                    <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                </div>
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div class="detail-qty border radius" style="width: 80px; height: 60px; margin-bottom: auto;">
+                            <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
+                            <input name="prod_quantity_n" class="qty-val" value="1">
+                            <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                        </div>
+                        <div style="margin-top: 10px; text-align: center;">
+                            <h6 style="font-weight: bold; white-space: nowrap; min-width: 150px;">Price<b style="color: red;">{{ i.price }} L.E</b></h6>
+                        </div>
+                    </div>
+                    
+
                 </li>
 
 
@@ -830,7 +921,7 @@ body, html {
 
 
 
-<button id="Apply_Special_Order" style="color: white; background-color: red; width: 100%; height: 20%; font-size: xx-large; font-weight: bolder; ">Apply Special Order</button>
+<button id="Apply_Special_Order" style="color: white; background-color: red; width: 100%; height: 10%; font-size: xx-large; font-weight: bolder; ">Apply Special Order</button>
 
 
 
