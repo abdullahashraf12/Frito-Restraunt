@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Products,Category,Vendor,CardOrder,CardOrderItems,ProductImages,ProductReview,WishList,Address,Tags, UserOrderCard,Offers ,ProductMealTYPE,ProductSideDish,ProdutsAdditions
+from .models import Products,Category,Vendor,CardOrder,CardOrderItems,ProductImages,ProductReview,WishList,Address,Tags, UserOrderCard,Offers ,ProductMealType,ProductSideDish,ProdutsAdditions,ProductAdditionsNames,ProductMealTypeNames,ProductSideDishNames,OffersNames
 import logging
 from django.forms.models import BaseInlineFormSet
 
@@ -16,7 +16,7 @@ class ProductImagesAdmin(admin.TabularInline):
 
 
 class PMealAdmin(admin.TabularInline):
-    model=ProductMealTYPE
+    model=ProductMealType
     formset = BaseProductMealTYPEFormSet
 
 
@@ -30,6 +30,41 @@ class PeodSidedmin(admin.TabularInline):
 class ProdutsAdditions(admin.TabularInline):
     model=ProdutsAdditions
     formset = BaseProductMealTYPEFormSet
+
+
+
+
+
+
+
+
+
+
+
+
+
+class ProductMealTypeNamesAdmin(admin.ModelAdmin):
+    list_display= ["product_Meal_TYPE"]
+
+
+class ProductSideDishNamesAdmin(admin.ModelAdmin):
+    list_display= ["product_SIDE_DISH"]
+
+class ProdutsAdditionsAdmin(admin.ModelAdmin):
+    list_display= ["product_additions"]
+
+class OffersNamesdmin(admin.ModelAdmin):
+    list_display= ["product_offers"]
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -86,3 +121,7 @@ admin.site.register(Address,AddressAdmin)
 admin.site.register(Tags,TagsAdmin)
 admin.site.register(UserOrderCard,Card_items_Admin)
 admin.site.register(Offers,Offers_Admin)
+admin.site.register(ProductMealTypeNames,ProductMealTypeNamesAdmin)
+admin.site.register(ProductSideDishNames,ProductSideDishNamesAdmin)
+admin.site.register(ProductAdditionsNames,ProdutsAdditionsAdmin)
+admin.site.register(OffersNames,OffersNamesdmin)

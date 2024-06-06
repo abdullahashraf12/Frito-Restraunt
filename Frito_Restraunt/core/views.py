@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render ,redirect
 from rest_framework.response import Response
-from product.models import Products,Category,CardOrder,CardOrderItems,ProductImages,ProductReview,WishList,Address,Tags,UserOrderCard,WishList,ProductReview,ProductMealTYPE,ProductSideDish,ProdutsAdditions,Offers
+from product.models import Products,Category,CardOrder,CardOrderItems,ProductImages,ProductReview,WishList,Address,Tags,UserOrderCard,WishList,ProductReview,ProductMealType,ProductSideDish,ProdutsAdditions,Offers
 from rest_framework.views import APIView
 from rest_framework import status
 from django.db.models import Q
@@ -96,10 +96,10 @@ def get_product_by_id(request,pid):
     related_products = Products.objects.filter(category=product.category).exclude(pid=pid)
     category =Category.objects.all();
     latest_products = Products.objects.filter(category=product.category).exclude(pid=pid).order_by('date')
-    ProductMealTYPE = product.ProductMealTYPE.all()
+    ProductMealType = product.ProductMealType.all()
     ProductSideDish = product.ProductSideDish.all()
     ProdutsAdditions = product.ProdutsAdditions.all()
-    print(ProductMealTYPE)
+    print(ProductMealType)
     print(ProductSideDish)
     print(ProdutsAdditions)
     context = {
@@ -108,7 +108,7 @@ def get_product_by_id(request,pid):
         "related_products":related_products,
         "category":category,
         "latest_products":latest_products,
-        "ProductMealTYPE":ProductMealTYPE,
+        "ProductMealType":ProductMealType,
         "ProductSideDish":ProductSideDish,
         "ProdutsAdditions":ProdutsAdditions,
         'is_product_page': True

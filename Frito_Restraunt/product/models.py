@@ -85,11 +85,14 @@ PRODUCTS_additions=[
 
 
 ]
+class OffersNames(models.Model):
+    product_offers = models.CharField(max_length=300,default="Default",primary_key=True)
+
 
 
 class Offers(models.Model):
     oid = ShortUUIDField(unique=True,length=10,max_length= 20,prefix="off",alphabet="abcdefgh12345")
-    product_offers = models.CharField(choices=OFFERS,max_length=30,default="Default")
+    product_offers = models.ForeignKey(OffersNames,on_delete=models.SET_NULL,null=True,related_name="ProductMealTYPE")
     gallery_image = models.ImageField(upload_to="global_/off/",default="product.jpg")
     offer_image = models.ImageField(upload_to="off_/off/",default="product.jpg")
 
@@ -217,11 +220,15 @@ class ProductImages(models.Model):
     date=models.DateTimeField(auto_now_add=True)
     class Meta:
         verbose_name_plural = "Products images"
+class ProductMealTypeNames(models.Model):
+    product_Meal_TYPE = models.CharField(max_length=500,default="Default",primary_key=True)
 
 
-class ProductMealTYPE(models.Model):
+
+class ProductMealType(models.Model):
     images = models.ImageField(upload_to="product-images/pmt",default="product.jpg")
-    product_Meal_TYPE = models.CharField(choices=PRODUCT_Meal_TYPE,max_length=30,default="Default")
+    # product_Meal_TYPE = models.CharField(choices=PRODUCT_Meal_TYPE,max_length=30,default="Default")
+    product_Meal_TYPE = models.ForeignKey(ProductMealTypeNames,on_delete=models.SET_NULL,null=True,related_name="ProductMealTYPE")
     product = models.ForeignKey(Products,on_delete=models.SET_NULL,null=True,related_name="ProductMealTYPE")
     date=models.DateTimeField(auto_now_add=True)
     default = models.BooleanField(default=False)
@@ -233,11 +240,15 @@ class ProductMealTYPE(models.Model):
 
 
 
+class ProductSideDishNames(models.Model):
+    product_SIDE_DISH = models.CharField(max_length=500,default="Default",primary_key=True)
 
 
 class ProductSideDish(models.Model):
     images = models.ImageField(upload_to="product-images/psd",default="product.jpg")
-    product_SIDE_DISH = models.CharField(choices=PRODUCT_SIDE_DISH,max_length=30,default="Default")
+    # product_SIDE_DISH = models.CharField(choices=PRODUCT_SIDE_DISH,max_length=30,default="Default")
+    product_SIDE_DISH = models.ForeignKey(ProductSideDishNames,on_delete=models.SET_NULL,null=True,related_name="ProductSideDish")
+
     product = models.ForeignKey(Products,on_delete=models.SET_NULL,null=True,related_name="ProductSideDish")
     date=models.DateTimeField(auto_now_add=True)
     default = models.BooleanField(default=False)
@@ -252,6 +263,9 @@ class ProductSideDish(models.Model):
 
 
 
+class ProductAdditionsNames(models.Model):
+    product_additions = models.CharField(max_length=500,default="Default",primary_key=True)
+
 
 
 
@@ -259,7 +273,9 @@ class ProductSideDish(models.Model):
 
 class ProdutsAdditions(models.Model):
     images = models.ImageField(upload_to="product-images/pa",default="product.jpg")
-    product_additions = models.CharField(choices=PRODUCTS_additions,max_length=30,default="Default")
+    # product_additions = models.CharField(choices=PRODUCTS_additions,max_length=30,default="Default")
+    product_additions = models.ForeignKey(ProductAdditionsNames,on_delete=models.SET_NULL,null=True,related_name="ProdutsAdditions")
+
     product = models.ForeignKey(Products,on_delete=models.SET_NULL,null=True,related_name="ProdutsAdditions")
     date=models.DateTimeField(auto_now_add=True)
     default = models.BooleanField(default=False)
