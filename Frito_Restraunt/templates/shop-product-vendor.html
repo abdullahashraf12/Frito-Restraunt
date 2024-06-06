@@ -139,12 +139,12 @@
                                         <span class="stock-status out-stock"> Sale Off </span>
                                         <h2 class="title-detail">{{ product.title }}</h2>
                                         <div class="product-detail-rating">
-                                            <div class="product-rate-cover text-end">
+                                            <!-- <div class="product-rate-cover text-end">
                                                 <div class="product-rate d-inline-block">
                                                     <div class="product-rating" style="width: 90%"></div>
                                                 </div>
                                                 <span class="font-small ml-5 text-muted"> (32 reviews)</span>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <div class="clearfix product-price-cover">
                                             <div class="product-price primary-color float-left">
@@ -266,13 +266,72 @@
                                         
                                     </div>
                                     <!-- Detail Info -->
-                                    <form method="POST">
+                                    <!-- <form method="POST">
                                         {% csrf_token %}
                                         <input name="product_pid_to_card" value="{{ product.pid }}" hidden/>
                                         <a type="submit" aria-label="Add To Wishlist" class="action-btn" name="add_to_wishcard">
                                             <i class="fi-rs-heart"></i>
                                         </a>
-                                    </form>
+                                    </form> -->
+                                    <!-- Writeing Default Here -->
+                                    <!--  -->
+
+
+
+
+                                    <div>
+                                        <!-- Product Meal Type -->
+                                        <!-- First row -->
+                                        <div style="float: left;">
+                                            <h2 style="display: inline-block; margin-right: 10px;">Meal Type:</h2>
+                                            {% for i in ProductMealTYPE %}
+                                                {% if i.default %}
+                                                    <h3 style="display: inline-block; margin-right: 10px;">{{ i.product_Meal_TYPE }}</h3>
+                                                    <img src="{{ i.images.url }}" width="50px" height="50px" style="display: inline-block;">
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+
+                                        <!-- Clear float to ensure next div starts on a new line -->
+                                        <div style="clear: both;"></div>
+
+                                        <!-- Second row -->
+                                        <div>
+                                            <h2 style="display: inline-block; margin-right: 10px;">Side Dish:</h2>
+                                            {% for i in ProductSideDish %}
+                                                {% if i.default %}
+                                                    <h3 style="display: inline-block; margin-right: 10px;">{{ i.product_SIDE_DISH }}</h3>
+                                                    <img src="{{ i.images.url }}" width="50px" height="50px" style="display: inline-block;">
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                        <div style="clear: both;"></div>
+                                        <div>
+                                            <h2 style="display: inline-block; margin-right: 10px;">Produts Additions:</h2>
+                                            {% for i in ProdutsAdditions %}
+                                                {% if i.default %}
+                                                    <h3 style="display: inline-block; margin-right: 10px;">{{ i.product_additions }}</h3>
+                                                    <img src="{{ i.images.url }}" width="50px" height="50px" style="display: inline-block;">
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    
+                                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                 </div>
                                 
                             </div>
