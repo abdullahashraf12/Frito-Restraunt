@@ -344,7 +344,7 @@
                                     <h2 class="section-title style-1 mb-30">Related products</h2>
                                 </div>
                                 {% endif %}
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <div class="row related-products">
                                         {% for i  in related_products %}
                                         <div class="col-lg-3 col-md-4 col-12 col-sm-6">
@@ -359,9 +359,7 @@
                                                     <div class="product-action-1">
                                                                   
                                     <div style="display: flex;">
-                                        <!-- <a aria-label="Quick view" class="action-btn open_iframe" data-src="{% url 'core:get_products' i.pid %}">
-                                            <i class="fi-rs-eye"></i>
-                                        </a> -->
+                                       
                                     
                                         <form method="POST">
                                             {% csrf_token %}
@@ -415,363 +413,82 @@
                                             </div>
                                         </div>
                                         {% endfor %}
-                                        <!-- <div class="col-lg-3 col-md-4 col-12 col-sm-6">
-                                            <div class="product-cart-wrap hover-up">
-                                                <div class="product-img-action-wrap">
-                                                    <div class="product-img product-img-zoom">
-                                                        <a href="shop-product-right.html" tabindex="0">
-                                                            <img class="default-img" src="{% static 'assets/imgs/shop/product-3-1.jpg' %}" alt="" />
-                                                            <img class="hover-img" src="{% static 'assets/imgs/shop/product-4-2.jpg' %}" alt="" />
-                                                        </a>
-                                                    </div>
-                                                    <div class="product-action-1">
-                                                        <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-search"></i></a>
-                                                        <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html" tabindex="0"><i class="fi-rs-heart"></i></a>
-                                                        <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html" tabindex="0"><i class="fi-rs-shuffle"></i></a>
-                                                    </div>
-                                                    <div class="product-badges product-badges-position product-badges-mrg">
-                                                        <span class="sale">-12%</span>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content-wrap">
-                                                    <h2><a href="shop-product-right.html" tabindex="0">Smart Bluetooth Speaker</a></h2>
-                                                    <div class="rating-result" title="90%">
-                                                        <span> </span>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <span>$138.85 </span>
-                                                        <span class="old-price">$145.8</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-4 col-12 col-sm-6">
-                                            <div class="product-cart-wrap hover-up">
-                                                <div class="product-img-action-wrap">
-                                                    <div class="product-img product-img-zoom">
-                                                        <a href="shop-product-right.html" tabindex="0">
-                                                            <img class="default-img" src="{% static 'assets/imgs/shop/product-4-1.jpg' %}" alt="" />
-                                                            <img class="hover-img" src="{% static 'assets/imgs/shop/product-4-2.jpg' %}" alt="" />
-                                                        </a>
-                                                    </div>
-                                                    <div class="product-action-1">
-                                                        <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-search"></i></a>
-                                                        <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html" tabindex="0"><i class="fi-rs-heart"></i></a>
-                                                        <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html" tabindex="0"><i class="fi-rs-shuffle"></i></a>
-                                                    </div>
-                                                    <div class="product-badges product-badges-position product-badges-mrg">
-                                                        <span class="new">New</span>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content-wrap">
-                                                    <h2><a href="shop-product-right.html" tabindex="0">HomeSpeak 12UEA Goole</a></h2>
-                                                    <div class="rating-result" title="90%">
-                                                        <span> </span>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <span>$738.85 </span>
-                                                        <span class="old-price">$1245.8</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-4 col-12 col-sm-6 d-lg-block d-none">
-                                            <div class="product-cart-wrap hover-up mb-0">
-                                                <div class="product-img-action-wrap">
-                                                    <div class="product-img product-img-zoom">
-                                                        <a href="shop-product-right.html" tabindex="0">
-                                                            <img class="default-img" src="{% static 'assets/imgs/shop/product-5-1.jpg' %}" alt="" />
-                                                            <img class="hover-img" src="{% static 'assets/imgs/shop/product-3-2.jpg' %}" alt="" />
-                                                        </a>
-                                                    </div>
-                                                    <div class="product-action-1">
-                                                        <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-search"></i></a>
-                                                        <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html" tabindex="0"><i class="fi-rs-heart"></i></a>
-                                                        <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html" tabindex="0"><i class="fi-rs-shuffle"></i></a>
-                                                    </div>
-                                                    <div class="product-badges product-badges-position product-badges-mrg">
-                                                        <span class="hot">Hot</span>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content-wrap">
-                                                    <h2><a href="shop-product-right.html" tabindex="0">Dadua Camera 4K 2022EF</a></h2>
-                                                    <div class="rating-result" title="90%">
-                                                        <span> </span>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <span>$89.8 </span>
-                                                        <span class="old-price">$98.8</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> -->
+                                        
                                     </div>
-                                </div>
+                                </div> -->
+
+
+                            
                             </div>
+                            
                         </div>
+                        
                     </div>
                    
-
-                    <div class="col-xl-3 primary-sidebar sticky-sidebar mt-30">
-
-                        <!-- <div class="col-xl-3 primary-sidebar sticky-sidebar mt-30" style="margin-left: -123%; margin-top: 55%;  max-height: 0.05%; max-width: 70%; float: left;">
-
-                                            
-                            <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none;"><div class="sidebar-widget widget-category-2 mb-30">
-                                        <h5 class="section-title style-1 mb-30"> Product Meal Type </h5>
-                                        <ul>
-                                            {% for i in ProductMealTYPE  %}
-                                            <li>
-                                                <span style="text-decoration: none;"> <img src="{{ i.images.url }}" width="100px" height="100px" alt="">{{ i.product_Meal_TYPE }}</span><span class="count"> 
-
-
-                                                </span>
-                                            </li>
-                                          {% endfor  %}
-                                        
-                                          
-                                        </ul>
-                                        <div style="height: 50px;"></div>
-                                     
-            
-                                    </div>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-                                    </div></div>
-
-
-                        <div class="col-xl-3 primary-sidebar sticky-sidebar mt-30" style="margin-left: -50%; margin-top: 55%;  max-height: 0.05%; max-width: 70%; float: left;">
-
-                                            
-                                        <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none;"><div class="sidebar-widget widget-category-2 mb-30">
-                                                    <h5 class="section-title style-1 mb-30"> Product Meal Type </h5>
-                                                    <ul>
-                                                        {% for i in ProductMealTYPE  %}
-                                                        <li>
-                                                            <span style="text-decoration: none;"> <img src="{{ i.images.url }}" width="100px" height="100px" alt="">{{ i.product_Meal_TYPE }}</span><span class="count"> 
-            
-            
-                                                            </span>
-                                                        </li>
-                                                      {% endfor  %}
-                                                    
-                                                      
-                                                    </ul>
-                                                    <div style="height: 50px;"></div>
-                                                 
-                        
+                    <div class="row">
+     
+                        <div class="" data-wow-delay=".4s">
+                            <div class="tab-content" id="myTabContent-1">
+                                <div class="tab-pane fade show active" id="tab-one-1" role="tabpanel" aria-labelledby="tab-one-1">
+                                    <div class="carausel-4-columns-cover arrow-center position-relative">
+                                        <div class="slider-arrow slider-arrow-2 carausel-4-columns-arrow" id="carausel-4-columns-arrows"></div>
+                                        <div class="carausel-4-columns carausel-arrow-center" id="carausel-4-columns">
+                                            {% for i in  related_products %}
+                                            <div class="product-cart-wrap">
+                                                <div class="product-img-action-wrap">
+                                                    <div class="product-img product-img-zoom">
+                                                        <a href="{% url 'core:get_products' i.pid %}">
+                                                            <img class="default-img" src="{{ i.image.url }}" alt="" />
+                                                            <img class="hover-img" src="{{ i.image.url }}" alt="" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="product-badges product-badges-position product-badges-mrg">
+                                                        <span class="hot">-{{i.precentage|floatformat}}%</span>
+                                                    </div>
                                                 </div>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                                    </div></div>
-
-
-                        <div class="col-xl-3  primary-sidebar sticky-sidebar mt-30" style=" margin-top: 55%;  max-height: 0.05%; max-width: 70%; float: left;">
-
-                                            
-                                                    <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none;"><div class="sidebar-widget widget-category-2 mb-30">
-                                                                <h5 class="section-title style-1 mb-30"> Product Meal Type </h5>
-                                                                <ul>
-                                                                    {% for i in ProductMealTYPE  %}
-                                                                    <li>
-                                                                        <span style="text-decoration: none;"> <img src="{{ i.images.url }}" width="100px" height="100px" alt="">{{ i.product_Meal_TYPE }}</span><span class="count"> 
-                        
-                        
-                                                                        </span>
-                                                                    </li>
-                                                                  {% endfor  %}
-                                                                
+                                                <div class="product-content-wrap">
+                                                    <!-- <div class="product-category">
+                                                        <a href="shop-grid-right.html">Hodo Foods</a>
+                                                    </div> -->
+                                                    <h2><a href="{% url 'core:get_products' i.pid %}">{{ i.title }}</a></h2>
+                                                    <div class="product-rate d-inline-block">
+                                                        <div class="product-rating" style="width: 80%"></div>
+                                                    </div>
+                                                    <div class="product-price mt-10">
+                                                        <span>{{i.price}} L.E</span>
+                                                        <span class="old-price">{{i.old_Price}} L.E</span>
+                                                    </div>
+                                                    <div class="add-cart">
+                                                
+                                                        <div class="product-card-bottom">
                                                                   
-                                                                </ul>
-                                                                <div style="height: 50px;"></div>
-                                                             
-                                    
+                                                            <div class="add-cart">
+                                                                <form method="POST">
+                                                                    {% csrf_token %}
+                                                                    <input name="prod_quantity_n" value="1" hidden="hidden"/>
+                                                                    <input name="product_pid_to_card" value="{{ i.pid }}" hidden/>
+                                                                    <button type="submit" name="prod_ven" class="prod_ven add" style="color: #dc3545;"><i class="fi-rs-shopping-cart mr-5" style="color: blueviolet;"></i>Add</button>
+                                                                </form>
+                                                                
                                                             </div>
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    </div></div> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                     
-                      
-                 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        
-                        <!-- <div class="sidebar-widget widget-category-2 mb-30">
-                            <h5 class="section-title style-1 mb-30">Category</h5>
-                            <ul>
-                                {%for i in category|slice:":3"%}
-                                <li>
-                                    <a href="{% url 'core:category_product_list' i.cid %}"> <img src="{{ i.image.url }}" alt="" />{{ i.title }}</a><span class="count">{{i.category.count}} </span>
-                                </li>
-                              {% endfor %}
-                            </ul>
-                            <div style="height: 50px;"></div>
-                            <h5 class=" style-1 mb-30">& More</h5>
-
-                        </div> -->
-                        
-                   
-
-
-
-
-
-
-
-
-
-  
-    <!-- Product sidebar Widget -->
-    <!-- <div class="sidebar-widget product-sidebar mb-30 p-30 bg-grey border-radius-10">
-        <h5 class="section-title style-1 mb-30">New products</h5>
-        {% for i in latest_products|slice:":5" %}
-        <div class="single-post clearfix">
-            <div class="image">
-                <img src="{{ i.image.url }}" alt="#" />
-            </div>
-            <div class="content pt-10">
-                <h5><a href="{% url 'core:get_products' i.pid %}">{{i.title}}</a></h5>
-                <p class="price mb-0 mt-5">${{ i.price }}</p>
-
-            </div>
-        
-    </div>
-{% endfor %}            
-                    </div> -->
-                </div>
+                                                        </div>
+                                                        <!-- <a class="add" href="shop-cart.html"><i class="fi-rs-shopping-cart mr-5"></i>Add </a> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                      
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End tab-pane-->
+                            
+                            </div>
+                            <!--End tab-content-->
+                        </div>
+                        <!--End Col-lg-9-->
+                    </div>
+                    
             </div>
         </div>
     </div>
