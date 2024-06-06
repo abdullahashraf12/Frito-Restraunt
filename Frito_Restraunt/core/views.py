@@ -35,7 +35,7 @@ def category_list(request):
     }
     return render(request,template_name="blog-category-list.html",context=context)
 def category_product_list_view(request,cid):
-    category = Category.objects.get(cid=cid)
+    category = Category.objects.get(cid=cid)  # Retrieve a single Category object
     products = Products.objects.filter(products_status="published",category=category)
     categ_all = Category.objects.all()
     context={
