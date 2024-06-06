@@ -78,7 +78,7 @@ PRODUCTS_additions=[
       ('lettuce','lettuce'),
       ('Tomato','Tomato'),
       ('American Cheese','American Cheese'),
-      ('Smoked turkey','Smoked turkey'),
+      ('Smoked Turkey','Smoked turkey'),
       ('Pickle','Pickle'),
       ('Garlicky','Garlicky'),
       

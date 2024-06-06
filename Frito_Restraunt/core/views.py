@@ -96,7 +96,7 @@ def get_product_by_id(request,pid):
     related_products = Products.objects.filter(category=product.category).exclude(pid=pid)
     category =Category.objects.all();
     latest_products = Products.objects.filter(category=product.category).exclude(pid=pid).order_by('date')
-    ProductMealType = product.ProductMealType.all()
+    ProductMealType = product.ProductMealTYPE.all()
     ProductSideDish = product.ProductSideDish.all()
     ProdutsAdditions = product.ProdutsAdditions.all()
     print(ProductMealType)
