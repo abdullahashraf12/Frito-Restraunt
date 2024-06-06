@@ -210,6 +210,9 @@ class ProductMealTYPE(models.Model):
     product_Meal_TYPE = models.CharField(choices=PRODUCT_Meal_TYPE,max_length=30,default="Default")
     product = models.ForeignKey(Products,on_delete=models.SET_NULL,null=True,related_name="ProductMealTYPE")
     date=models.DateTimeField(auto_now_add=True)
+    default = models.BooleanField(default=False)
+    number = models.PositiveIntegerField(default=0)
+    price = models.FloatField(default=0.00)
     class Meta:
         verbose_name_plural = "PRODUCT Meal TYPE"
     
@@ -223,6 +226,9 @@ class ProductSideDish(models.Model):
     product_SIDE_DISH = models.CharField(choices=PRODUCT_SIDE_DISH,max_length=30,default="Default")
     product = models.ForeignKey(Products,on_delete=models.SET_NULL,null=True,related_name="ProductSideDish")
     date=models.DateTimeField(auto_now_add=True)
+    default = models.BooleanField(default=False)
+    number = models.PositiveIntegerField(default=0)
+    price = models.FloatField(default=0.00)
     class Meta:
         verbose_name_plural = "PRODUCT SIDE DISH"
     
@@ -242,6 +248,9 @@ class ProdutsAdditions(models.Model):
     product_additions = models.CharField(choices=PRODUCTS_additions,max_length=30,default="Default")
     product = models.ForeignKey(Products,on_delete=models.SET_NULL,null=True,related_name="ProdutsAdditions")
     date=models.DateTimeField(auto_now_add=True)
+    default = models.BooleanField(default=False)
+    number = models.PositiveIntegerField(default=0)
+    price = models.FloatField(default=0.00)
     class Meta:
         verbose_name_plural = "PRODUCTS additions"
     
