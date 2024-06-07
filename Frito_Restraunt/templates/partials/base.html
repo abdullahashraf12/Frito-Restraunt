@@ -363,6 +363,65 @@ body, html {
 
 
 
+.card__Shopping_Card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            max-width: 600px;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card__Shopping_Card-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 16px;
+        }
+
+        .card__Shopping_Card-content {
+            flex: 1;
+        }
+
+        .card__Shopping_Card-content h2 {
+            margin: 0 0 8px;
+            font-size: 24px;
+        }
+
+        .card__Shopping_Card-content p {
+            margin: 0;
+            color: #666;
+        }
+
+        .card__Shopping_Card-price {
+            position: absolute;
+            bottom: 8px; /* Adjust as needed */
+            right: 8px; /* Adjust as needed */
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -402,7 +461,7 @@ body, html {
                 <div class="content">
                     <div style="position: relative; display: inline-block;">
                         <img src="{% static '/assets/imgs/ShopCard2.png' %}" alt="Shopping Card">
-                        <span class="notification">0</span>
+                        <span class="notification" id="number_of_ordered_items">0</span>
                     </div>
                     <span class="card-text">Card</span> <!-- Card text wrapped in a separate span -->
                 </div>

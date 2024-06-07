@@ -41,19 +41,19 @@ def add_to_cart(request):
                 data_exists = CardOrderItems.objects.filter(user=request.user, uoc_prod=Prod, user_meal_type="Default").exists()
                 # data_exists=False
 
-                print(data_exists)
-                print(data_exists)
-                print(data_exists)
-                print(data_exists)
-                print(data_exists)
-                print(data_exists)
-                print(data_exists)
-                print(data_exists)
-                print(data_exists)
-                print(data_exists)
-                print(data_exists)
-                print(data_exists)
-                print(data_exists)
+                # print(data_exists)
+                # print(data_exists)
+                # print(data_exists)
+                # print(data_exists)
+                # print(data_exists)
+                # print(data_exists)
+                # print(data_exists)
+                # print(data_exists)
+                # print(data_exists)
+                # print(data_exists)
+                # print(data_exists)
+                # print(data_exists)
+                # print(data_exists)
                 if data_exists:
 
 
@@ -64,13 +64,13 @@ def add_to_cart(request):
                     existing_object.total_price_for_MealAdditions = 0.00  # Assign total price for additions
                     existing_object.total_price_for_all = float(Prod.price) * float(product_quantity)   # Assign total price for all
                     existing_object.save()
-                    print("hrereee")
+                    # print("hrereee")
                 else:
                     model=CardOrderItems(user=request.user,uoc_prod=Prod,user_meal_type="Default",quantity=0,MealType="None",MealSideDishes="None",MealAdditions="None",total_price_for_meal=0.00,total_price_for_MealSideDishes=0.00,total_price_for_MealAdditions=0.00,total_price_for_all=float(Prod.price)*float(product_quantity))
                     model.save()
-                    print("hrereee 22")
+                    # print("hrereee 22")
 
-                print("Data Saved")
+                # print("Data Saved")
                 return JsonResponse({'message': 'Product added to cart'})
             elif(prod_ven=="Special Order"):
                     
@@ -84,11 +84,11 @@ def add_to_cart(request):
                 mealType = json.loads(mealType)
                 sideDishtype = json.loads(sideDishtype)
                 prductAdditionstype = json.loads(prductAdditionstype)
-                print(extract_values_by_key(mealType,"product_meal_type"))
-                print(pid)
-                print(mealType)
-                print(sideDishtype)
-                print(prductAdditionstype)
+                # print(extract_values_by_key(mealType,"product_meal_type"))
+                # print(pid)
+                # print(mealType)
+                # print(sideDishtype)
+                # print(prductAdditionstype)
                 mealtype_data = "["
                 product_side_dish="["
                 additionName="["
@@ -102,15 +102,15 @@ def add_to_cart(request):
                     meal_Quatity = i.get("quantity")
                     total_price+= float(i.get("price"))
                     total_price_for_meal+=float(i.get("price")) * float(meal_Quatity)
-                    print(name_meal)
-                    print(meal_Quatity)
+                    # print(name_meal)
+                    # print(meal_Quatity)
                     mealtype_data += name_meal + ":" + meal_Quatity + " , "  # Add each meal data to mealtype_data
 
                 if mealtype_data.endswith(", "):  # Remove the last comma and space if present
                     mealtype_data = mealtype_data[:-2]
 
                 mealtype_data += "]"  # Add closing bracket to mealtype_data
-                print(mealtype_data)
+                # print(mealtype_data)
 
 
                 for i in sideDishtype:
@@ -119,15 +119,15 @@ def add_to_cart(request):
                     total_price+= float(i.get("price"))
                     total_price_for_MealSideDishes+=float(i.get("price")) * float(side_dish_Quatity)
 
-                    print(name_meal)
-                    print(meal_Quatity)
+                    # print(name_meal)
+                    # print(meal_Quatity)
                     product_side_dish += side_dish + ":" + side_dish_Quatity + " , "  # Add each meal data to mealtype_data
 
                 if product_side_dish.endswith(", "):  # Remove the last comma and space if present
                     product_side_dish = product_side_dish[:-2]
 
                 product_side_dish += "]"  # Add closing bracket to mealtype_data
-                print(product_side_dish)
+                # print(product_side_dish)
 
 
 
@@ -137,26 +137,26 @@ def add_to_cart(request):
                     additionName_quantity = i.get("quantity")
                     total_price+= float(i.get("price"))
 
-                    print(additionName_value)
-                    print(additionName_quantity)
+                    # print(additionName_value)
+                    # print(additionName_quantity)
                     additionName += additionName_value + ":" + additionName_quantity + " , "  # Add each addition data to additionName
                     total_price_for_MealAdditions+=float(i.get("price")) * float(additionName_quantity)
-                print("-------------------------------------")
-                print(total_price_for_MealAdditions)
-                print("-------------------------------------")
+                # print("-------------------------------------")
+                # print(total_price_for_MealAdditions)
+                # print("-------------------------------------")
                 
                 if additionName.endswith(", "):  # Remove the last comma and space if present
                     additionName = additionName[:-2]
 
                 additionName += "]"  # Add closing bracket to additionName
-                print(additionName)
-                print(total_price)
+                # print(additionName)
+                # print(total_price)
 
 
                 total_for_total = total_price_for_meal + total_price_for_MealSideDishes + total_price_for_MealAdditions
-                print("------------------Total-------------------")
-                print(total_for_total)
-                print("-------------------------------------")
+                # print("------------------Total-------------------")
+                # print(total_for_total)
+                # print("-------------------------------------")
                 if data_exists == False:
                         model=CardOrderItems(user=request.user,uoc_prod=Prod,user_meal_type="Special Order",quantity=0,MealType=mealType,MealSideDishes=sideDishtype,MealAdditions=prductAdditionstype,total_price_for_meal=total_price_for_meal,total_price_for_MealSideDishes=total_price_for_MealSideDishes,total_price_for_MealAdditions=total_price_for_MealAdditions,total_price_for_all=total_for_total)
                         # model=CardOrderItems(user=request.user,uoc_prod=Prod,user_meal_type="Special Order",Product_Quantity_IF_Default=0,MealType=mealType,MealSideDishes=sideDishtype,MealAdditions=prductAdditionstype)
@@ -183,15 +183,23 @@ def add_to_cart(request):
             user = request.user
             all_in_cards_for_this_user = list(CardOrderItems.objects.filter(user=user).values())
             # print(all_in_cards_for_this_user)
-            print(all_in_cards_for_this_user)
+            # print(all_in_cards_for_this_user)
             # data = []
             n=0
             for item in all_in_cards_for_this_user:
-                print(item.get("id"))
-                product_name=CardOrderItems.objects.get(id=item.get("id")).uoc_prod.title
-                print(product_name)
-                print(item.get("uoc_prod_id"))
-                n+=1
+                if str(item.get("user_meal_type")) == "Default":
+                    try:
+                        card_order_item = CardOrderItems.objects.get(id=item.get("id"))
+                        item["default_image"] = card_order_item.uoc_prod.image.url
+                    except CardOrderItems.DoesNotExist:
+                        # Handle the case where the CardOrderItems object doesn't exist
+                        item["default_image"] = None  # or any default image URL you want to assign
+            print(all_in_cards_for_this_user)
+                # print(item.get("id"))
+                # product_name=CardOrderItems.objects.get(id=item.get("id")).uoc_prod.title
+                # print(product_name)
+                # print(item.get("uoc_prod_id"))
+                # n+=1
                 # item_data = {
                     # 'uoc_prod': item.uoc_prod.title,  # Retrieve the title from Products model
             #         'user_meal_type': item.user_meal_type,
@@ -205,6 +213,7 @@ def add_to_cart(request):
             #         'total_price_for_all': item.total_price_for_all
                 # }
             print()
+            
             #     data.append(item_data)
             return JsonResponse({'success': all_in_cards_for_this_user}, status=200)
 
