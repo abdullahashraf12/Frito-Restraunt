@@ -224,7 +224,6 @@ class ProductImages(models.Model):
         verbose_name_plural = "Products images"
 class ProductMealTypeNames(models.Model):
     product_Meal_TYPE = models.CharField(max_length=500, default="Default", primary_key=True)
-    price = models.FloatField(default=0.00)
     images = models.ImageField(upload_to="product-images/pmt", default="product.jpg")
 
     def __str__(self):
@@ -236,13 +235,15 @@ class ProductMealType(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     default = models.BooleanField(default=False)
     number = models.PositiveIntegerField(default=0)
+    price = models.FloatField(default=0.00)
+
 
     class Meta:
         verbose_name_plural = "PRODUCT Meal TYPE"
 
-    @property
-    def price(self):
-        return self.product_Meal_TYPE.price if self.product_Meal_TYPE else None
+    # @property
+    # def price(self):
+    #     return self.product_Meal_TYPE.price if self.product_Meal_TYPE else None
 
     @property
     def images(self):

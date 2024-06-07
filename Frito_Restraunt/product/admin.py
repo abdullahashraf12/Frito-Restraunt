@@ -45,11 +45,11 @@ class ProdutsAdditions(admin.TabularInline):
 
 
 class ProductMealTypeNamesAdmin(admin.ModelAdmin):
-    list_display= ["product_Meal_TYPE", "get_price", "get_image"]
-    def get_price(self, obj):
-        return obj.price
+    list_display= ["product_Meal_TYPE", "get_image"]
+    # def get_price(self, obj):
+    #     return obj.price
 
-    get_price.short_description = 'Price'
+    # get_price.short_description = 'Price'
 
     def get_image(self, obj):
         if obj.images:
