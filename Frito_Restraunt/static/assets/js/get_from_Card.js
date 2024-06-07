@@ -20,20 +20,38 @@ try {
                         console.log("---------------------------")
                         console.log(element)
                         console.log("---------------------------")
-    //                     $("#Add_Products_from_card_here").html(
-    //                         `
-    //                         <div class="card__Shopping_Card">
-    //     <img src="img_avatar.png" alt="Product Image" class="card__Shopping_Card-image">
-    //     <div class="card__Shopping_Card-content">
-    //         <h2>Product Title</h2>
-    //         <p>Product description goes here. This is where you can provide details about the product.</p>
-    //     </div>
-    //     <div class="card__Shopping_Card-price">
-    //         <h5>Price <b style="color:red">150 L.E</b></h5>
-    //     </div>
-    // </div>                 
-    //        `
-    //                     );
+                    if(element.user_meal_type == "Default"){
+                        $("#Add_Products_from_card_here").append(
+                            `
+                            <div class="card__Shopping_Card">
+        <img src="${element.default_image}" alt="Product Image" class="card__Shopping_Card-image">
+        <div class="card__Shopping_Card-content">
+            <h2>${element.product_name}</h2>
+            <p>Quantity ${element.quantity}</p>
+            <p>All Product Type & SideDishes & Beverages Included <b style="color:green;">(Default)</b></p>
+        </div>
+        <div class="card__Shopping_Card-price">
+            <h5>Price <b style="color:red">${element.total_price_for_all} L.E</b></h5>
+        </div>
+    </div>                 
+           `
+                        );
+                    }else{
+                        $("#Add_Products_from_card_here").append(
+                            `
+                            <div class="card__Shopping_Card">
+        <img src="${element.default_image}" alt="Product Image" class="card__Shopping_Card-image">
+        <div class="card__Shopping_Card-content">
+            <h2>${element.product_name}</h2>
+            <p>All Product Type & SideDishes & Beverages Included <b style="color:green;">(Special Order)</b></p>
+        </div>
+        <div class="card__Shopping_Card-price">
+            <h5>Price <b style="color:red">${element.total_price_for_all} L.E</b></h5>
+        </div>
+    </div>                 
+           `);
+                    }
+
 
 
                         

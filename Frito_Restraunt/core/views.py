@@ -187,13 +187,14 @@ def add_to_cart(request):
             # data = []
             n=0
             for item in all_in_cards_for_this_user:
-                if str(item.get("user_meal_type")) == "Default":
-                    try:
-                        card_order_item = CardOrderItems.objects.get(id=item.get("id"))
-                        item["default_image"] = card_order_item.uoc_prod.image.url
-                    except CardOrderItems.DoesNotExist:
-                        # Handle the case where the CardOrderItems object doesn't exist
-                        item["default_image"] = None  # or any default image URL you want to assign
+                card_order_item = CardOrderItems.objects.get(id=item.get("id"))
+
+                item["product_name"] = card_order_item.uoc_prod.title
+                try:
+                    item["default_image"] = card_order_item.uoc_prod.image.url
+                except CardOrderItems.DoesNotExist:
+                    # Handle the case where the CardOrderItems object doesn't exist
+                    item["default_image"] = None  # or any default image URL you want to assign
             print(all_in_cards_for_this_user)
                 # print(item.get("id"))
                 # product_name=CardOrderItems.objects.get(id=item.get("id")).uoc_prod.title

@@ -1156,35 +1156,36 @@ $(document).ready(function() {
     </script>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-            var smallWindow = document.querySelector('.small-window');
-            var wishCard = document.querySelector('.Wish_And_Card');
-            
-            wishCard.addEventListener('mouseenter', function() {
-                smallWindow.style.display = 'block';
-            });
-            
-            wishCard.addEventListener('mouseleave', function(event) {
-                if (!isInside(event.relatedTarget, smallWindow)) {
-                    smallWindow.style.display = 'none';
-                }
-            });
-            
-            smallWindow.addEventListener('mouseenter', function() {
-                smallWindow.style.display = 'block';
-            });
-            
-            smallWindow.addEventListener('mouseleave', function(event) {
-                if (!isInside(event.relatedTarget, wishCard)) {
-                    smallWindow.style.display = 'none';
-                }
-            });
+ $(document).ready(function() {
+  var smallWindow = $('.small-window');
+  var wishCard = $('.Wish_And_Card');
+  var notification = $('.notification');
+   
+  wishCard.on('mouseenter', function() {
+    smallWindow.css('display', 'block');
+  });
+  smallWindow.on('mouseleave', function(event) {
+    smallWindow.css('display', 'none');
+})
+//   wishCard.on('mouseleave', function(event) {
+//     if (!$(event.relatedTarget).closest(wishCard).length) {
+//       smallWindow.css('display', 'none');
+//     }
+//   });
 
-            function isInside(element, container) {
-                if (!element) return false;
-                return element === container || container.contains(element);
-            }
-        });
+  notification.on('mouseenter', function() {
+    smallWindow.css('display', 'block');
+  });
+
+//   notification.on('mouseleave', function(event) {
+//     if (!$(event.relatedTarget).closest(wishCard).length) {
+//       smallWindow.css('display', 'none');
+//     }
+//   });
+
+  // No need for mouseenter/mouseleave on smallWindow itself
+});
+
 </script>
 </body>
     </html>

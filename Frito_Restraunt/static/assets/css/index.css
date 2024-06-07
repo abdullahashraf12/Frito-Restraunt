@@ -459,7 +459,6 @@ font-size: larger;
 
 
 
-
 .Wish_And_Card {
     position: relative;
     font-size: larger;
@@ -476,8 +475,20 @@ font-size: larger;
 }
 
 .Wish_And_Card .content {
-    pointer-events: auto; /* Enable pointer events for the content */
+    pointer-events: none; /* Enable pointer events for the content */
     cursor: pointer; /* Set cursor to pointer */
+}
+
+.Wish_And_Card .notification {
+    position: absolute;
+    top: 0;
+    right: -5px;
+    background: red;
+    border-radius: 50%;
+    color: white;
+    padding: 2px 6px;
+    font-size: 12px;
+    z-index: 2; /* Ensure the notification is above the small window */
 }
 
 .Wish_And_Card .small-window {
@@ -489,7 +500,7 @@ font-size: larger;
     background-color: snow; /* Set the background color */
     border: 1px solid #ccc;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 10;
+    z-index: 1; /* Ensure the small window is below the notification */
     padding: 10px;
     height: auto; /* Let the height adjust based on content */
     overflow: auto; /* Add scrollbars if the content overflows */
@@ -499,17 +510,6 @@ font-size: larger;
     width: 50px;
     height: 50px;
     vertical-align: middle;
-}
-
-.notification {
-    position: absolute;
-    top: 0;
-    right: -5px;
-    background: red;
-    border-radius: 50%;
-    color: white;
-    padding: 2px 6px;
-    font-size: 12px;
 }
 
 
