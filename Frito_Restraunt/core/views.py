@@ -39,14 +39,16 @@ def add_to_cart(request):
             elif(prod_ven=="Special Order"):
                 pass
             else:
-                return JsonResponse({'error': 'Invalid value for prod_ven'}, status=400)
+                return JsonResponse({'error': 'Invalid value for prod_ven'}, status=200)
+        else:
+            return JsonResponse({'error': 'User Must Login To Add To Card'}, status=200)
     except Exception as er:
         print(request.user)
         if(str(request.user) == "AnonymousUser"):
-            return JsonResponse({'error': 'User Empty'}, status=400)
+            return JsonResponse({'error': 'User Empty'}, status=200)
         else:
             print(er)
-            return JsonResponse({'error': 'Invalid Request'}, status=400)
+            return JsonResponse({'error': 'Invalid Request'}, status=200)
 
 
 

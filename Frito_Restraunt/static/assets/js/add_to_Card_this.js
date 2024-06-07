@@ -1,4 +1,4 @@
-
+try{
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -150,7 +150,9 @@
 
 
 
-
+        }catch(err){
+            console.log(err);
+        }
 
 
 
