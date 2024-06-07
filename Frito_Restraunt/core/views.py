@@ -175,8 +175,33 @@ def add_to_cart(request):
                 return JsonResponse({'Success': 'Ajax Has Been Sent'}, status=200)
             else:
                 return JsonResponse({'error': 'Invalid value for prod_ven'}, status=200)
-        else:
+        elif request.method == 'POST' and str(request.user) == "AnonymousUser":
             return JsonResponse({'error': 'User Must Login To Add To Card'}, status=200)
+        elif request.method == 'GET' and request.user =="AnonymousUser":
+            return JsonResponse({'error': 'User Must Login To Add To Card'}, status=200)
+        elif request.method == 'GET' and request.user != "AnonymousUser":
+            user = request.user
+            all_in_cards_for_this_user = CardOrderItems.objects.filter(user=user)
+            # Serialize the QuerySet to JSON
+            serialized_data = serialize('json', all_in_cards_for_this_user)
+            # Convert the serialized data to a list of dictionaries
+            data = []
+            for item in all_in_cards_for_this_user:
+                item_data = {
+                    'uoc_prod': item.uoc_prod.title,  # Retrieve the title from Products model
+                    'user_meal_type': item.user_meal_type,
+                    'quantity': item.quantity,
+                    'MealType': item.MealType,
+                    'MealSideDishes': item.MealSideDishes,
+                    'MealAdditions': item.MealAdditions,
+                    'total_price_for_meal': item.total_price_for_meal,
+                    'total_price_for_MealSideDishes': item.total_price_for_MealSideDishes,
+                    'total_price_for_MealAdditions': item.total_price_for_MealAdditions,
+                    'total_price_for_all': item.total_price_for_all
+                }
+                data.append(item_data)
+            return JsonResponse({'success': data}, status=200)
+
     except Exception as er:
         print(request.user)
         if(str(request.user) == "AnonymousUser"):
