@@ -55,7 +55,7 @@ try{
                     let quantity = quantityInput.val();
                     // Add the data-custom attribute value to the array
                     checkedValues_items_for_MealType.push({
-                        custom: $(this).attr('data-custom'),
+                        // custom: $(this).attr('data-custom'),
                         product_meal_type: $(this).attr('data-custom-product_Meal_TYPE-name'),
                         price:$(this).attr('data-custom-addtition-price'),
                         quantity:quantity
@@ -73,7 +73,7 @@ try{
                     let quantity = quantityInput.val();
                     // Add the data-custom attribute value to the array
                     checkedValues_items_for_Side_Dishes.push({
-                        custom: $(this).attr('data-custom'),
+                        // custom: $(this).attr('data-custom'),
                         product_side_dish: $(this).attr('data-custom-product_SIDE_DISH-name'),
                         price:$(this).attr('data-custom-addtition-price'),
                         quantity:quantity
@@ -93,7 +93,7 @@ try{
                     let quantity = quantityInput.val();
                     // Add the data-custom attribute value to the array
                     checkedValues_items_for_Products_Additions.push({
-                        custom: $(this).attr('data-custom'),
+                        // custom: $(this).attr('data-custom'),
                         additionName: $(this).attr('data-custom-addtition-name'),
                         price:$(this).attr('data-custom-addtition-price'),
                         quantity:quantity
