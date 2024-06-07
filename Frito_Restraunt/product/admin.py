@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Products,Category,Vendor,CardOrder,CardOrderItems,ProductImages,ProductReview,WishList,Address,Tags, UserOrderCard,Offers ,ProductMealType,ProductSideDish,ProdutsAdditions,ProductAdditionsNames,ProductMealTypeNames,ProductSideDishNames,OffersNames
+from .models import Products, Category, Vendor, CardOrder, ProductImages, ProductReview, WishList, Address, Tags, UserOrderCard, Offers, ProductMealType, ProductSideDish, ProdutsAdditions, ProductAdditionsNames, ProductMealTypeNames, ProductSideDishNames, OffersNames, CardOrderItems
 import logging
 from django.forms.models import BaseInlineFormSet
 from django.utils.html import format_html
@@ -37,11 +37,13 @@ class ProdutsAdditions(admin.TabularInline):
 
 
 
+class CardOrderedItemsAdmin(admin.ModelAdmin):
+    list_display = ["get_user_name", "uoc_prod", "user_meal_type","Product_Quantity_IF_Default", "MealType", "MealSideDishes", "MealAdditions"]
 
-
-
-
-
+    def get_user_name(self, obj):
+        return obj.user.username
+    
+    get_user_name.short_description = 'User'
 
 
 class ProductMealTypeNamesAdmin(admin.ModelAdmin):
@@ -101,7 +103,6 @@ class OffersNamesdmin(admin.ModelAdmin):
 
 
 
-
 class ProductAdmin(admin.ModelAdmin):
     exclude = ('user',)  # Exclude the user field from the admin form
     inlines = [ProductImagesAdmin,PMealAdmin,PeodSidedmin,ProdutsAdditions]
@@ -123,9 +124,6 @@ class VendorAdmin(admin.ModelAdmin):
 class CardOrderAdmin(admin.ModelAdmin):
     list_display= ["user","price","paid_status","order_date","product_status"]
 
-class CardOrderItemsAdmin(admin.ModelAdmin):
-    list_display= ["order","invoice_no","item","image","qty","price","total"]
-
  
 class ProductReviewAdmin(admin.ModelAdmin):
     list_display= ["user","product","review","rating"]
@@ -146,8 +144,6 @@ class Offers_Admin(admin.ModelAdmin):
 admin.site.register(Products,ProductAdmin)
 admin.site.register(Category,CategoryAdmin)
 admin.site.register(Vendor,VendorAdmin)
-admin.site.register(CardOrder,CardOrderAdmin)
-admin.site.register(CardOrderItems,CardOrderItemsAdmin)
 admin.site.register(ProductReview,ProductReviewAdmin)
 admin.site.register(WishList,WichListAdmin)
 admin.site.register(Address,AddressAdmin)
@@ -158,3 +154,4 @@ admin.site.register(ProductMealTypeNames,ProductMealTypeNamesAdmin)
 admin.site.register(ProductSideDishNames,ProductSideDishNamesAdmin)
 admin.site.register(ProductAdditionsNames,ProdutsAdditionsAdmin)
 admin.site.register(OffersNames,OffersNamesdmin)
+admin.site.register(CardOrderItems, CardOrderedItemsAdmin)

@@ -20,6 +20,54 @@ def index(request):
         "products":bananas,
     }
     return render(request,template_name="index.html",context=context)
+
+
+
+
+def add_to_cart(request):
+    if request.method == 'POST':
+        prod_ven = request.POST.get("prod_ven")
+        if prod_ven == "Default":
+            return JsonResponse({'message': 'Product added to cart'})
+        else:
+            return JsonResponse({'error': 'Invalid value for prod_ven'}, status=400)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=400)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def product_list(request):
     bananas = Products.objects.filter(products_status="published",featured=True).order_by("-id")
     context = {

@@ -330,20 +330,20 @@ class CardOrder(models.Model):
     class Meta:
         verbose_name_plural = "Cards Order"
     
-class CardOrderItems(models.Model): 
-    order = models.ForeignKey(CardOrder,on_delete=models.CASCADE)
-    invoice_no = models.CharField(max_length=200)
-    product_status= models.CharField(max_length=200)
-    item=models.CharField(max_length=200)
-    image=models.CharField(max_length=200)
-    qty=models.IntegerField()
-    price = models.DecimalField(max_digits=9999999999999,decimal_places = 2,default="1.99")
-    total = models.DecimalField(max_digits=9999999999999,decimal_places = 2,default="1.99")
-    class Meta:
-        verbose_name_plural = "Cards Order Items"
+# class CardOrderItems(models.Model): 
+#     order = models.ForeignKey(CardOrder,on_delete=models.CASCADE)
+#     invoice_no = models.CharField(max_length=200)
+#     product_status= models.CharField(max_length=200)
+#     item=models.CharField(max_length=200)
+#     image=models.CharField(max_length=200)
+#     qty=models.IntegerField()
+#     price = models.DecimalField(max_digits=9999999999999,decimal_places = 2,default="1.99")
+#     total = models.DecimalField(max_digits=9999999999999,decimal_places = 2,default="1.99")
+#     class Meta:
+#         verbose_name_plural = "Cards Order Items"
     
-    def order_image(self):
-        return mark_safe("<img src='/media/%s' width='50' height ='50'/>" % (self.image))
+#     def order_image(self):
+#         return mark_safe("<img src='/media/%s' width='50' height ='50'/>" % (self.image))
 
 
 
@@ -403,3 +403,15 @@ class UserOrderCard(models.Model):
     weight=models.CharField(max_length=200)
     def __str__(self):
         return self.user.email
+default_order=[
+    ("Default","Default"),
+    ("Special Order","Special Order")
+]
+class CardOrderItems(models.Model):
+    user= models.ForeignKey(User,on_delete=models.CASCADE)
+    uoc_prod=models.ForeignKey(Products,on_delete=models.CASCADE,related_name="CardOrderItemsProduct")
+    user_meal_type=models.CharField(max_length=200) # DEFAULT OR Special Order
+    Product_Quantity_IF_Default =models.IntegerField()
+    MealType = models.JSONField() 
+    MealSideDishes = models.JSONField()
+    MealAdditions = models.JSONField() 

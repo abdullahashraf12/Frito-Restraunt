@@ -133,7 +133,7 @@
                                 </div>
                                 <div class="col-md-6 col-sm-12 col-xs-12">
                                     <div class="detail-info pr-30 pl-30">
-                                        <form method="POST">
+                                        <form method="POST" id="add-to-cart-form" action="{% url 'core:add_to_cart' %}">
                                             {% csrf_token %}
 
                                         <span class="stock-status out-stock"> Sale Off </span>
@@ -215,8 +215,11 @@
 
 
                                                 <input name="product_pid_to_card" value="{{ product.pid }}" hidden/>
-                                                <button type="submit" name="prod_ven" class="button button-add-to-cart"><i class="fi-rs-shopping-cart"></i>Add to cart</button>
+                                                <input type="hidden" name="prod_ven" value="Default">
 
+                                                <button type="submit" name="prod_ven" class="button button-add-to-cart">
+                                                    <i class="fi-rs-shopping-cart"></i>Add to cart
+                                                </button>
                                                 <!-- <div> -->
                                                     <!-- <div style="margin-left: 10%; margin-top: 50%; float: left;">
                                                         <h6>Meal Type</h6>
@@ -494,5 +497,4 @@
     </div>
 
 </main>
-   
     {% endblock content %}
