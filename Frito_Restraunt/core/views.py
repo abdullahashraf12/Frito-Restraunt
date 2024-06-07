@@ -37,7 +37,15 @@ def add_to_cart(request):
                 print("Data Saved")
                 return JsonResponse({'message': 'Product added to cart'})
             elif(prod_ven=="Special Order"):
-                pass
+                pid=request.POST.get("pid")
+                mealType = request.POST.get("mealType")
+                sideDishtype = request.POST.get("sideDishtype")
+                prductAdditionstype = request.POST.get("prductAdditionstype")
+                print(pid)
+                print(mealType)
+                print(sideDishtype)
+                print(prductAdditionstype)
+                return JsonResponse({'Success': 'Ajax Has Been Sent'}, status=200)
             else:
                 return JsonResponse({'error': 'Invalid value for prod_ven'}, status=200)
         else:

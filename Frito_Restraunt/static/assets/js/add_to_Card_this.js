@@ -46,9 +46,9 @@ try{
             event.preventDefault(); // Prevent the default form submission
             let checkedValues_items_for_MealType = [];
             let checkedValues_items_for_Side_Dishes = [];
-
             let checkedValues_items_for_Products_Additions = [];
 
+            
             $('input[type="checkbox"][data-custom^="checkbox_in_product_Meal_TYPE_"]').each(function() {
                 if ($(this).is(':checked')) {
                     let quantityInput = $(this).closest('div').next('div').find('input[data-custom-productmealtype-quantity]');
@@ -101,6 +101,33 @@ try{
                 }
              });
 
+             $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'), // Get the form action URL dynamically
+                data: {
+                    pid: $('[name="product_pid_to_card"]').val(),
+                    mealType: JSON.stringify(checkedValues_items_for_MealType),
+                    sideDishtype: JSON.stringify(checkedValues_items_for_Side_Dishes),
+                    prductAdditionstype: JSON.stringify(checkedValues_items_for_Products_Additions), 
+                    prod_ven:"Special Order"
+                },
+                headers: {
+                    'X-CSRFToken': csrftoken
+                },
+                success: function(response) {
+                    console.log(checkedValues_items_for_MealType);
+                    console.log(checkedValues_items_for_Side_Dishes);
+                    console.log(checkedValues_items_for_Products_Additions);
+       
+                    // Print the JSON response to the browser console
+                    console.log(response);
+                },
+                error: function(xhr, status, error) {
+                    // Print the error to the browser console
+                    console.log('Error adding product to cart:', xhr.responseText);
+                }
+            });
+        
 
 
 
@@ -109,9 +136,9 @@ try{
 
 
 
-             console.log(checkedValues_items_for_MealType);
-             console.log(checkedValues_items_for_Side_Dishes);
-             console.log(checkedValues_items_for_Products_Additions);
+            //  console.log(checkedValues_items_for_MealType);
+            //  console.log(checkedValues_items_for_Side_Dishes);
+            //  console.log(checkedValues_items_for_Products_Additions);
 
             });
         });
