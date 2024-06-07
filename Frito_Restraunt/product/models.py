@@ -398,7 +398,7 @@ class Address(models.Model):
 class UserOrderCard(models.Model):
     uoc_id = ShortUUIDField(unique=True, length=10, max_length=20, prefix="uoc", alphabet="abcdefgh12345", default=ShortUUIDField.generated)
     user= models.ForeignKey(User,on_delete=models.CASCADE)
-    uoc_prod=models.ForeignKey(Products,on_delete=models.CASCADE)
+    uoc_prod=models.ForeignKey(Products,on_delete=models.CASCADE,related_name="uoc_prod")
     qty=models.IntegerField()
     weight=models.CharField(max_length=200)
     def __str__(self):
@@ -412,9 +412,9 @@ class CardOrderItems(models.Model):
     uoc_prod=models.ForeignKey(Products,on_delete=models.CASCADE,related_name="CardOrderItemsProduct")
     user_meal_type=models.CharField(max_length=200) # DEFAULT OR Special Order
     quantity =models.IntegerField()
-    MealType = models.CharField(max_length=5000) 
-    MealSideDishes = models.CharField(max_length=5000) 
-    MealAdditions = models.CharField(max_length=5000) 
+    MealType = models.JSONField() 
+    MealSideDishes = models.JSONField() 
+    MealAdditions = models.JSONField() 
     total_price_for_meal=models.FloatField(default=0.00)
     total_price_for_MealSideDishes=models.FloatField(default=0.00)
     total_price_for_MealAdditions=models.FloatField(default=0.00)

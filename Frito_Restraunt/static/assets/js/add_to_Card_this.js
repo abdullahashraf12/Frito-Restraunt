@@ -51,14 +51,18 @@ try{
             
             $('input[type="checkbox"][data-custom^="checkbox_in_product_Meal_TYPE_"]').each(function() {
                 if ($(this).is(':checked')) {
+                    let meal_imga = $(this).closest('li').find('img[name="ProductMealType_image"]');
+                    let src_value = meal_imga.attr('src');
                     let quantityInput = $(this).closest('div').next('div').find('input[data-custom-productmealtype-quantity]');
                     let quantity = quantityInput.val();
                     // Add the data-custom attribute value to the array
                     checkedValues_items_for_MealType.push({
+                        
                         // custom: $(this).attr('data-custom'),
                         product_meal_type: $(this).attr('data-custom-product_Meal_TYPE-name'),
                         price:$(this).attr('data-custom-addtition-price'),
-                        quantity:quantity
+                        quantity:quantity,
+                        mealtype:src_value
                     });
                 }
              });
@@ -68,15 +72,22 @@ try{
 
 
              $('input[type="checkbox"][data-custom^="checkbox_in_product_SIDE_DISH_"]').each(function() {
+
+
                 if ($(this).is(':checked')) {
+                    let sid_imga = $(this).closest('li').find('img[name="ProductSideDish_image"]');
+                    let src_value = sid_imga.attr('src');
+
                     let quantityInput = $(this).closest('div').next('div').find('input[data-custom-ProductSideDish-quantity]');
                     let quantity = quantityInput.val();
+
                     // Add the data-custom attribute value to the array
                     checkedValues_items_for_Side_Dishes.push({
                         // custom: $(this).attr('data-custom'),
                         product_side_dish: $(this).attr('data-custom-product_SIDE_DISH-name'),
                         price:$(this).attr('data-custom-addtition-price'),
-                        quantity:quantity
+                        quantity:quantity,
+                        side_image:src_value
                     });
                 }
              });
@@ -89,14 +100,20 @@ try{
 
              $('input[type="checkbox"][data-custom^="checkbox_in_ProdutsAdditions_"]').each(function() {
                 if ($(this).is(':checked')) {
+                    let addition_imga = $(this).closest('li').find('img[name="ProdutsAdditions_image"]');
+                    let src_value = addition_imga.attr('src');
+
+
                     let quantityInput = $(this).closest('div').next('div').find('input[data-custom-addtition-quantity]');
                     let quantity = quantityInput.val();
+                    
                     // Add the data-custom attribute value to the array
                     checkedValues_items_for_Products_Additions.push({
                         // custom: $(this).attr('data-custom'),
                         additionName: $(this).attr('data-custom-addtition-name'),
                         price:$(this).attr('data-custom-addtition-price'),
-                        quantity:quantity
+                        quantity:quantity,
+                        addition_image:src_value
                     });
                 }
              });

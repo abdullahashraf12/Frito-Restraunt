@@ -158,7 +158,7 @@ def add_to_cart(request):
                 print(total_for_total)
                 print("-------------------------------------")
                 if data_exists == False:
-                        model=CardOrderItems(user=request.user,uoc_prod=Prod,user_meal_type="Special Order",quantity=0,MealType=mealtype_data,MealSideDishes=product_side_dish,MealAdditions=additionName,total_price_for_meal=total_price_for_meal,total_price_for_MealSideDishes=total_price_for_MealSideDishes,total_price_for_MealAdditions=total_price_for_MealAdditions,total_price_for_all=total_for_total)
+                        model=CardOrderItems(user=request.user,uoc_prod=Prod,user_meal_type="Special Order",quantity=0,MealType=mealType,MealSideDishes=sideDishtype,MealAdditions=prductAdditionstype,total_price_for_meal=total_price_for_meal,total_price_for_MealSideDishes=total_price_for_MealSideDishes,total_price_for_MealAdditions=total_price_for_MealAdditions,total_price_for_all=total_for_total)
                         # model=CardOrderItems(user=request.user,uoc_prod=Prod,user_meal_type="Special Order",Product_Quantity_IF_Default=0,MealType=mealType,MealSideDishes=sideDishtype,MealAdditions=prductAdditionstype)
 
                         model.save()
@@ -181,26 +181,32 @@ def add_to_cart(request):
             return JsonResponse({'error': 'User Must Login To Add To Card'}, status=200)
         elif request.method == 'GET' and request.user != "AnonymousUser":
             user = request.user
-            all_in_cards_for_this_user = CardOrderItems.objects.filter(user=user)
-            # Serialize the QuerySet to JSON
-            serialized_data = serialize('json', all_in_cards_for_this_user)
-            # Convert the serialized data to a list of dictionaries
-            data = []
+            all_in_cards_for_this_user = list(CardOrderItems.objects.filter(user=user).values())
+            # print(all_in_cards_for_this_user)
+            print(all_in_cards_for_this_user)
+            # data = []
+            n=0
             for item in all_in_cards_for_this_user:
-                item_data = {
-                    'uoc_prod': item.uoc_prod.title,  # Retrieve the title from Products model
-                    'user_meal_type': item.user_meal_type,
-                    'quantity': item.quantity,
-                    'MealType': item.MealType,
-                    'MealSideDishes': item.MealSideDishes,
-                    'MealAdditions': item.MealAdditions,
-                    'total_price_for_meal': item.total_price_for_meal,
-                    'total_price_for_MealSideDishes': item.total_price_for_MealSideDishes,
-                    'total_price_for_MealAdditions': item.total_price_for_MealAdditions,
-                    'total_price_for_all': item.total_price_for_all
-                }
-                data.append(item_data)
-            return JsonResponse({'success': data}, status=200)
+                print(item.get("id"))
+                product_name=CardOrderItems.objects.get(id=item.get("id")).uoc_prod.title
+                print(product_name)
+                print(item.get("uoc_prod_id"))
+                n+=1
+                # item_data = {
+                    # 'uoc_prod': item.uoc_prod.title,  # Retrieve the title from Products model
+            #         'user_meal_type': item.user_meal_type,
+            #         'quantity': item.quantity,
+            #         'MealType': item.MealType,
+            #         'MealSideDishes': item.MealSideDishes,
+            #         'MealAdditions': item.MealAdditions,
+            #         'total_price_for_meal': item.total_price_for_meal,
+            #         'total_price_for_MealSideDishes': item.total_price_for_MealSideDishes,
+            #         'total_price_for_MealAdditions': item.total_price_for_MealAdditions,
+            #         'total_price_for_all': item.total_price_for_all
+                # }
+            print()
+            #     data.append(item_data)
+            return JsonResponse({'success': all_in_cards_for_this_user}, status=200)
 
     except Exception as er:
         print(request.user)
