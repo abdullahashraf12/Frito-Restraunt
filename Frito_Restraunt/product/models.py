@@ -223,75 +223,90 @@ class ProductImages(models.Model):
     class Meta:
         verbose_name_plural = "Products images"
 class ProductMealTypeNames(models.Model):
-    product_Meal_TYPE = models.CharField(max_length=500,default="Default",primary_key=True)
+    product_Meal_TYPE = models.CharField(max_length=500, default="Default", primary_key=True)
+    price = models.FloatField(default=0.00)
+    images = models.ImageField(upload_to="product-images/pmt", default="product.jpg")
+
     def __str__(self):
         return str(self.product_Meal_TYPE)
 
-
-
 class ProductMealType(models.Model):
-    images = models.ImageField(upload_to="product-images/pmt",default="product.jpg")
-    # product_Meal_TYPE = models.CharField(choices=PRODUCT_Meal_TYPE,max_length=30,default="Default")
-    product_Meal_TYPE = models.ForeignKey(ProductMealTypeNames,on_delete=models.SET_NULL,null=True,related_name="ProductMealTYPE")
-    product = models.ForeignKey(Products,on_delete=models.SET_NULL,null=True,related_name="ProductMealTYPE")
-    date=models.DateTimeField(auto_now_add=True)
+    product_Meal_TYPE = models.ForeignKey(ProductMealTypeNames, on_delete=models.SET_NULL, null=True, related_name="ProductMealTYPE")
+    product = models.ForeignKey('Products', on_delete=models.SET_NULL, null=True, related_name="ProductMealTYPE")
+    date = models.DateTimeField(auto_now_add=True)
     default = models.BooleanField(default=False)
     number = models.PositiveIntegerField(default=0)
-    price = models.FloatField(default=0.00)
+
     class Meta:
         verbose_name_plural = "PRODUCT Meal TYPE"
-    
 
+    @property
+    def price(self):
+        return self.product_Meal_TYPE.price if self.product_Meal_TYPE else None
 
+    @property
+    def images(self):
+        return self.product_Meal_TYPE.images if self.product_Meal_TYPE else None
+
+from django.db import models
 
 class ProductSideDishNames(models.Model):
-    product_SIDE_DISH = models.CharField(max_length=500,default="Default",primary_key=True)
+    product_SIDE_DISH = models.CharField(max_length=500, default="Default", primary_key=True)
+    price = models.FloatField(default=0.00)
+    images = models.ImageField(upload_to="product-images/psd", default="product.jpg")
 
     def __str__(self):
         return str(self.product_SIDE_DISH)
 
 class ProductSideDish(models.Model):
-    images = models.ImageField(upload_to="product-images/psd",default="product.jpg")
-    # product_SIDE_DISH = models.CharField(choices=PRODUCT_SIDE_DISH,max_length=30,default="Default")
-    product_SIDE_DISH = models.ForeignKey(ProductSideDishNames,on_delete=models.SET_NULL,null=True,related_name="ProductSideDish")
-
-    product = models.ForeignKey(Products,on_delete=models.SET_NULL,null=True,related_name="ProductSideDish")
-    date=models.DateTimeField(auto_now_add=True)
+    product_SIDE_DISH = models.ForeignKey(ProductSideDishNames, on_delete=models.SET_NULL, null=True, related_name="ProductSideDish")
+    product = models.ForeignKey('Products', on_delete=models.SET_NULL, null=True, related_name="ProductSideDish")
+    date = models.DateTimeField(auto_now_add=True)
     default = models.BooleanField(default=False)
     number = models.PositiveIntegerField(default=0)
-    price = models.FloatField(default=0.00)
+
     class Meta:
         verbose_name_plural = "PRODUCT SIDE DISH"
-    
+
+    @property
+    def price(self):
+        return self.product_SIDE_DISH.price if self.product_SIDE_DISH else None
+
+    @property
+    def images(self):
+        return self.product_SIDE_DISH.images if self.product_SIDE_DISH else None
 
 
 
 
 
+from django.db import models
 
 class ProductAdditionsNames(models.Model):
-    product_additions = models.CharField(max_length=500,default="Default",primary_key=True)
+    product_additions = models.CharField(max_length=500, default="Default", primary_key=True)
+    price = models.FloatField(default=0.00)
+    images = models.ImageField(upload_to="product-images/pa", default="product.jpg")
 
     def __str__(self):
         return str(self.product_additions)
 
-
-
-
-
 class ProdutsAdditions(models.Model):
-    images = models.ImageField(upload_to="product-images/pa",default="product.jpg")
-    # product_additions = models.CharField(choices=PRODUCTS_additions,max_length=30,default="Default")
-    product_additions = models.ForeignKey(ProductAdditionsNames,on_delete=models.SET_NULL,null=True,related_name="ProdutsAdditions")
-
-    product = models.ForeignKey(Products,on_delete=models.SET_NULL,null=True,related_name="ProdutsAdditions")
-    date=models.DateTimeField(auto_now_add=True)
+    product_additions = models.ForeignKey(ProductAdditionsNames, on_delete=models.SET_NULL, null=True, related_name="ProdutsAdditions")
+    product = models.ForeignKey('Products', on_delete=models.SET_NULL, null=True, related_name="ProdutsAdditions")
+    date = models.DateTimeField(auto_now_add=True)
     default = models.BooleanField(default=False)
     number = models.PositiveIntegerField(default=0)
-    price = models.FloatField(default=0.00)
+
     class Meta:
         verbose_name_plural = "PRODUCTS additions"
-    
+
+    @property
+    def price(self):
+        return self.product_additions.price if self.product_additions else None
+
+    @property
+    def images(self):
+        return self.product_additions.images if self.product_additions else None
 
 
 

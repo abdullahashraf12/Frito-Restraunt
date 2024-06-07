@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import Products,Category,Vendor,CardOrder,CardOrderItems,ProductImages,ProductReview,WishList,Address,Tags, UserOrderCard,Offers ,ProductMealType,ProductSideDish,ProdutsAdditions,ProductAdditionsNames,ProductMealTypeNames,ProductSideDishNames,OffersNames
 import logging
 from django.forms.models import BaseInlineFormSet
+from django.utils.html import format_html
 
 # Register your models here.
 logger = logging.getLogger(__name__)
@@ -44,14 +45,46 @@ class ProdutsAdditions(admin.TabularInline):
 
 
 class ProductMealTypeNamesAdmin(admin.ModelAdmin):
-    list_display= ["product_Meal_TYPE"]
+    list_display= ["product_Meal_TYPE", "get_price", "get_image"]
+    def get_price(self, obj):
+        return obj.price
 
+    get_price.short_description = 'Price'
+
+    def get_image(self, obj):
+        if obj.images:
+            return format_html('<img src="{}" style="height: 50px;"/>', obj.images.url)
+        return "No Image"
+
+    get_image.short_description = 'Image'
 
 class ProductSideDishNamesAdmin(admin.ModelAdmin):
-    list_display= ["product_SIDE_DISH"]
+    list_display = ["product_SIDE_DISH", "get_price", "get_image"]
+    def get_price(self, obj):
+        return obj.price
+
+    get_price.short_description = 'Price'
+
+    def get_image(self, obj):
+        if obj.images:
+            return format_html('<img src="{}" style="height: 50px;"/>', obj.images.url)
+        return "No Image"
+
+    get_image.short_description = 'Image'
 
 class ProdutsAdditionsAdmin(admin.ModelAdmin):
-    list_display= ["product_additions"]
+    list_display= ["product_additions", "get_price", "get_image"]
+    def get_price(self, obj):
+        return obj.price
+
+    get_price.short_description = 'Price'
+
+    def get_image(self, obj):
+        if obj.images:
+            return format_html('<img src="{}" style="height: 50px;"/>', obj.images.url)
+        return "No Image"
+
+    get_image.short_description = 'Image'
 
 class OffersNamesdmin(admin.ModelAdmin):
     list_display= ["product_offers"]
