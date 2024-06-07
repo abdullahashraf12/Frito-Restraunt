@@ -241,18 +241,12 @@
                                     </div>
                                     <div class="product-action-1">
                                         <div style="display: flex;">
-                                            <a aria-label="Quick view" class="action-btn open_iframe" data-src="{% url 'core:get_products' p.pid %}">
-                                                <i class="fi-rs-eye"></i>
-                                            </a>
-                                        
-                                            <form method="POST">
+                                         
+                                            <!-- <form method="POST">
                                                 {% csrf_token %}
                                                 <input name="product_pid_to_card" value="{{ p.pid }}" hidden/>
-                                                <a type="submit" aria-label="Add To Wishlist" class="action-btn" name="add_to_wishcard">
-                                                    <i class="fi-rs-heart"></i>
-                                                </a>
                                             </form>
-                                            
+                                             -->
                                         </div>
                                         
                                         
