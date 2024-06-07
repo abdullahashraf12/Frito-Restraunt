@@ -22,29 +22,156 @@ def index(request):
     return render(request,template_name="index.html",context=context)
 
 
-
+def extract_values_by_key(data, key):
+    values = []
+    for item in data:
+        if key in item:
+            values.append(item[key])
+    return values
 
 def add_to_cart(request):
     try:
         if request.method == 'POST' and str(request.user) != "AnonymousUser":
             prod_ven = request.POST.get("prod_ven")
             if prod_ven == "Default":
+
                 product_quantity = request.POST.get("prod_quantity_n")
                 prod_pid=request.POST.get("product_pid_to_card")
                 Prod= Products.objects.get(pid=prod_pid)
-                model=CardOrderItems(user=request.user,uoc_prod=Prod,user_meal_type="Default",Product_Quantity_IF_Default=str(product_quantity),MealType="None",MealSideDishes="None",MealAdditions="None")
-                model.save()
+                data_exists = CardOrderItems.objects.filter(user=request.user, uoc_prod=Prod, user_meal_type="Default").exists()
+                # data_exists=False
+
+                print(data_exists)
+                print(data_exists)
+                print(data_exists)
+                print(data_exists)
+                print(data_exists)
+                print(data_exists)
+                print(data_exists)
+                print(data_exists)
+                print(data_exists)
+                print(data_exists)
+                print(data_exists)
+                print(data_exists)
+                print(data_exists)
+                if data_exists:
+
+
+                    existing_object = CardOrderItems.objects.get(user=request.user, uoc_prod=Prod, user_meal_type="Default")
+                    existing_object.quantity = product_quantity   # Increment the quantity by 1
+                    existing_object.total_price_for_meal = 0.00  # Assign total price for meal
+                    existing_object.total_price_for_MealSideDishes = 0.00  # Assign total price for side dishes
+                    existing_object.total_price_for_MealAdditions = 0.00  # Assign total price for additions
+                    existing_object.total_price_for_all = float(Prod.price) * float(product_quantity)   # Assign total price for all
+                    existing_object.save()
+                    print("hrereee")
+                else:
+                    model=CardOrderItems(user=request.user,uoc_prod=Prod,user_meal_type="Default",quantity=0,MealType="None",MealSideDishes="None",MealAdditions="None",total_price_for_meal=0.00,total_price_for_MealSideDishes=0.00,total_price_for_MealAdditions=0.00,total_price_for_all=float(Prod.price)*float(product_quantity))
+                    model.save()
+                    print("hrereee 22")
+
                 print("Data Saved")
                 return JsonResponse({'message': 'Product added to cart'})
             elif(prod_ven=="Special Order"):
+                    
                 pid=request.POST.get("pid")
+                Prod= Products.objects.get(pid=pid)
+                data_exists = CardOrderItems.objects.filter(user=request.user, uoc_prod=Prod, user_meal_type="Special Order").exists()
+
                 mealType = request.POST.get("mealType")
                 sideDishtype = request.POST.get("sideDishtype")
                 prductAdditionstype = request.POST.get("prductAdditionstype")
+                mealType = json.loads(mealType)
+                sideDishtype = json.loads(sideDishtype)
+                prductAdditionstype = json.loads(prductAdditionstype)
+                print(extract_values_by_key(mealType,"product_meal_type"))
                 print(pid)
                 print(mealType)
                 print(sideDishtype)
                 print(prductAdditionstype)
+                mealtype_data = "["
+                product_side_dish="["
+                additionName="["
+                total_price=0
+                total_price_for_meal=0.00
+                total_price_for_MealSideDishes=0.00
+                total_price_for_MealAdditions=0.00
+                total_for_total=0.00
+                for i in mealType:
+                    name_meal = i.get("product_meal_type")
+                    meal_Quatity = i.get("quantity")
+                    total_price+= float(i.get("price"))
+                    total_price_for_meal+=float(i.get("price")) * float(meal_Quatity)
+                    print(name_meal)
+                    print(meal_Quatity)
+                    mealtype_data += name_meal + ":" + meal_Quatity + " , "  # Add each meal data to mealtype_data
+
+                if mealtype_data.endswith(", "):  # Remove the last comma and space if present
+                    mealtype_data = mealtype_data[:-2]
+
+                mealtype_data += "]"  # Add closing bracket to mealtype_data
+                print(mealtype_data)
+
+
+                for i in sideDishtype:
+                    side_dish = i.get("product_side_dish")
+                    side_dish_Quatity = i.get("quantity")
+                    total_price+= float(i.get("price"))
+                    total_price_for_MealSideDishes+=float(i.get("price")) * float(side_dish_Quatity)
+
+                    print(name_meal)
+                    print(meal_Quatity)
+                    product_side_dish += side_dish + ":" + side_dish_Quatity + " , "  # Add each meal data to mealtype_data
+
+                if product_side_dish.endswith(", "):  # Remove the last comma and space if present
+                    product_side_dish = product_side_dish[:-2]
+
+                product_side_dish += "]"  # Add closing bracket to mealtype_data
+                print(product_side_dish)
+
+
+
+
+                for i in prductAdditionstype:
+                    additionName_value = i.get("additionName")
+                    additionName_quantity = i.get("quantity")
+                    total_price+= float(i.get("price"))
+
+                    print(additionName_value)
+                    print(additionName_quantity)
+                    additionName += additionName_value + ":" + additionName_quantity + " , "  # Add each addition data to additionName
+                    total_price_for_MealAdditions+=float(i.get("price")) * float(additionName_quantity)
+                print("-------------------------------------")
+                print(total_price_for_MealAdditions)
+                print("-------------------------------------")
+                
+                if additionName.endswith(", "):  # Remove the last comma and space if present
+                    additionName = additionName[:-2]
+
+                additionName += "]"  # Add closing bracket to additionName
+                print(additionName)
+                print(total_price)
+
+
+                total_for_total = total_price_for_meal + total_price_for_MealSideDishes + total_price_for_MealAdditions
+                print("------------------Total-------------------")
+                print(total_for_total)
+                print("-------------------------------------")
+                if data_exists == False:
+                        model=CardOrderItems(user=request.user,uoc_prod=Prod,user_meal_type="Special Order",quantity=0,MealType=mealtype_data,MealSideDishes=product_side_dish,MealAdditions=additionName,total_price_for_meal=total_price_for_meal,total_price_for_MealSideDishes=total_price_for_MealSideDishes,total_price_for_MealAdditions=total_price_for_MealAdditions,total_price_for_all=total_for_total)
+                        # model=CardOrderItems(user=request.user,uoc_prod=Prod,user_meal_type="Special Order",Product_Quantity_IF_Default=0,MealType=mealType,MealSideDishes=sideDishtype,MealAdditions=prductAdditionstype)
+
+                        model.save()
+                else:
+                        existing_object = CardOrderItems.objects.get(user=request.user, uoc_prod=Prod, user_meal_type="Special Order")
+                        existing_object.quantity = 0  
+                        existing_object.total_price_for_meal =total_price_for_meal  
+                        existing_object.total_price_for_MealSideDishes =total_price_for_MealSideDishes  # Assign total price for side dishes
+                        existing_object.total_price_for_MealAdditions = total_price_for_MealAdditions  # Assign total price for additions
+                        existing_object.total_price_for_all = total_for_total  # Assign total price for all
+                        existing_object.save()
+                        # MealType=mealtype_data,MealSideDishes=product_side_dish,MealAdditions=additionName,total_price_for_meal=total_price_for_meal,total_price_for_MealSideDishes=total_price_for_MealSideDishes,total_price_for_MealAdditions=total_price_for_MealAdditions,total_price_for_all=total_price)
+                        
                 return JsonResponse({'Success': 'Ajax Has Been Sent'}, status=200)
             else:
                 return JsonResponse({'error': 'Invalid value for prod_ven'}, status=200)

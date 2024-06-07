@@ -398,10 +398,27 @@ body, html {
                 <img src='{% static "/assets/imgs/shopwishlist.png" %}' alt="Wishlist" width="50px" height="50px">
                 Wishlist
             </a> -->
-            <a href="#" class="Wish_And_Card"  style="margin-left: 50px;">
-                <img src='{% static "/assets/imgs/ShopCard2.png" %}' alt="Shopping Card" width="50px" height="50px">
-                Card
-            </a>
+            <div class="Wish_And_Card">
+                <div class="content">
+                    <div style="position: relative; display: inline-block;">
+                        <img src="{% static '/assets/imgs/ShopCard2.png' %}" alt="Shopping Card">
+                        <span class="notification">0</span>
+                    </div>
+                    <span class="card-text">Card</span> <!-- Card text wrapped in a separate span -->
+                </div>
+                <div class="small-window" id="Add_Products_from_card_here">
+                    <!-- Large content goes here -->
+                    <p>This is the content of the small window. Here is some additional content to demonstrate how the window expands with more content. You can add more paragraphs, images, or any other HTML content you need. For example:</p>
+                    <ul>
+                        <li>Item 1</li>
+                        <li>Item 2</li>
+                        <li>Item 3</li>
+                        <li>Item 4</li>
+                    </ul>
+                    <p>More content...</p>
+                </div>
+            </div>
+            
             <div style="width: 15px;"></div>
 
             {% if user.is_authenticated %}
@@ -1078,7 +1095,38 @@ $(document).ready(function() {
 });
 
 
-
     </script>
-    </body>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+            var smallWindow = document.querySelector('.small-window');
+            var wishCard = document.querySelector('.Wish_And_Card');
+            
+            wishCard.addEventListener('mouseenter', function() {
+                smallWindow.style.display = 'block';
+            });
+            
+            wishCard.addEventListener('mouseleave', function(event) {
+                if (!isInside(event.relatedTarget, smallWindow)) {
+                    smallWindow.style.display = 'none';
+                }
+            });
+            
+            smallWindow.addEventListener('mouseenter', function() {
+                smallWindow.style.display = 'block';
+            });
+            
+            smallWindow.addEventListener('mouseleave', function(event) {
+                if (!isInside(event.relatedTarget, wishCard)) {
+                    smallWindow.style.display = 'none';
+                }
+            });
+
+            function isInside(element, container) {
+                if (!element) return false;
+                return element === container || container.contains(element);
+            }
+        });
+</script>
+</body>
     </html>

@@ -454,25 +454,73 @@ text-decoration: none; /* Remove underline on hover */
 font-size: larger;
 
 }
-.Wish_And_Card{
-position: relative;
-font-size: larger;
 
-color: darkblue;
-border-color: transparent;
-font-weight: bold;
-text-decoration: none; /* Remove underline on hover */
 
+
+
+
+
+.Wish_And_Card {
+    position: relative;
+    font-size: larger;
+    color: darkblue;
+    border-color: transparent;
+    font-weight: bold;
+    text-decoration: none; /* Remove underline on hover */
+    display: inline-block;
+    margin-left: 50px;
 }
-.Wish_And_Card:hover{
-position: relative;
 
-color: red;
-border-color: transparent;
-font-weight: bold;
-text-decoration: none; /* Remove underline on hover */
-
+.Wish_And_Card:hover .content {
+    color: red;
 }
+
+.Wish_And_Card .content {
+    pointer-events: auto; /* Enable pointer events for the content */
+    cursor: pointer; /* Set cursor to pointer */
+}
+
+.Wish_And_Card .small-window {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px); /* Adjust based on the size of your image and desired offset */
+    left: -250px; /* Adjust left position by -250px */
+    width: 500px; /* Set the desired width including the additional 250px */
+    background-color: snow; /* Set the background color */
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    padding: 10px;
+    height: auto; /* Let the height adjust based on content */
+    overflow: auto; /* Add scrollbars if the content overflows */
+}
+
+.Wish_And_Card img {
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
+}
+
+.notification {
+    position: absolute;
+    top: 0;
+    right: -5px;
+    background: red;
+    border-radius: 50%;
+    color: white;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+
+
+
+
+
+
+
+
+
 
 .card-container {
 position: relative;

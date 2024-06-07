@@ -38,7 +38,7 @@ class ProdutsAdditions(admin.TabularInline):
 
 
 class CardOrderedItemsAdmin(admin.ModelAdmin):
-    list_display = ["get_user_name", "uoc_prod", "user_meal_type","Product_Quantity_IF_Default", "MealType", "MealSideDishes", "MealAdditions"]
+    list_display = ["get_user_name", "uoc_prod", "user_meal_type","quantity", "MealType", "MealSideDishes", "MealAdditions","total_price_for_meal","total_price_for_MealSideDishes","total_price_for_MealAdditions","total_price_for_all"]
 
     def get_user_name(self, obj):
         return obj.user.username
