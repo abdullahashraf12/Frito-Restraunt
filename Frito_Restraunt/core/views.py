@@ -25,14 +25,28 @@ def index(request):
 
 
 def add_to_cart(request):
-    if request.method == 'POST':
-        prod_ven = request.POST.get("prod_ven")
-        if prod_ven == "Default":
-            return JsonResponse({'message': 'Product added to cart'})
+    try:
+        if request.method == 'POST' and str(request.user) != "AnonymousUser":
+            prod_ven = request.POST.get("prod_ven")
+            if prod_ven == "Default":
+                product_quantity = request.POST.get("prod_quantity_n")
+                prod_pid=request.POST.get("product_pid_to_card")
+                Prod= Products.objects.get(pid=prod_pid)
+                model=CardOrderItems(user=request.user,uoc_prod=Prod,user_meal_type="Default",Product_Quantity_IF_Default=str(product_quantity),MealType="None",MealSideDishes="None",MealAdditions="None")
+                model.save()
+                print("Data Saved")
+                return JsonResponse({'message': 'Product added to cart'})
+            elif(prod_ven=="Special Order"):
+                pass
+            else:
+                return JsonResponse({'error': 'Invalid value for prod_ven'}, status=400)
+    except Exception as er:
+        print(request.user)
+        if(str(request.user) == "AnonymousUser"):
+            return JsonResponse({'error': 'User Empty'}, status=400)
         else:
-            return JsonResponse({'error': 'Invalid value for prod_ven'}, status=400)
-    else:
-        return JsonResponse({'error': 'Invalid request method'}, status=400)
+            print(er)
+            return JsonResponse({'error': 'Invalid Request'}, status=400)
 
 
 

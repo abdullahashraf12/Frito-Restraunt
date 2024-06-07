@@ -606,8 +606,9 @@ body, html {
     <a href="#">Services</a>
     <a href="#">Contact</a> -->
 
+    <form method="POST" id="add-to-cart-form-Special-Order" action="{% url 'core:add_to_cart' %}">
 
-
+        {% csrf_token %}
 
 
 
@@ -919,9 +920,10 @@ body, html {
 
 
 
+<input type="hidden" name="prod_ven" value="Special Order">
 
 
-<button id="Apply_Special_Order" style="color: white; background-color: red; width: 100%; height: 10%; font-size: xx-large; font-weight: bolder; ">Apply Special Order</button>
+<button type="submit"  id="Apply_Special_Order" style="color: white; background-color: red; width: 100%; height: 10%; font-size: xx-large; font-weight: bolder; ">Apply Special Order</button>
 
 
 
@@ -942,6 +944,7 @@ body, html {
 
 
 
+</form>
 
 
 
