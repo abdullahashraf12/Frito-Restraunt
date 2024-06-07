@@ -45,18 +45,18 @@ class ProdutsAdditions(admin.TabularInline):
 
 
 class ProductMealTypeNamesAdmin(admin.ModelAdmin):
-    list_display= ["product_Meal_TYPE", "get_image"]
+    list_display= ["product_Meal_TYPE"]
     # def get_price(self, obj):
     #     return obj.price
 
     # get_price.short_description = 'Price'
 
-    def get_image(self, obj):
-        if obj.images:
-            return format_html('<img src="{}" style="height: 50px;"/>', obj.images.url)
-        return "No Image"
+    # def get_image(self, obj):
+    #     if obj.images:
+    #         return format_html('<img src="{}" style="height: 50px;"/>', obj.images.url)
+    #     return "No Image"
 
-    get_image.short_description = 'Image'
+    # get_image.short_description = 'Image'
 
 class ProductSideDishNamesAdmin(admin.ModelAdmin):
     list_display = ["product_SIDE_DISH", "get_price", "get_image"]
