@@ -44,28 +44,97 @@
         });
         $('#add-to-cart-form-Special-Order').on('submit', function(event) {
             event.preventDefault(); // Prevent the default form submission
+            let checkedValues_items_for_MealType = [];
+            let checkedValues_items_for_Side_Dishes = [];
 
-            // Serialize the form data
-            var formData = $(this).serialize();
+            let checkedValues_items_for_Products_Additions = [];
 
-            // Send an AJAX request
-            $.ajax({
-                type: 'POST',
-                url: $(this).attr('action'), // Get the form action URL dynamically
-                data: formData,
-                headers: {
-                    'X-CSRFToken': csrftoken
-                },
-                success: function(response) {
-                    // Print the JSON response to the browser console
-                    console.log(response);
-                },
-                error: function(xhr, status, error) {
-                    // Print the error to the browser console
-                    console.log('Error adding product to cart:', xhr.responseText);
+            $('input[type="checkbox"][data-custom^="checkbox_in_product_Meal_TYPE_"]').each(function() {
+                if ($(this).is(':checked')) {
+                    let quantityInput = $(this).closest('div').next('div').find('input[data-custom-productmealtype-quantity]');
+                    let quantity = quantityInput.val();
+                    // Add the data-custom attribute value to the array
+                    checkedValues_items_for_MealType.push({
+                        custom: $(this).attr('data-custom'),
+                        product_meal_type: $(this).attr('data-custom-product_Meal_TYPE-name'),
+                        price:$(this).attr('data-custom-addtition-price'),
+                        quantity:quantity
+                    });
                 }
+             });
+            
+
+
+
+
+             $('input[type="checkbox"][data-custom^="checkbox_in_product_SIDE_DISH_"]').each(function() {
+                if ($(this).is(':checked')) {
+                    let quantityInput = $(this).closest('div').next('div').find('input[data-custom-ProductSideDish-quantity]');
+                    let quantity = quantityInput.val();
+                    // Add the data-custom attribute value to the array
+                    checkedValues_items_for_Side_Dishes.push({
+                        custom: $(this).attr('data-custom'),
+                        product_side_dish: $(this).attr('data-custom-product_SIDE_DISH-name'),
+                        price:$(this).attr('data-custom-addtition-price'),
+                        quantity:quantity
+                    });
+                }
+             });
+
+
+
+
+
+
+
+             $('input[type="checkbox"][data-custom^="checkbox_in_ProdutsAdditions_"]').each(function() {
+                if ($(this).is(':checked')) {
+                    let quantityInput = $(this).closest('div').next('div').find('input[data-custom-addtition-quantity]');
+                    let quantity = quantityInput.val();
+                    // Add the data-custom attribute value to the array
+                    checkedValues_items_for_Products_Additions.push({
+                        custom: $(this).attr('data-custom'),
+                        additionName: $(this).attr('data-custom-addtition-name'),
+                        price:$(this).attr('data-custom-addtition-price'),
+                        quantity:quantity
+                    });
+                }
+             });
+
+
+
+
+
+
+
+
+
+             console.log(checkedValues_items_for_MealType);
+             console.log(checkedValues_items_for_Side_Dishes);
+             console.log(checkedValues_items_for_Products_Additions);
+
             });
         });
+        // Serialize the form data
+            // var formData = $(this).serialize();
+
+            // // Send an AJAX request
+            // $.ajax({
+            //     type: 'POST',
+            //     url: $(this).attr('action'), // Get the form action URL dynamically
+            //     data: formData,
+            //     headers: {
+            //         'X-CSRFToken': csrftoken
+            //     },
+            //     success: function(response) {
+            //         // Print the JSON response to the browser console
+            //         console.log(response);
+            //     },
+            //     error: function(xhr, status, error) {
+            //         // Print the error to the browser console
+            //         console.log('Error adding product to cart:', xhr.responseText);
+            //     }
+            // });
 
 
 
@@ -86,7 +155,3 @@
 
 
 
-
-
-
-    });

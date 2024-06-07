@@ -22,6 +22,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/slick-theme.css' %}" >
     <!-- <link rel="stylesheet" type="text/css" href="{% static 'assets/css/font-awesome.css' %}" > -->
     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/base.css' %}" >
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/quantity.css' %}" >
 
 <!-- <style>
 .container {
@@ -669,28 +670,32 @@ body, html {
                     <span style="display: flex; align-items: center;">
                         <img src="{{ i.images.url }}" width="150px" height="150px" alt="" style="margin-right: 10px;">
                     </span>
-                    <span>
 
                         <div style="float: left;">
                         <label class="container_check"> <p style="margin-left: 10px; font-weight: bold; margin-right: 10px; color: black;">{{ i.product_Meal_TYPE }}</p>
                        
                             {% if i.default %}
-                            <input type="checkbox" name="checkbox1" checked="checked"  style=" margin-left: 10px; margin-right: 10px;">
+                            <input type="checkbox" name="checkbox1" checked="checked"  style=" margin-left: 10px; margin-right: 10px;" data-custom="checkbox_in_product_Meal_TYPE_{{ forloop.counter }}" data-custom-product_Meal_TYPE-name="{{ i.product_Meal_TYPE }}" data-custom-addtition-price="{{ i.price }}">
                             <span class="checkmark_check"  style=" margin-left: 10px; margin-right: 10px;"></span>
                         {% else %}
-                            <input type="checkbox" name="checkbox1"  style=" margin-left: 10px; margin-right: 10px;">
+                            <input type="checkbox" name="checkbox1"  style=" margin-left: 10px; margin-right: 10px;" data-custom="checkbox_in_product_Meal_TYPE_{{ forloop.counter }}" data-custom-product_Meal_TYPE-name="{{ i.product_Meal_TYPE }}" data-custom-addtition-price="{{ i.price }}">
                             <span class="checkmark_check"  style="  margin-left: 10px; margin-right: 10px;"></span>
                         {% endif %}
                         </label>
                     </div>
                   
-                    </span>
                     <div style="display: flex; flex-direction: column; align-items: center;">
-                        <div class="detail-qty border radius" style="width: 80px; height: 60px; margin-bottom: auto;">
-                            <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                            <input name="prod_quantity_n" class="qty-val" value="1">
-                            <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                        <h6 class="text-center">Unit(s)</h6>
+                        <div class="input-group input-number-group">
+                          <div class="input-group-button">
+                            <span class="input-number-decrement">-</span>
+                          </div>
+                          <input class="input-number" type="number" value="1" min="0" max="1000" data-custom-productmealtype-quantity="">
+                          <div class="input-group-button">
+                            <span class="input-number-increment">+</span>
+                          </div>
                         </div>
+                        
                         <div style="margin-top: 10px; text-align: center;">
                             <h6 style="font-weight: bold; white-space: nowrap; min-width: 150px;">Price<b style="color: red;">{{ i.price }} L.E</b></h6>
                         </div>
@@ -744,9 +749,9 @@ body, html {
 
                     <div style="display: flex; flex-direction: column; align-items: center;">
                         <div class="detail-qty border radius" style="width: 80px; height: 60px; margin-bottom: auto;">
-                            <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                            <input name="prod_quantity_n" class="qty-val" value="1">
-                            <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                            <a href="#" ><i class="fi-rs-angle-small-down"></i></a>
+                            <input   value="1">
+                            <a href="#" ><i class="fi-rs-angle-small-up"></i></a>
                         </div>
                         <div style="margin-top: 10px; text-align: center;">
                             <h6 style="font-weight: bold; white-space: nowrap; min-width: 150px;">Price<b style="color: red;">{{ i.price }} L.E</b></h6>
@@ -794,18 +799,23 @@ body, html {
 
                                 <p></p>
                                 {% if i.default %}
-                                    <input type="checkbox" name="checkbox1" checked="checked">
+                                    <input type="checkbox" name="checkbox1" checked="checked" data-custom="checkbox_in_product_SIDE_DISH_{{ forloop.counter }}" data-custom-product_SIDE_DISH-name="{{ i.product_SIDE_DISH }}" data-custom-addtition-price="{{ i.price }}">
                                 {% else %}
-                                    <input type="checkbox" name="checkbox1">
+                                    <input type="checkbox" name="checkbox1" data-custom="checkbox_in_product_SIDE_DISH_{{ forloop.counter }}" data-custom-product_SIDE_DISH-name="{{ i.product_SIDE_DISH }}" data-custom-addtition-price="{{ i.price }}">
                                 {% endif %}
                                 <span class="checkmark_check"></span>
                             </label>
                         </div>
                         <div style="display: flex; flex-direction: column; align-items: center;">
-                            <div class="detail-qty border radius" style="width: 80px; height: 60px; margin-bottom: auto;">
-                                <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                <input name="prod_quantity_n" class="qty-val" value="1">
-                                <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                            <h6 class="text-center">Unit(s)</h6>
+                            <div class="input-group input-number-group">
+                              <div class="input-group-button">
+                                <span class="input-number-decrement">-</span>
+                              </div>
+                              <input class="input-number" type="number" value="1" min="0" max="1000" data-custom-ProductSideDish-quantity="">
+                              <div class="input-group-button">
+                                <span class="input-number-increment">+</span>
+                              </div>
                             </div>
                             <div style="margin-top: 10px; text-align: center;">
                                 <h6 style="font-weight: bold; white-space: nowrap; min-width: 150px;">Price<b style="color: red;">{{ i.price }} L.E</b></h6>
@@ -860,6 +870,7 @@ body, html {
     {% if forloop.counter0|divisibleby:2 %}
         <div style="display: flex;">
     {% endif %}
+    <!-- <p name="n_{{ forloop.counter }}"></p> -->
     <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none; max-width: 550px; margin-right: 35px;">
         <div class="sidebar-widget widget-category-2 mb-30">
             <ul>
@@ -874,10 +885,10 @@ body, html {
                             <label class="container_check"> <p style="margin-left: 10px; font-weight: bold; margin-right: 10px; color: black;">{{ i.product_additions }}</p>
 
                             {% if i.default %}
-                            <input type="checkbox" name="checkbox1" checked="checked">
+                            <input type="checkbox" name="checkbox1" checked="checked" data-custom="checkbox_in_ProdutsAdditions_{{ forloop.counter }}" data-custom-addtition-name="{{ i.product_additions }}" data-custom-addtition-price="{{ i.price }}" >
                             <span class="checkmark_check"></span>
                         {% else %}
-                            <input type="checkbox" name="checkbox1">
+                            <input type="checkbox" name="checkbox1" data-custom="checkbox_in_ProdutsAdditions_{{ forloop.counter }}" data-custom-addtition-name="{{ i.product_additions }}" data-custom-addtition-price="{{ i.price }}">
                             <span class="checkmark_check"></span>
                         {% endif %}
 
@@ -886,10 +897,15 @@ body, html {
                   
                     </span>
                     <div style="display: flex; flex-direction: column; align-items: center;">
-                        <div class="detail-qty border radius" style="width: 80px; height: 60px; margin-bottom: auto;">
-                            <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                            <input name="prod_quantity_n" class="qty-val" value="1">
-                            <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                        <h6 class="text-center">Unit(s)</h6>
+                        <div class="input-group input-number-group">
+                          <div class="input-group-button">
+                            <span class="input-number-decrement">-</span>
+                          </div>
+                          <input class="input-number" type="number" value="1" min="0" max="1000" data-custom-addtition-quantity="">
+                          <div class="input-group-button">
+                            <span class="input-number-increment">+</span>
+                          </div>
                         </div>
                         <div style="margin-top: 10px; text-align: center;">
                             <h6 style="font-weight: bold; white-space: nowrap; min-width: 150px;">Price<b style="color: red;">{{ i.price }} L.E</b></h6>
@@ -1039,26 +1055,28 @@ body, html {
     <!-- <script src="{% static 'assets/js/add_client_review.js' %}"></script> -->
     <!-- <script src="{% static 'assets/js/get_review.js' %}"></script> -->
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Define the toggleNav function
-    function toggleNav() {
-        var navMenu = document.getElementById('navMenu');
-        var body = document.querySelector('body');
-        if (navMenu.style.right === '0px') {
-            navMenu.style.right = '-1000px';
-            body.style.marginRight = '0';
-        } else {
-            navMenu.style.right = '0px';
-            body.style.marginRight = '1000px';
-        }
+// Define the toggleNav function in the global scope
+function toggleNav() {
+    var navMenu = $('#navMenu');
+    var body = $('body');
+    if (navMenu.css('right') === '0px') {
+        navMenu.css('right', '-1000px');
+        body.css('margin-right', '0');
+    } else {
+        navMenu.css('right', '0px');
+        body.css('margin-right', '1000px');
     }
+}
 
+// Run the script when the document is fully loaded
+$(document).ready(function() {
     // Add an event listener to the hamburger button
-    var hamburgerBtn = document.querySelector('.hamburger-btn');
-    if (hamburgerBtn) {
-        hamburgerBtn.addEventListener('click', toggleNav);
+    var hamburgerBtn = $('.hamburger-btn');
+    if (hamburgerBtn.length > 0) {
+        hamburgerBtn.on('click', toggleNav);
     }
 });
+
 
 
     </script>
