@@ -66,7 +66,7 @@ def add_to_cart(request):
                     existing_object.save()
                     # print("hrereee")
                 else:
-                    model=CardOrderItems(user=request.user,uoc_prod=Prod,user_meal_type="Default",quantity=0,MealType="None",MealSideDishes="None",MealAdditions="None",total_price_for_meal=0.00,total_price_for_MealSideDishes=0.00,total_price_for_MealAdditions=0.00,total_price_for_all=float(Prod.price)*float(product_quantity))
+                    model=CardOrderItems(user=request.user,uoc_prod=Prod,user_meal_type="Default",quantity=product_quantity,MealType="None",MealSideDishes="None",MealAdditions="None",total_price_for_meal=0.00,total_price_for_MealSideDishes=0.00,total_price_for_MealAdditions=0.00,total_price_for_all=float(Prod.price)*float(product_quantity))
                     model.save()
                     # print("hrereee 22")
 
