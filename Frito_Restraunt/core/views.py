@@ -33,6 +33,10 @@ def add_to_cart(request):
     try:
         if request.method == 'POST' and str(request.user) != "AnonymousUser":
             prod_ven = request.POST.get("prod_ven")
+            # print(request.user.is_staff)
+
+            # request.user.is_superuser
+            # request.user.groups.filter(name='admin').exists()
             if prod_ven == "Default":
 
                 product_quantity = request.POST.get("prod_quantity_n")
