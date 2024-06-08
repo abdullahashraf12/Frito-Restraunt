@@ -64,75 +64,34 @@
                         {% for i in products %}
                         <div class="col-lg-1-5 col-md-4 col-12 col-sm-6">
                             <div class="product-cart-wrap mb-30">
-                                <div class="product-img-action-wrap">
-                                    <div class="product-img product-img-zoom">
-                                        <a href="{% url 'core:get_products' i.pid %}">
-                                            <img class="default-img" src="{{ i.image.url }}" alt="" />
-                                            <img class="hover-img" src="{{ i.back_image.url }}" alt="" />
-                                        </a>
-                                    </div>
-                                    <div class="product-action-1">
-                                    
-                                        <div style="display: flex;">
-                                            <!-- <a aria-label="Quick view" class="action-btn open_iframe" data-src="{% url 'core:get_products' i.pid %}">
-                                                <i class="fi-rs-eye"></i>
-                                            </a> -->
-<!--                                         
-                                            <form method="POST">
-                                                {% csrf_token %}
-                                                <input name="product_pid_to_card" value="{{ i.pid }}" hidden/>
-                                                <a type="submit" aria-label="Add To Wishlist" class="action-btn" name="add_to_wishcard">
-                                                    <i class="fi-rs-heart"></i>
-                                                </a>
-                                            </form> -->
-                                            
+                                <div class="product-cart-wrap" style=" display: flex; flex-direction: column; justify-content: space-between;">
+                                    <!-- width: 600px !important; height: 600px !important; -->
+                                    <div class="">
+                                        <div >
+                                            <a href="{% url 'core:get_products' i.pid %}">
+                                                <img class="default-img" src="{{ i.image.url }}" style="max-width: 100%; max-height: 100%; width: auto; height: max-content; object-fit: contain;" alt="" />
+                                                <!-- <img class="hover-img" src="{{ i.image.url }}" height="50%" alt="" /> -->
+                                            </a>
                                         </div>
-                                        
-                                    
-                                    </div>
-                                    <div class="product-badges product-badges-position product-badges-mrg">
-                                        <span class="hot">-{{i.precentage|floatformat}}%</span>
-                                    </div>
-                                </div>
-                                <div class="product-content-wrap">
-                                    <div class="product-category">
-                                        <a href="shop-grid-right.html">Snack</a>
-                                    </div>
-                                    <h2><a href="{% url 'core:get_products' i.pid %}">{{ i.title }}</a></h2>
-                                    <div class="product-rate-cover">
-                                        <div class="product-rate d-inline-block">
-                                            <div class="product-rating" style="width: 90%"></div>
+                                        <div class="product-badges product-badges-position product-badges-mrg">
+                                          <span class="hot">-{{i.precentage|floatformat}}%</span>
                                         </div>
-                                        <span class="font-small ml-5 text-muted"> (4.0)</span>
                                     </div>
-                                    <div>
-                                        <span class="font-small text-muted">By <a href="vendor-details-1.html">{{i.vendor.title}}</a></span>
-                                    </div>
-                                    <div class="product-card-bottom">
-                                        <div class="product-price">
+                                    <div class="product-content-wrap" style="flex-grow: 0; margin-top: 50px;">
+                                        <h2><a href="{% url 'core:get_products' i.pid %}">{{ i.title }}</a></h2>
+                                        <div class="product-price mt-10">
                                             <span>{{i.price}} L.E</span>
                                             <span class="old-price">{{i.old_Price}} L.E</span>
                                         </div>
-                                        <div class="add-cart">
-                                    
-                                            <div class="product-card-bottom">
-                                                      
-                                                <div class="add-cart">
-                                                    <form method="POST">
-                                                        {% csrf_token %}
-                                                        <input name="prod_quantity_n" value="1" hidden="hidden"/>
-                                                        <input name="product_pid_to_card" value="{{ i.pid }}" hidden/>
-                                                        <button type="submit" name="prod_ven" class="prod_ven add" style="color: #dc3545;"><i class="fi-rs-shopping-cart mr-5" style="color: blueviolet;"></i>Add</button>
-                                                    </form>
-                                                    
-                                                </div>
-                                            </div>
-                                            <!-- <a class="add" href="shop-cart.html"><i class="fi-rs-shopping-cart mr-5"></i>Add </a> -->
+                                        <div class="add-cart" style="text-align: center;">
+                                            <h2><a href="{% url 'core:get_products' i.pid %}" style="text-decoration: none; color: darkblue;">View Product</a></h2>
                                         </div>
                                     </div>
                                 </div>
+                             
                             </div>
                         </div>
+                        
                         {% endfor %}
                         <!--end product card-->
                         <!-- <div class="col-lg-1-5 col-md-4 col-12 col-sm-6">
