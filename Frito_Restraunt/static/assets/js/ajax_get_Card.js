@@ -1,3 +1,20 @@
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
 function myFunction() {
     $.ajax({
         url: "/add_to_card/",
@@ -15,6 +32,8 @@ function myFunction() {
                 $("ul[name=Shopping_card]").empty();
                 $("span[name=number_of_products_in_card]").html(userOrderCards.length);
                 var price =0;
+                const csrftoken = getCookie('csrftoken');
+
                 for (var i = 0; i < userOrderCards.length; i++) {
                     var userOrderCard = userOrderCards[i];
                     console.log(userOrderCard);

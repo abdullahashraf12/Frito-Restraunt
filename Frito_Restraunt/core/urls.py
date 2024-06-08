@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import include,path
-from core.views import index,product_list,category_list,category_product_list_view,get_product_by_id,get_products_name,AddToCardView,show_card,RemoveFromCardView,wishlist,AddToWishCardView,RemoveFromWishCardView,AddReview,message_socket,offers_product_list_view,add_to_cart
+from core.views import index,product_list,category_list,category_product_list_view,get_product_by_id,get_products_name,AddToCardView,show_card,RemoveFromCardView,wishlist,AddToWishCardView,RemoveFromWishCardView,AddReview,message_socket,offers_product_list_view,add_to_cart,remove_from_Card
 app_name = "core"
 urlpatterns = [
 path("",include("home.urls", namespace='home')),
@@ -11,7 +11,9 @@ path('remove_from_wish/', RemoveFromWishCardView.as_view(), name='remove_from_wi
 
 path("wishlist/",wishlist,name="wishlist"),
 
-path('remove_from_card/', RemoveFromCardView.as_view(), name='remove_from_card'),
+# path('remove_from_card/', RemoveFromCardView.as_view(), name='remove_from_card'),
+path('removefromcard/', remove_from_Card, name='remove_from_card'),
+
 # path('add_to_card/', AddToCardView.as_view(), name='add_to_card'),
 path('add-to-cart/', add_to_cart, name='add_to_cart'),
 path("show_card/",show_card,name="show_card"),

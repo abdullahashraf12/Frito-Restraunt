@@ -247,11 +247,27 @@ def add_to_cart(request):
 
 
 
+def remove_from_Card(request):
+    if request.user:
+        user=request.user
+        product_id_remove_from_button=request.POST.get("product_id_remove_from_button")
+        product_type_def_special=request.POST.get("product_type_def_special")
+        get_from_Card_by_user_and_product_id = None
+        print(product_id_remove_from_button)
+        print(product_type_def_special)
+        try:
+            get_from_Card_by_user_and_product_id = CardOrderItems.objects.get(user=user, uoc_prod=product_id_remove_from_button,user_meal_type=product_type_def_special)
+        except CardOrderItems.DoesNotExist:
+            pass
 
+        if get_from_Card_by_user_and_product_id:
+            get_from_Card_by_user_and_product_id.delete()
+            return JsonResponse({"sucess":"Product Removes"})
 
-
-
-
+        else:
+            return JsonResponse({"error":"Product Not Exists"})
+    else:
+        return JsonResponse({"error":"user Not Logged In"})
 
 
 
