@@ -355,6 +355,9 @@ def get_product_by_id(request,pid):
     ProductMealType = product.ProductMealTYPE.all()
     ProductSideDish = product.ProductSideDish.all()
     ProdutsAdditions = product.ProdutsAdditions.all()
+    offer_image=product.offers.offer_image.url
+    offer_name=product.offers.product_offers.product_offers
+    # offer.product_offers.product_offers
     print(ProductMealType)
     print(ProductSideDish)
     print(ProdutsAdditions)
@@ -367,7 +370,9 @@ def get_product_by_id(request,pid):
         "ProductMealType":ProductMealType,
         "ProductSideDish":ProductSideDish,
         "ProdutsAdditions":ProdutsAdditions,
-        'is_product_page': True
+        'is_product_page': True,
+        "offer_image":offer_image,
+        "offer_name":offer_name
     }
     return render(request,template_name="shop-product-vendor.html",context=context)
 
