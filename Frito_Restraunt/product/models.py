@@ -2,6 +2,9 @@ from django.db import models
 from shortuuid.django_fields import ShortUUIDField
 from django.utils.safestring import mark_safe
 from userauths.models import User
+from django.core.exceptions import ValidationError
+from django.utils.html import format_html
+
 # Create your models here.
 
 STATUS_CHOICE = (
@@ -341,10 +344,15 @@ class ProductsOffers(models.Model):
     def images(self):
         return self.product_additions.images if self.product_additions else None
 
-
-
-
-
+    def save(self, *args, **kwargs):
+        if self.default:
+            existing_default = ProductsOffers.objects.filter(product=self.product, default=True)
+            if self.pk:
+                existing_default = existing_default.exclude(pk=self.pk)
+            if existing_default.exists():
+                message = "<span style='color: red; font-weight: bold;'>Only one default offer is allowed per product.</span>"
+                raise ValidationError(format_html(message))
+        super().save(*args, **kwargs)
 
 
 
