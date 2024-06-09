@@ -51,6 +51,7 @@ function get_from_Card(){
                                 <form style="position: absolute; top: 2px; right: 2px;" method="POST" class="remove-from-card-form">
                                     <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
                                     <input type="hidden" name="product_type_def_special" value="${element.user_meal_type}">
+                                    <input type="hidden" name="offer_type" value="${element.product_offers_id}">
 
                                     <input type="hidden" name="product_id_remove_from_button" value="${element.uoc_prod_id}">
                                     <button type="submit" class="remove-from-card-button" style="padding: 10px; background-color: red; color: white; border: 1px solid transparent; font-weight: bold; font-size: 15px;">X</button>
@@ -78,6 +79,7 @@ function get_from_Card(){
                                 <form style="position: absolute; top: 2px; right: 2px;" method="POST" class="remove-from-card-form">
                                     <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
                                     <input type="hidden" name="product_type_def_special" value="${element.user_meal_type}">
+                                    <input type="hidden" name="offer_type" value="${element.product_offers_id}">
 
                                     <input type="hidden" name="product_id_remove_from_button" value="${element.uoc_prod_id}">
                                     <button type="submit" class="remove-from-card-button" style="padding: 10px; background-color: red; color: white; border: 1px solid transparent; font-weight: bold; font-size: 15px;">X</button>
@@ -143,6 +145,7 @@ $(document).ready(function() {
             data: {
                 product_id_remove_from_button:$('input[name="product_id_remove_from_button"').val(),
                 product_type_def_special:$('input[name="product_type_def_special"').val(),
+                offer_type:$('input[name="offer_type"').val(),
                 
             }, // Serialize form data
             headers: {

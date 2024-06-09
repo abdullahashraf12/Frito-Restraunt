@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render ,redirect
 from rest_framework.response import Response
-from product.models import Products,Category,CardOrder,CardOrderItems,ProductImages,ProductReview,WishList,Address,Tags,UserOrderCard,WishList,ProductReview,ProductMealType,ProductSideDish,ProdutsAdditions,Offers , ProductsOffers
+from product.models import Products,Category,CardOrder,CardOrderItems,ProductImages,ProductReview,WishList,Address,Tags,UserOrderCard,WishList,ProductReview,ProductMealType,ProductSideDish,ProdutsAdditions,Offers , ProductsOffers,OffersNames
 from rest_framework.views import APIView
 from rest_framework import status
 from django.db.models import Q
@@ -40,9 +40,55 @@ def add_to_cart(request):
             if prod_ven == "Default":
 
                 product_quantity = request.POST.get("prod_quantity_n")
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
+                print(product_quantity)
                 prod_pid=request.POST.get("product_pid_to_card")
                 Prod= Products.objects.get(pid=prod_pid)
-                data_exists = CardOrderItems.objects.filter(user=request.user, uoc_prod=Prod, user_meal_type="Default").exists()
+                # Filter ProductsOffers directly
+                default_products_offers = ProductsOffers.objects.filter(default=True, product=Prod)
+
+                # Get the IDs of these ProductsOffers
+                default_products_offers_ids = default_products_offers.values_list('id', flat=True)
+
+                # Now filter CardOrderItems based on these ProductsOffers IDs
+                data_exists = CardOrderItems.objects.filter(
+                    user=request.user, 
+                    uoc_prod=Prod, 
+                    user_meal_type="Default",
+                    product_offers=ProductsOffers.objects.get(product=Prod,default=True).product_offers
+                )
+
+
+
                 # data_exists=False
 
                 # print(data_exists)
@@ -58,25 +104,43 @@ def add_to_cart(request):
                 # print(data_exists)
                 # print(data_exists)
                 # print(data_exists)
-                if data_exists:
+                # print(len(list(data_exists.values())))
+                print("i am here 66")
 
-
-                    existing_object = CardOrderItems.objects.get(user=request.user, uoc_prod=Prod, user_meal_type="Default")
+                if len(list(data_exists.values()))==1:
+                    print("i am here 55")
+                    existing_object = CardOrderItems.objects.get(user=request.user, 
+                    uoc_prod=Prod, 
+                    user_meal_type="Default",
+                    product_offers=ProductsOffers.objects.get(product=Prod,default=True).product_offers)
                     existing_object.quantity = product_quantity   # Increment the quantity by 1
+                    print("i am here 100")
+
                     existing_object.total_price_for_meal = 0.00  # Assign total price for meal
+                    print("i am here 200")
+
                     existing_object.total_price_for_MealSideDishes = 0.00  # Assign total price for side dishes
+                    print("i am here 300")
                     existing_object.total_price_for_MealAdditions = 0.00  # Assign total price for additions
+                    print("i am here 400")
+
                     existing_object.total_price_for_all = float(Prod.price) * float(product_quantity)   # Assign total price for all
-                    existing_object.product_offers=ProductsOffers.objects.get(product=Prod,default=True).product_offers.product_offers
+                    print("i am here 500")
+
+                    # existing_object.product_offers=ProductsOffers.objects.get(product=Prod,default=True)
                     existing_object.save()
+                    print("i am here 77")
+
                     # print("hrereee")
-                else:
+                elif(len(list(data_exists.values()))==0):
                     print(ProductsOffers.objects.get(product=Prod,default=True).product_offers.oid)
                     print(ProductsOffers.objects.get(product=Prod,default=True).product_offers.oid)
                     print(ProductsOffers.objects.get(product=Prod,default=True).product_offers.oid)
                     print(ProductsOffers.objects.get(product=Prod,default=True).product_offers.oid)
                     model=CardOrderItems(user=request.user,uoc_prod=Prod,user_meal_type="Default",quantity=product_quantity,MealType="None",MealSideDishes="None",MealAdditions="None",total_price_for_meal=0.00,total_price_for_MealSideDishes=0.00,total_price_for_MealAdditions=0.00,total_price_for_all=float(Prod.price)*float(product_quantity),product_offers=ProductsOffers.objects.get(product=Prod,default=True).product_offers)
                     model.save()
+                    print("i am here 88")
+
                     # print("hrereee 22")
 
                 # print("Data Saved")
@@ -96,7 +160,9 @@ def add_to_cart(request):
                 print(offer_oid)
                 print(offer_oid)
                 Prod= Products.objects.get(pid=pid)
-                data_exists = CardOrderItems.objects.filter(user=request.user, uoc_prod=Prod, user_meal_type="Special Order",product_offers__oid=offer_oid).exists()
+                print("222222222222222222222")
+                data_exists = CardOrderItems.objects.filter(user=request.user, uoc_prod=Prod, user_meal_type="Special Order").exists()
+                print("444444444444444444444444")
 
                 mealType = request.POST.get("mealType")
                 sideDishtype = request.POST.get("sideDishtype")
@@ -187,18 +253,26 @@ def add_to_cart(request):
 
                         model.save()
                 else:
-                        existing_object = CardOrderItems.objects.get(user=request.user, uoc_prod=Prod, user_meal_type="Special Order",product_offers__oid=offer_oid)
-                        existing_object.quantity = 0  
-                        existing_object.total_price_for_meal =total_price_for_meal  
-                        existing_object.total_price_for_MealSideDishes =total_price_for_MealSideDishes  # Assign total price for side dishes
-                        existing_object.total_price_for_MealAdditions = total_price_for_MealAdditions  # Assign total price for additions
-                        existing_object.MealType=mealType
-                        existing_object.MealSideDishes=sideDishtype
-                        existing_object.MealAdditions=prductAdditionstype
-                        existing_object.total_price_for_all = total_for_total  # Assign total price for all
-                        existing_object.product_offers = Offers.objects.get(oid=offer_oid)  # Assign total price for all
+                        print("90909909")
+                        try:
+                            existing_object=CardOrderItems.objects.get(user=request.user, uoc_prod=Prod, user_meal_type="Special Order",product_offers= Offers.objects.get(oid=offer_oid))
+                            print("58585885855")
 
-                        existing_object.save()
+                            existing_object.quantity = 0  
+                            existing_object.total_price_for_meal =total_price_for_meal  
+                            existing_object.total_price_for_MealSideDishes =total_price_for_MealSideDishes  # Assign total price for side dishes
+                            existing_object.total_price_for_MealAdditions = total_price_for_MealAdditions  # Assign total price for additions
+                            existing_object.MealType=mealType
+                            existing_object.MealSideDishes=sideDishtype
+                            existing_object.MealAdditions=prductAdditionstype
+                            existing_object.total_price_for_all = total_for_total  # Assign total price for all
+                            existing_object.product_offers = Offers.objects.get(oid=offer_oid)  # Assign total price for all
+
+                            existing_object.save()
+                        except Exception as e:
+                            model=CardOrderItems(user=request.user,uoc_prod=Prod,user_meal_type="Special Order",quantity=0,MealType=mealType,MealSideDishes=sideDishtype,MealAdditions=prductAdditionstype,total_price_for_meal=total_price_for_meal,total_price_for_MealSideDishes=total_price_for_MealSideDishes,total_price_for_MealAdditions=total_price_for_MealAdditions,total_price_for_all=total_for_total,product_offers= Offers.objects.get(oid=offer_oid))
+
+                            model.save()
                         # MealType=mealtype_data,MealSideDishes=product_side_dish,MealAdditions=additionName,total_price_for_meal=total_price_for_meal,total_price_for_MealSideDishes=total_price_for_MealSideDishes,total_price_for_MealAdditions=total_price_for_MealAdditions,total_price_for_all=total_price)
                         
                 return JsonResponse({'Success': 'Ajax Has Been Sent'}, status=200)
@@ -211,8 +285,12 @@ def add_to_cart(request):
         elif request.method == 'GET' and request.user != "AnonymousUser":
             user = request.user
             all_in_cards_for_this_user = list(CardOrderItems.objects.filter(user=user).values())
-            # print(all_in_cards_for_this_user)
-            # print(all_in_cards_for_this_user)
+
+            print("++++++++++++++++++++++++++++++")
+            print(all_in_cards_for_this_user)
+            print(all_in_cards_for_this_user)
+            print("++++++++++++++++++++++++++++++")
+
             # data = []
             n=0
             for item in all_in_cards_for_this_user:
@@ -281,11 +359,21 @@ def remove_from_Card(request):
         user=request.user
         product_id_remove_from_button=request.POST.get("product_id_remove_from_button")
         product_type_def_special=request.POST.get("product_type_def_special")
+        offer_type=request.POST.get("offer_type")
+        # add product_offer
+        print(offer_type)
+        print(offer_type)
+        print(offer_type)
+        print(offer_type)
+        print(offer_type)
+        print(offer_type)
+        print(offer_type)
+
         get_from_Card_by_user_and_product_id = None
         print(product_id_remove_from_button)
         print(product_type_def_special)
         try:
-            get_from_Card_by_user_and_product_id = CardOrderItems.objects.get(user=user, uoc_prod=product_id_remove_from_button,user_meal_type=product_type_def_special)
+            get_from_Card_by_user_and_product_id = CardOrderItems.objects.get(user=user, uoc_prod=product_id_remove_from_button,user_meal_type=product_type_def_special,product_offers= Offers.objects.get(product_offers= OffersNames.objects.get(product_offers_offers=offer_type))  )
         except CardOrderItems.DoesNotExist:
             pass
 
@@ -391,6 +479,7 @@ def offers_product_list_view(request,oid):
 def get_product_by_id(request, pid):
     # Get the product object
     product=Products.objects.get(pid=pid)
+
     p_images = product.p_images.all()
     related_products = Products.objects.filter(category=product.category).exclude(pid=pid)
     category = Category.objects.all()
@@ -398,11 +487,12 @@ def get_product_by_id(request, pid):
     ProductMealType = product.ProductMealTYPE.all()
     ProductSideDish = product.ProductSideDish.all()
     ProdutsAdditions = product.ProdutsAdditions.all()
-
+    product_offer_not_default=None
     # Fetch the related offer details
     try:
         product_offer = ProductsOffers.objects.get(product=product, default=True)
         product_offer_not_default = ProductsOffers.objects.filter(product=product)
+
         offer_image = product_offer.product_offers.offer_image.url
         offer_name = product_offer.product_offers.product_offers.product_offers 
     except ProductsOffers.DoesNotExist:
@@ -423,6 +513,7 @@ def get_product_by_id(request, pid):
         "offer_name": offer_name,
         "all_offers":product_offer_not_default
     }
+    print(related_products)
     return render(request, template_name="shop-product-vendor.html", context=context)
 
 def get_products_name(request):
