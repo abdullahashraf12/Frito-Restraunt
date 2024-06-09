@@ -214,6 +214,7 @@ try{
                     let src_value = meal_imga.attr('src');
                     let quantityInput = $(this).closest('div').next('div').find('input[data-custom-productmealtype-quantity]');
                     let quantity = quantityInput.val();
+                    // alert(quantity)
                     // Add the data-custom attribute value to the array
                     checkedValues_items_for_MealType.push({
                         

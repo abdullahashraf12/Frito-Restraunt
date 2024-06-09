@@ -104,7 +104,10 @@ def add_to_cart(request):
                 mealType = json.loads(mealType)
                 sideDishtype = json.loads(sideDishtype)
                 prductAdditionstype = json.loads(prductAdditionstype)
-                
+                print(mealType)
+                print(mealType)
+                print(mealType)
+                print(mealType)
                 # print(extract_values_by_key(mealType,"product_meal_type"))
                 # print(pid)
                 # print(mealType)
@@ -184,11 +187,14 @@ def add_to_cart(request):
 
                         model.save()
                 else:
-                        existing_object = CardOrderItems.objects.get(user=request.user, uoc_prod=Prod, user_meal_type="Special Order",)
+                        existing_object = CardOrderItems.objects.get(user=request.user, uoc_prod=Prod, user_meal_type="Special Order",product_offers__oid=offer_oid)
                         existing_object.quantity = 0  
                         existing_object.total_price_for_meal =total_price_for_meal  
                         existing_object.total_price_for_MealSideDishes =total_price_for_MealSideDishes  # Assign total price for side dishes
                         existing_object.total_price_for_MealAdditions = total_price_for_MealAdditions  # Assign total price for additions
+                        existing_object.MealType=mealType
+                        existing_object.MealSideDishes=sideDishtype
+                        existing_object.MealAdditions=prductAdditionstype
                         existing_object.total_price_for_all = total_for_total  # Assign total price for all
                         existing_object.product_offers = Offers.objects.get(oid=offer_oid)  # Assign total price for all
 
