@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render ,redirect
 from rest_framework.response import Response
-from product.models import Products,Category,CardOrder,CardOrderItems,ProductImages,ProductReview,WishList,Address,Tags,UserOrderCard,WishList,ProductReview,ProductMealType,ProductSideDish,ProdutsAdditions,Offers
+from product.models import Products,Category,CardOrder,CardOrderItems,ProductImages,ProductReview,WishList,Address,Tags,UserOrderCard,WishList,ProductReview,ProductMealType,ProductSideDish,ProdutsAdditions,Offers , ProductsOffers
 from rest_framework.views import APIView
 from rest_framework import status
 from django.db.models import Q
@@ -67,10 +67,15 @@ def add_to_cart(request):
                     existing_object.total_price_for_MealSideDishes = 0.00  # Assign total price for side dishes
                     existing_object.total_price_for_MealAdditions = 0.00  # Assign total price for additions
                     existing_object.total_price_for_all = float(Prod.price) * float(product_quantity)   # Assign total price for all
+                    existing_object.product_offers=ProductsOffers.objects.get(product=Prod,default=True).product_offers.product_offers
                     existing_object.save()
                     # print("hrereee")
                 else:
-                    model=CardOrderItems(user=request.user,uoc_prod=Prod,user_meal_type="Default",quantity=product_quantity,MealType="None",MealSideDishes="None",MealAdditions="None",total_price_for_meal=0.00,total_price_for_MealSideDishes=0.00,total_price_for_MealAdditions=0.00,total_price_for_all=float(Prod.price)*float(product_quantity))
+                    print(ProductsOffers.objects.get(product=Prod,default=True).product_offers.oid)
+                    print(ProductsOffers.objects.get(product=Prod,default=True).product_offers.oid)
+                    print(ProductsOffers.objects.get(product=Prod,default=True).product_offers.oid)
+                    print(ProductsOffers.objects.get(product=Prod,default=True).product_offers.oid)
+                    model=CardOrderItems(user=request.user,uoc_prod=Prod,user_meal_type="Default",quantity=product_quantity,MealType="None",MealSideDishes="None",MealAdditions="None",total_price_for_meal=0.00,total_price_for_MealSideDishes=0.00,total_price_for_MealAdditions=0.00,total_price_for_all=float(Prod.price)*float(product_quantity),product_offers=ProductsOffers.objects.get(product=Prod,default=True).product_offers)
                     model.save()
                     # print("hrereee 22")
 
@@ -79,8 +84,19 @@ def add_to_cart(request):
             elif(prod_ven=="Special Order"):
                     
                 pid=request.POST.get("pid")
+                offer_oid=request.POST.get("offer_oid")
+                print(offer_oid)
+                print(offer_oid)
+                print(offer_oid)
+                print(offer_oid)
+                print(offer_oid)
+                print(offer_oid)
+                print(offer_oid)
+                print(offer_oid)
+                print(offer_oid)
+                print(offer_oid)
                 Prod= Products.objects.get(pid=pid)
-                data_exists = CardOrderItems.objects.filter(user=request.user, uoc_prod=Prod, user_meal_type="Special Order").exists()
+                data_exists = CardOrderItems.objects.filter(user=request.user, uoc_prod=Prod, user_meal_type="Special Order",product_offers__oid=offer_oid).exists()
 
                 mealType = request.POST.get("mealType")
                 sideDishtype = request.POST.get("sideDishtype")
@@ -88,6 +104,7 @@ def add_to_cart(request):
                 mealType = json.loads(mealType)
                 sideDishtype = json.loads(sideDishtype)
                 prductAdditionstype = json.loads(prductAdditionstype)
+                
                 # print(extract_values_by_key(mealType,"product_meal_type"))
                 # print(pid)
                 # print(mealType)
@@ -162,17 +179,19 @@ def add_to_cart(request):
                 # print(total_for_total)
                 # print("-------------------------------------")
                 if data_exists == False:
-                        model=CardOrderItems(user=request.user,uoc_prod=Prod,user_meal_type="Special Order",quantity=0,MealType=mealType,MealSideDishes=sideDishtype,MealAdditions=prductAdditionstype,total_price_for_meal=total_price_for_meal,total_price_for_MealSideDishes=total_price_for_MealSideDishes,total_price_for_MealAdditions=total_price_for_MealAdditions,total_price_for_all=total_for_total)
+                        model=CardOrderItems(user=request.user,uoc_prod=Prod,user_meal_type="Special Order",quantity=0,MealType=mealType,MealSideDishes=sideDishtype,MealAdditions=prductAdditionstype,total_price_for_meal=total_price_for_meal,total_price_for_MealSideDishes=total_price_for_MealSideDishes,total_price_for_MealAdditions=total_price_for_MealAdditions,total_price_for_all=total_for_total,product_offers= Offers.objects.get(oid=offer_oid))
                         # model=CardOrderItems(user=request.user,uoc_prod=Prod,user_meal_type="Special Order",Product_Quantity_IF_Default=0,MealType=mealType,MealSideDishes=sideDishtype,MealAdditions=prductAdditionstype)
 
                         model.save()
                 else:
-                        existing_object = CardOrderItems.objects.get(user=request.user, uoc_prod=Prod, user_meal_type="Special Order")
+                        existing_object = CardOrderItems.objects.get(user=request.user, uoc_prod=Prod, user_meal_type="Special Order",)
                         existing_object.quantity = 0  
                         existing_object.total_price_for_meal =total_price_for_meal  
                         existing_object.total_price_for_MealSideDishes =total_price_for_MealSideDishes  # Assign total price for side dishes
                         existing_object.total_price_for_MealAdditions = total_price_for_MealAdditions  # Assign total price for additions
                         existing_object.total_price_for_all = total_for_total  # Assign total price for all
+                        existing_object.product_offers = Offers.objects.get(oid=offer_oid)  # Assign total price for all
+
                         existing_object.save()
                         # MealType=mealtype_data,MealSideDishes=product_side_dish,MealAdditions=additionName,total_price_for_meal=total_price_for_meal,total_price_for_MealSideDishes=total_price_for_MealSideDishes,total_price_for_MealAdditions=total_price_for_MealAdditions,total_price_for_all=total_price)
                         
@@ -306,9 +325,24 @@ def category_product_list_view(request,cid):
     return render(request=request,template_name="shop-grid-left.html",context=context)
 
 
+# def offers_product_list_view(request, oid):
+#     offer = get_object_or_404(Offers, oid=oid)
+#     # Filter products that are associated with the given offer and have a status of "published"
+#     products = Products.objects.filter(products_status="published", ProductsOffers__product_offers=offer)
+#     # categ_all = Category.objects.all()
+    
+#     context = {
+#         "products": products,
+#         "offer": offer
+#     }
+#     return render(request=request, template_name="shop-offer.html", context=context)
+
+
 def offers_product_list_view(request,oid):
     offer = Offers.objects.get(oid=oid)
-    products = Products.objects.filter(products_status="published",offers=offer)
+    print(offer)
+    products = Products.objects.filter(products_status="published", Products_Offers_prod__product_offers=offer)
+    
     categ_all = Category.objects.all()
     context={
         "products":products,
@@ -348,37 +382,42 @@ def offers_product_list_view(request,oid):
 #     }
 #     return render(request=request,template_name="vendor-details-2.html",context=context)
 
-
-def get_product_by_id(request,pid):
-    
+def get_product_by_id(request, pid):
+    # Get the product object
     product=Products.objects.get(pid=pid)
     p_images = product.p_images.all()
     related_products = Products.objects.filter(category=product.category).exclude(pid=pid)
-    category =Category.objects.all();
+    category = Category.objects.all()
     latest_products = Products.objects.filter(category=product.category).exclude(pid=pid).order_by('date')
     ProductMealType = product.ProductMealTYPE.all()
     ProductSideDish = product.ProductSideDish.all()
     ProdutsAdditions = product.ProdutsAdditions.all()
-    offer_image=product.offers.offer_image.url
-    offer_name=product.offers.product_offers.product_offers
-    # offer.product_offers.product_offers
-    print(ProductMealType)
-    print(ProductSideDish)
-    print(ProdutsAdditions)
+
+    # Fetch the related offer details
+    try:
+        product_offer = ProductsOffers.objects.get(product=product, default=True)
+        product_offer_not_default = ProductsOffers.objects.filter(product=product)
+        offer_image = product_offer.product_offers.offer_image.url
+        offer_name = product_offer.product_offers.product_offers.product_offers 
+    except ProductsOffers.DoesNotExist:
+        offer_image = None
+        offer_name = None
+
     context = {
-        "product":product,
-        "p_images":p_images,
-        "related_products":related_products,
-        "category":category,
-        "latest_products":latest_products,
-        "ProductMealType":ProductMealType,
-        "ProductSideDish":ProductSideDish,
-        "ProdutsAdditions":ProdutsAdditions,
+        "product": product,
+        "p_images": p_images,
+        "related_products": related_products,
+        "category": category,
+        "latest_products": latest_products,
+        "ProductMealType": ProductMealType,
+        "ProductSideDish": ProductSideDish,
+        "ProdutsAdditions": ProdutsAdditions,
         'is_product_page': True,
-        "offer_image":offer_image,
-        "offer_name":offer_name
+        "offer_image": offer_image,
+        "offer_name": offer_name,
+        "all_offers":product_offer_not_default
     }
-    return render(request,template_name="shop-product-vendor.html",context=context)
+    return render(request, template_name="shop-product-vendor.html", context=context)
 
 def get_products_name(request):
     categ_name = request.GET.get('category_category')

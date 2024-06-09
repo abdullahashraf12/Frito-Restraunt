@@ -92,15 +92,6 @@ class OffersNames(models.Model):
 
 
 
-class Offers(models.Model):
-    oid = ShortUUIDField(unique=True,length=10,max_length= 20,prefix="off",alphabet="abcdefgh12345")
-    product_offers = models.ForeignKey(OffersNames,on_delete=models.SET_NULL,null=True,related_name="ProductMealTYPE")
-    gallery_image = models.ImageField(upload_to="global_/off/",default="product.jpg")
-    offer_image = models.ImageField(upload_to="off_/off/",default="product.jpg")
-
-    def __str__(self):
-        return str(self.product_offers)
-
 
 def user_directory_path(instance,filename):
     return 'user_{0}/{1}'.format(instance.user.id,filename)
@@ -149,6 +140,7 @@ class Tags(models.Model):
     # pass
 
 
+
 class Products(models.Model):
     exclude = ('user',)  # Exclude the user field from the admin form
     pid =ShortUUIDField(unique=True,length=10,max_length= 20,alphabet="abcdefgh12345")
@@ -159,7 +151,7 @@ class Products(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, editable=False) 
     category = models.ForeignKey(Category,on_delete=models.SET_NULL,null=True,related_name="category")
     # vendor = models.ForeignKey(Vendor,on_delete=models.SET_NULL,null=True,related_name = "vendor")
-    offers = models.ForeignKey(Offers,on_delete=models.SET_NULL,null=True,related_name = "offers")
+    # offers = models.ForeignKey(Offers,on_delete=models.SET_NULL,null=True,related_name = "offers")
 
     price = models.DecimalField(max_digits=9999999999999,decimal_places = 2,default="1.99")
     old_Price = models.DecimalField(max_digits=9999999999999,decimal_places = 2,default="2.99")
@@ -215,6 +207,16 @@ class Products(models.Model):
             # Set the current logged-in user as the default value
             self.user = kwargs.pop('user', None)
         super().save(*args, **kwargs)
+class Offers(models.Model):
+    oid = ShortUUIDField(unique=True,length=10,max_length= 20,prefix="off",alphabet="abcdefgh12345")
+    product_offers = models.ForeignKey(OffersNames,on_delete=models.SET_NULL,null=True,related_name="product_offers_offers")
+    gallery_image = models.ImageField(upload_to="global_/off/",default="product.jpg")
+    offer_image = models.ImageField(upload_to="off_/off/",default="product.jpg")
+    # product = models.ForeignKey(Products, on_delete=models.CASCADE)  # ForeignKey to Products
+    # default = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.product_offers)
 
 class ProductImages(models.Model):
     images = models.ImageField(upload_to="product-images",default="product.jpg")
@@ -309,6 +311,41 @@ class ProdutsAdditions(models.Model):
     @property
     def images(self):
         return self.product_additions.images if self.product_additions else None
+
+
+
+
+
+
+
+
+
+
+
+
+class ProductsOffers(models.Model):
+    product_offers = models.ForeignKey(Offers, on_delete=models.SET_NULL, null=True, related_name="ProductsOffers")
+    product = models.ForeignKey(Products, on_delete=models.SET_NULL, null=True, related_name="Products_Offers_prod")
+    date = models.DateTimeField(auto_now_add=True)
+    default = models.BooleanField(default=False)
+    number = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        verbose_name_plural = "Products Offers"
+
+    @property
+    def price(self):
+        return self.product_additions.price if self.product_additions else None
+
+    @property
+    def images(self):
+        return self.product_additions.images if self.product_additions else None
+
+
+
+
+
+
 
 
 
@@ -419,3 +456,5 @@ class CardOrderItems(models.Model):
     total_price_for_MealSideDishes=models.FloatField(default=0.00)
     total_price_for_MealAdditions=models.FloatField(default=0.00)
     total_price_for_all=models.FloatField(default=0.00)
+    product_offers = models.ForeignKey(Offers, on_delete=models.SET_NULL, null=True, related_name="Products_Offers")
+

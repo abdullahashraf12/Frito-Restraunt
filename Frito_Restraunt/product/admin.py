@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Products, Category, Vendor, CardOrder, ProductImages, ProductReview, WishList, Address, Tags, UserOrderCard, Offers, ProductMealType, ProductSideDish, ProdutsAdditions, ProductAdditionsNames, ProductMealTypeNames, ProductSideDishNames, OffersNames, CardOrderItems
+from .models import Products, Category, Vendor, CardOrder, ProductImages, ProductReview, WishList, Address, Tags, UserOrderCard, Offers, ProductMealType, ProductSideDish, ProdutsAdditions, ProductAdditionsNames, ProductMealTypeNames, ProductSideDishNames, OffersNames, CardOrderItems , ProductsOffers
 import logging
 from django.forms.models import BaseInlineFormSet
 from django.utils.html import format_html
@@ -33,12 +33,17 @@ class ProdutsAdditions(admin.TabularInline):
     formset = BaseProductMealTYPEFormSet
 
 
+class OffersOption(admin.TabularInline):
+    model=ProductsOffers
+    formset = BaseProductMealTYPEFormSet
+
+
 
 
 
 
 class CardOrderedItemsAdmin(admin.ModelAdmin):
-    list_display = ["get_user_name", "uoc_prod", "user_meal_type","quantity", "MealType", "MealSideDishes", "MealAdditions","total_price_for_meal","total_price_for_MealSideDishes","total_price_for_MealAdditions","total_price_for_all"]
+    list_display = ["get_user_name", "uoc_prod", "user_meal_type","quantity", "MealType", "MealSideDishes", "MealAdditions","total_price_for_meal","total_price_for_MealSideDishes","total_price_for_MealAdditions","product_offers","total_price_for_all"]
 
     def get_user_name(self, obj):
         return obj.user.username
@@ -50,14 +55,11 @@ class ProductMealTypeNamesAdmin(admin.ModelAdmin):
     list_display= ["product_Meal_TYPE"]
     # def get_price(self, obj):
     #     return obj.price
-
     # get_price.short_description = 'Price'
-
     # def get_image(self, obj):
     #     if obj.images:
     #         return format_html('<img src="{}" style="height: 50px;"/>', obj.images.url)
     #     return "No Image"
-
     # get_image.short_description = 'Image'
 
 class ProductSideDishNamesAdmin(admin.ModelAdmin):
@@ -105,7 +107,7 @@ class OffersNamesdmin(admin.ModelAdmin):
 
 class ProductAdmin(admin.ModelAdmin):
     exclude = ('user',)  # Exclude the user field from the admin form
-    inlines = [ProductImagesAdmin,PMealAdmin,PeodSidedmin,ProdutsAdditions]
+    inlines = [ProductImagesAdmin,PMealAdmin,PeodSidedmin,ProdutsAdditions,OffersOption]
     list_display= ["user","title","product_image","price","featured","status"]
 
     def save_model(self, request, obj, form, change):

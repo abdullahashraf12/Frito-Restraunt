@@ -350,6 +350,68 @@ body, html {
 
 
 
+.container_radio_button {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container_radio_button input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark_radio_button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.container_radio_button:hover input ~ .checkmark_radio_button {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.container_radio_button input:checked ~ .checkmark_radio_button {
+  background-color: #2196F3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark_radio_button:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container_radio_button input:checked ~ .checkmark_radio_button:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container_radio_button .checkmark_radio_button:after {
+ 	top: 9px;
+	left: 9px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
+}
 
 
 
@@ -1002,6 +1064,85 @@ body, html {
 
 
 
+
+
+
+
+
+
+{% if all_offers %}
+    {% for i in all_offers %}
+        {% if forloop.first %}
+            <h5 class="section-title style-1 mb-30" style="margin-left: 50px;">Offers</h5>
+        {% endif %}
+        {% if forloop.counter0|divisibleby:2 %}
+            <div style="display: flex;">
+        {% endif %}
+        <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none; max-width: 550px; margin-right: 35px;">
+            <div class="sidebar-widget widget-category-2 mb-30">
+                <ul>
+                    <div style="position: relative;">
+                        <li>
+                            <span style="display: flex; align-items: center;">
+                                <img src="{{ i.product_offers.offer_image.url }}" width="150px" height="150px" alt="" name="ProductSideDish_image">
+                            </span>
+                            <div style="margin-left: 10px;">
+                                <label class="container_radio_button"> 
+                                    <p style="margin-left: 10px; font-weight: bold; margin-right: 10px; color: black;">{{ i.product_offers }}</p>
+                                    <p></p>
+                                    {% if i.default %}
+                                        <input type="radio" name="radio_button" checked="checked" data-custom-offer="{{ i.product_offers.oid }}">
+                                    {% else %}
+                                        <input type="radio" name="radio_button" data-custom-offer="{{ i.product_offers.oid }}">
+                                    {% endif %}
+                                    <span class="checkmark_radio_button"></span>
+                                </label>
+                            </div>
+                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                <div style="margin-top: 10px; text-align: center;">
+                                    <h6 style="font-weight: bold; white-space: nowrap; min-width: 150px;">Price:&nbsp;&nbsp;<b style="color: green;">Free</b></h6>
+                                </div>
+                            </div>
+                            <p style="position: absolute; bottom: 10px; right: 10px; color: red; font-weight: bold;">All Rules Applied</p>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+        
+        {% if forloop.last or forloop.counter0|add:1|divisibleby:2 %}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <input type="hidden" name="prod_ven" value="Special Order">
 
 
@@ -1095,14 +1236,13 @@ body, html {
         <script src="{% static 'assets/js/base.js' %}"></script>
         <script src="{% static 'assets/js/index.js' %}"></script>
 
-        <script src="{% static 'assets/js/add_to_Card_this.js' %}"></script>
 
 
 
 
 
 
-
+    <script src="{% static 'assets/js/add_to_Card_this.js' %}"></script>
 
 
     <script src="{% static 'assets/js/filter_system.js' %}"></script>
