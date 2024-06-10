@@ -12,6 +12,24 @@ from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 import json
 # Create your views here.
+
+def checkout(request):
+    if request.user:
+        print("here 234")
+        return render(request,"checkout.html",context={})
+
+    else:
+        return render(request,"checkout.html",context={})
+
+
+
+
+
+
+
+
+
+
 def index(request):
     # bananas = Products.objects.all().order_by("-id")
     bananas = Products.objects.filter(products_status="published",featured=True).order_by("-id")

@@ -1,0 +1,52 @@
+{% extends 'partials/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<style>
+    /* Define hover effect for the class */
+    .hover_choose_site_Arrow {
+        color: silver; /* Default color */
+        cursor: pointer; /* Change cursor to pointer */
+
+    }
+    .hover_choose_site_Arrow.green {
+        color: green; /* Color on mouseover */
+        cursor: pointer; /* Change cursor to pointer */
+    }
+</style>
+
+<div style="background-color: snow; width: 500px; height: 500px; position: absolute; right: 25px;">
+<div style="background-color: rgba(242, 249, 255, 255); height: 50px; padding-left: 5px; float: left;padding-top: 5px; width: 100%; ">
+    <div style="float: left; padding-top: 5px; background-color: rgba(242, 249, 255, 255);; ">
+    <h4>Short Order Description</h4>
+</div>
+
+<div style="background-color: red; width: 25px; height: 25px; float: left; top: 5px; position: relative; margin-left: 100px; display: flex; align-items: center; justify-content: center;">
+    <span style="font-size: 25px; color: white;">&#9733;</span>
+</div>
+
+<div style="background-color: red; width: 25px; height: 25px; float: left; top: 5px; position: relative; margin-left: 15px; display: flex; align-items: center; justify-content: center;">
+    <span style="font-size: 25px; color: white;">&#9733;</span>
+</div>
+<div style="background-color: red; width: 25px; height: 25px; float: left; top: 5px; position: relative; margin-left: 15px; display: flex; align-items: center; justify-content: center;">
+    <span style="font-size: 25px; color: white;">&#9733;</span>
+</div>
+<div>
+    <!-- Main Content -->
+     <div>
+        <div style="height: 80px; width: 98%; background-color: white; margin-top:50px">
+            <p>&nbsp;</p>
+          
+            <div style="display: flex; align-items: center;">
+                <img style="width: 50px; height: 50px; margin-left: 10px; margin-top: -25px;" src="{% static 'assets/imgs/home_checkout.png' %}">
+                <h4 style="color: rgba(1, 122, 254, 255); margin-left: 10px; margin-top: -20px;">Choose Delivery Site</h4>
+                <h4 class="hover_choose_site_Arrow" onmouseover="this.classList.add('green')" onmouseout="this.classList.remove('green')" style="margin-top: -10px; font-size: 30px; margin-left: auto; margin-right: 25px;">&#10148;</h4>
+            </div>
+             
+        </div>
+     </div>
+</div>
+</div>
+</div>
+{% endblock content %}
