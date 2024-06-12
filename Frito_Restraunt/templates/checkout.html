@@ -77,7 +77,71 @@
   cursor: pointer;
 }
 </style>
+<div style="display: flex; flex-wrap: wrap; padding-left: 100px;">
 
+    <div class="fix_me" style="flex: 1; overflow-x: auto;">
+        <table class="table table-hover" style="width: 7500px;"> <!-- Increased the table width by 1000px -->
+            <thead>
+                <tr>
+                    <th style="width: 1500px;">Product Image</th> <!-- Increased the width by 1000px -->
+                    <th style="width: 2000px;">Product Name</th> <!-- Increased the width by 1000px -->
+
+                    <th style="width: 2000px;">Product Meal Offer</th> <!-- Increased the width by 1000px -->
+                    <th style="width: 1500px;">Product Meal Type</th> <!-- Increased the width by 1000px -->
+                    <th style="width: 1500px;">Product Side Dishes</th> <!-- Increased the width by 1000px -->
+                    <th style="width: 1500px;">Product Additions Type</th> <!-- Increased the width by 1000px -->
+                    <th style="width: 1500px;">Product Total Price</th> <!-- Increased the width by 1000px -->
+                </tr>
+            </thead>
+            <tbody>
+                {% if all_from_Card %}
+                {% for i in all_from_Card %}
+                <tr>
+                    <td><img src="{{ i.uoc_prod.image.url }}" style="width: 50px; height: 50px;"></td>
+                    <td>{{ i.uoc_prod.title }}</td>
+                    {% if i.user_meal_type == "Default" %}
+                    <td>{{ i.user_meal_type }} and quantity is {{ i.quantity }} </td>
+
+                    {% else %}
+                    <td>{{ i.user_meal_type }} </td>
+
+                     {% endif %}
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {% endif %}
+                
+                <!-- Additional rows here -->
+               
+            </tbody>
+            
+        </table>
+        
+        <div style="align-content: center; background-color: #ccc;">
+            {% if all_from_Card %}
+
+            <h1 style="text-align: center;">Total Price: <span style="display: inline; color: red;">price L.E</span></h1>
+            {% else %}
+            <h1 style="text-align: center;">Total Price: <span style="display: inline; color: green;">FREE</span></h1>
+
+
+
+            {% endif %}
+         </div>
+</div>
+
+<div  style="flex: 1;">
 <div style="background-color: snow; width: 600px; height: 600px; position: absolute; right: 25px;">
 <div style="background-color: rgba(242, 249, 255, 255); height: 50px; padding-left: 5px; float: left;padding-top: 5px; width: 100%; ">
     <div style="float: left; padding-top: 5px; background-color: rgba(242, 249, 255, 255);; ">
@@ -192,7 +256,7 @@
      </div>
 </div>
 </div>
-
+</div>
 <script src="{% static 'assets/js/vendor/jquery-3.6.0.min.js' %}"></script>
 <script>
     $(document).ready(function() {

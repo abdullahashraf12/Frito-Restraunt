@@ -14,9 +14,23 @@ import json
 # Create your views here.
 
 def checkout(request):
-    if request.user:
+    if str(request.user) != "AnonymousUser":
+        print("==================")
+        print("==================")
+        print("==================")
+        print("==================")
+        print("==================")
+        print("==================")
+
+        print("user is :"+ str(request.user))
+        print(request.user)
+        print(request.user)
         print("here 234")
-        return render(request,"checkout.html",context={})
+        get_all_from_card=CardOrderItems.objects.filter(user=request.user)
+        print(list(get_all_from_card.values()))
+
+        print("==================")
+        return render(request,"checkout.html",context={"all_from_Card":get_all_from_card})
 
     else:
         return render(request,"checkout.html",context={})
@@ -151,11 +165,34 @@ def add_to_cart(request):
 
                     # print("hrereee")
                 elif(len(list(data_exists.values()))==0):
+                    
                     print(ProductsOffers.objects.get(product=Prod,default=True).product_offers.oid)
                     print(ProductsOffers.objects.get(product=Prod,default=True).product_offers.oid)
                     print(ProductsOffers.objects.get(product=Prod,default=True).product_offers.oid)
                     print(ProductsOffers.objects.get(product=Prod,default=True).product_offers.oid)
-                    model=CardOrderItems(user=request.user,uoc_prod=Prod,user_meal_type="Default",quantity=product_quantity,MealType="None",MealSideDishes="None",MealAdditions="None",total_price_for_meal=0.00,total_price_for_MealSideDishes=0.00,total_price_for_MealAdditions=0.00,total_price_for_all=float(Prod.price)*float(product_quantity),product_offers=ProductsOffers.objects.get(product=Prod,default=True).product_offers)
+                    default_meal_type = ProductMealType.objects.filter(product=Prod, default=True)
+                    default_meal_side_dishes = ProductSideDish.objects.filter(product=Prod, default=True)
+                    default_meal_additions = ProdutsAdditions.objects.filter(product=Prod, default=True)
+                    print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+                    print(list(default_meal_type.values()))
+                    print(list(default_meal_side_dishes.values()))
+                    print(list(default_meal_additions.values()))
+
+                    print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+
+                    product_meal_type_ids = [meal_type.product_Meal_TYPE_id for meal_type in default_meal_type]
+                    default_meal_side_dishes = [side_dish.product_SIDE_DISH_id for side_dish in default_meal_side_dishes]
+                    default_meal_additions = [additions.product_additions_id for additions in default_meal_additions]
+                    # meal_type = default_meal_type.value if default_meal_type else "Default"
+                    # meal_side_dishes = default_meal_side_dishes.value if default_meal_side_dishes else "Default"
+                    # meal_additions = default_meal_additions.value if default_meal_additions else "Default"
+                    index_for_loop=0
+                 
+
+                        
+
+
+                    model=CardOrderItems(user=request.user,uoc_prod=Prod,user_meal_type="Default",quantity=product_quantity,MealType=product_meal_type_ids,MealSideDishes=default_meal_side_dishes,MealAdditions=default_meal_additions,total_price_for_meal=0.00,total_price_for_MealSideDishes=0.00,total_price_for_MealAdditions=0.00,total_price_for_all=float(Prod.price)*float(product_quantity),product_offers=ProductsOffers.objects.get(product=Prod,default=True).product_offers)
                     model.save()
                     print("i am here 88")
 
