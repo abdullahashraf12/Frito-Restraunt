@@ -80,35 +80,73 @@
 <div style="display: flex; flex-wrap: wrap; padding-left: 100px;">
 
     <div class="fix_me" style="flex: 1; overflow-x: auto;">
-        <table class="table table-hover" style="width: 7500px;"> <!-- Increased the table width by 1000px -->
+        <table class="table table-hover" style="width: 100%;"> <!-- Increased the table width by 1000px -->
             <thead>
                 <tr>
-                    <th style="width: 1500px;">Product Image</th> <!-- Increased the width by 1000px -->
-                    <th style="width: 2000px;">Product Name</th> <!-- Increased the width by 1000px -->
+                    <th style="width: auto">Product Image</th> <!-- Increased the width by 1000px -->
+                    <th style="width: auto;">Product Name</th> <!-- Increased the width by 1000px -->
 
-                    <th style="width: 2000px;">Product Meal Offer</th> <!-- Increased the width by 1000px -->
-                    <th style="width: 1500px;">Product Meal Type</th> <!-- Increased the width by 1000px -->
-                    <th style="width: 1500px;">Product Side Dishes</th> <!-- Increased the width by 1000px -->
-                    <th style="width: 1500px;">Product Additions Type</th> <!-- Increased the width by 1000px -->
-                    <th style="width: 1500px;">Product Total Price</th> <!-- Increased the width by 1000px -->
+                    <th style="width: auto;">Product Meal Offer</th> <!-- Increased the width by 1000px -->
+                    <th style="width: auto;">Product Meal Type</th> <!-- Increased the width by 1000px -->
+                    <th style="width: auto;">Product Side Dishes</th> <!-- Increased the width by 1000px -->
+                    <th style="width: auto;">Product Additions Type</th> <!-- Increased the width by 1000px -->
+                    <th style="width: auto;">Product Total Price</th> <!-- Increased the width by 1000px -->
                 </tr>
             </thead>
             <tbody>
                 {% if all_from_Card %}
                 {% for i in all_from_Card %}
                 <tr>
-                    <td><img src="{{ i.uoc_prod.image.url }}" style="width: 50px; height: 50px;"></td>
+                    <td>
+                         <div style="background-image: url('{{ i.uoc_prod.image.url }}'); width: 100px; height: 100px; background-size: cover; background-color: transparent;"></div>
+                    </td>
                     <td>{{ i.uoc_prod.title }}</td>
                     {% if i.user_meal_type == "Default" %}
                     <td>{{ i.user_meal_type }} and quantity is {{ i.quantity }} </td>
+                    <td>{{ i.MealType }}</td>
+                    <td>{{ i.MealSideDishes }}</td>
+                    <td>{{ i.MealAdditions }}</td>
+                    <td>{{ i.total_price_for_all }} L.E</td>
 
                     {% else %}
-                    <td>{{ i.user_meal_type }} </td>
+                    <td>
+                    Special
+                    </td>
+                    <td>
+                        [
+                        {% for p in i.MealType %}
+                        {
+                            'Meal Type': '{{ p.product_meal_type }}',
+                            'quantity': '{{ p.quantity }}'
+                        }{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                        ]
+                    </td>
+                    <td>
+                        [
+                        {% for p in i.MealSideDishes %}
+                        {
+                            'Meal Type': '{{ p.product_side_dish }}',
+                            'quantity': '{{ p.quantity }}'
+                        }{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                        ]
+                    </td>
+                    <td>
+                        [
+                        {% for p in i.MealAdditions %}
+                        {
+                            'Meal Type': '{{ p.additionName }}',
+                            'quantity': '{{ p.quantity }}'
+                        }{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                        ]
+                    </td>
+                    <td>{{ i.total_price_for_all }} L.E</td>
+
 
                      {% endif %}
-                    <td></td>
-                    <td></td>
-                    <td></td>
+
                 </tr>
                 {% endfor %}
                 {% else %}
@@ -131,7 +169,7 @@
         <div style="align-content: center; background-color: #ccc;">
             {% if all_from_Card %}
 
-            <h1 style="text-align: center;">Total Price: <span style="display: inline; color: red;">price L.E</span></h1>
+            <h1 style="text-align: center;">Total Price: <span style="display: inline; color: red;">{{ total_price }} L.E</span></h1>
             {% else %}
             <h1 style="text-align: center;">Total Price: <span style="display: inline; color: green;">FREE</span></h1>
 
@@ -207,8 +245,9 @@
     <h6 style="color: rgba(1, 122, 254, 255); margin-left: 10px; margin-top: 15px; color: black;">Subtotal</h6>
 
     <!-- Add h5 element here -->
-    <h5 style="margin-left: auto; margin-top: 15px; margin-right: 10px; color: black;">$100.00</h5>
-
+     {% if total_price %}  
+    <h5 style="margin-left: auto; margin-top: 15px; margin-right: 10px; color: black;">{{ total_price }} L.E</h5>
+    {% endif %}
 </div>
 
     </div>

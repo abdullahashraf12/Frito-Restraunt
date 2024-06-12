@@ -11,6 +11,8 @@ from django.core.serializers import serialize
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 import json
+from django.db.models import Sum
+
 # Create your views here.
 
 def checkout(request):
@@ -29,8 +31,10 @@ def checkout(request):
         get_all_from_card=CardOrderItems.objects.filter(user=request.user)
         print(list(get_all_from_card.values()))
 
+        total_price = CardOrderItems.objects.filter(user=request.user).aggregate(total_price=Sum('total_price_for_all'))['total_price']
         print("==================")
-        return render(request,"checkout.html",context={"all_from_Card":get_all_from_card})
+        print("Total Prices = "+str(total_price))
+        return render(request,"checkout.html",context={"all_from_Card":get_all_from_card,"total_price":total_price})
 
     else:
         return render(request,"checkout.html",context={})
@@ -186,7 +190,6 @@ def add_to_cart(request):
                     # meal_type = default_meal_type.value if default_meal_type else "Default"
                     # meal_side_dishes = default_meal_side_dishes.value if default_meal_side_dishes else "Default"
                     # meal_additions = default_meal_additions.value if default_meal_additions else "Default"
-                    index_for_loop=0
                  
 
                         
