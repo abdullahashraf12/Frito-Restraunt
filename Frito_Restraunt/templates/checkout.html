@@ -80,7 +80,7 @@
 <div style="display: flex; flex-wrap: wrap; padding-left: 100px;">
 
     <div class="fix_me" style="flex: 1; overflow-x: auto;">
-        <table class="table table-hover" style="width: 100%;"> <!-- Increased the table width by 1000px -->
+        <table class="table table-hover" style="width: 100%;"id="dynamicTable"> <!-- Increased the table width by 1000px -->
             <thead>
                 <tr>
                     <th style="width: auto">Product Image</th> <!-- Increased the width by 1000px -->
@@ -94,7 +94,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% if all_from_Card %}
+                <!-- {% if all_from_Card %}
                 {% for i in all_from_Card %}
                 <tr>
                     <td>
@@ -160,16 +160,16 @@
                 </tr>
                 {% endif %}
                 
-                <!-- Additional rows here -->
+                Additional rows here
                
-            </tbody>
+            </tbody> -->
             
         </table>
         
         <div style="align-content: center; background-color: #ccc;">
             {% if all_from_Card %}
 
-            <h1 style="text-align: center;">Total Price: <span style="display: inline; color: red;">{{ total_price }} L.E</span></h1>
+            <h1  style="text-align: center;">Total Price: <span style="display: inline; color: red;" id="Subtotal_table">{{ total_price }} L.E</span></h1>
             {% else %}
             <h1 style="text-align: center;">Total Price: <span style="display: inline; color: green;">FREE</span></h1>
 
@@ -246,7 +246,7 @@
 
     <!-- Add h5 element here -->
      {% if total_price %}  
-    <h5 style="margin-left: auto; margin-top: 15px; margin-right: 10px; color: black;">{{ total_price }} L.E</h5>
+    <h5 id="Subtotal_mini_card" style="margin-left: auto; margin-top: 15px; margin-right: 10px; color: red;">{{ total_price }} L.E</h5>
     {% endif %}
 </div>
 
@@ -410,7 +410,104 @@ function closeSmallDiv() {
 
 
     </script>
-     
+     <script>
+
+$(document).ready(function() {
+    function loadTableData() {
+        $.ajax({
+            url: '/core/ajax/', // Ensure this URL matches your view endpoint
+            method: 'GET',
+            dataType: 'json',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest' // Set the X-Requested-With header
+            },
+            success: function(data) {
+                const tbody = $('#dynamicTable tbody');
+                tbody.empty(); // Clear any existing rows
+                total_price_sub=parseFloat(data.total_price).toFixed(1).toString()
+                // alert(total_price_sub)
+    
+                $("#Subtotal_mini_card").html(total_price_sub+" L.E")
+                $("#Subtotal_table").html(total_price_sub+" L.E")
+                if (data.items.length > 0) {
+                    data.items.forEach(function(i) {
+                        let row = '<tr>';
+                            console.log(data.items)
+                            console.log(parseFloat(i.total_price_for_all.toFixed(2)).toString())
+                            console.log(parseFloat(i.total_price_for_all.toFixed(2)).toString())
+                            console.log(parseFloat(i.total_price_for_all.toFixed(2)).toString())
+                            console.log(parseFloat(i.total_price_for_all.toFixed(2)).toString())
+
+                            // Image Cell
+                        row += '<td><div style="background-image: url(\'' + '/media/' + i.image_url + '\'); width: 100px; height: 100px; background-size: cover; background-color: transparent;"></div></td>';
+                        
+                        // Title Cell
+                        row += '<td>' + i.uoc_prod__title + '</td>';
+                        
+                        if (i.user_meal_type === "Default") {
+                            // Default Meal Type
+                            row += '<td>' + i.user_meal_type + ' and quantity is ' + i.quantity + '</td>';
+                            row += '<td>' + i.MealType + '</td>';
+                            row += '<td>' + i.MealSideDishes + '</td>';
+                            row += '<td>' + i.MealAdditions + '</td>';
+                            row += '<td>' + parseFloat(i.total_price_for_all).toFixed(1).toString() + ' L.E</td>';
+                        } else {
+                            // Special Meal Type
+                            row += '<td>Special</td>';
+                            row += '<td>';
+row += '[';
+i.MealType.forEach(function(p, index) {
+    row += '{\'Meal Type\': \'' + p.product_meal_type + '\', \'quantity\': ' + p.quantity + '}';
+    if (index < i.MealType.length - 1) row += ', ';
+});
+row += ']';
+row += '</td>';
+
+row += '<td>';
+row += '[';
+i.MealSideDishes.forEach(function(p, index) {
+    row += '{\'Meal Type\': \'' + p.product_side_dish + '\', \'quantity\': ' + p.quantity + '}';
+    if (index < i.MealSideDishes.length - 1) row += ', ';
+});
+row += ']';
+row += '</td>';
+
+row += '<td>';
+row += '[';
+i.MealAdditions.forEach(function(p, index) {
+    row += '{\'Meal Type\': \'' + p.additionName + '\', \'quantity\': ' + p.quantity + '}';
+    if (index < i.MealAdditions.length - 1) row += ', ';
+});
+row += ']';
+row += '</td>';
+
+row += '<td>' + parseFloat(i.total_price_for_all).toFixed(1).toString() + ' L.E</td>';
+
+                        }
+                        
+                        row += '</tr>';
+                        tbody.append(row);
+                    });
+                } else {
+                    // If no data, insert empty rows
+                    tbody.append('<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
+                }
+            },
+            error: function(error) {
+                console.error('Error fetching data', error);
+            }
+        });
+    }
+    
+    loadTableData();
+
+    // Load table data on page load
+    setInterval(loadTableData,5000)
+    // loadTableData();
+});
+
+
+     </script>
 </div>
 
 {% endblock content %}

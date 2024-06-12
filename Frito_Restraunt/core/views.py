@@ -12,8 +12,62 @@ from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 import json
 from django.db.models import Sum
+from django.db.models import F
 
 # Create your views here.
+
+def checkout_ajax(request):
+    if str(request.user) != "AnonymousUser":
+        get_all_from_card = CardOrderItems.objects.filter(user=request.user)
+        total_price = get_all_from_card.aggregate(total_price=Sum('total_price_for_all'))['total_price']
+        print("open headers")
+        print(request.headers.get('X-Requested-With'))
+        print(total_price)
+        print(total_price)
+        print(total_price)
+        print(total_price)
+        print(request.headers.get('X-Requested-With'))
+        print("close headers")
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            print(get_all_from_card)
+
+            data = {
+                "items": list(get_all_from_card.annotate(
+                    image_url=F('uoc_prod__image')
+                ).values(
+                    'uoc_prod__title', 'image_url', 'user_meal_type', 'quantity',
+                    'MealType', 'MealSideDishes', 'MealAdditions', 'total_price_for_all'
+                )),
+                "total_price": float(total_price)
+                }
+            
+            print(list(data.values()))
+            print(list(data.values()))
+            print(list(data.values()))
+            
+            return JsonResponse(data)
+
+        return render(request, "checkout.html", context={"all_from_Card": get_all_from_card, "total_price": total_price})
+
+    else:
+        return render(request, "checkout.html", context={})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def checkout(request):
     if str(request.user) != "AnonymousUser":

@@ -194,6 +194,8 @@ class Products(models.Model):
         }
 
         return star_percentages
+    def image_url(self):
+        return self.image.url
 
     class Meta:
         verbose_name_plural = "Products"
