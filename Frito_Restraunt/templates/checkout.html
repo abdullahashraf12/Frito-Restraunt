@@ -6,26 +6,103 @@
 <style>
     /* Define hover effect for the class */
     .hover_choose_site_Arrow {
-        color: silver; /* Default color */
+        color: green; /* Default color */
         cursor: pointer; /* Change cursor to pointer */
 
     }
-    .hover_choose_site_Arrow.green {
-        color: green; /* Color on mouseover */
+    .hover_choose_site_Arrow.blue {
+        color: blue; /* Color on mouseover */
         cursor: pointer; /* Change cursor to pointer */
     }
+
+
+    .silver_arrow {
+        color: green; /* Default color */
+        cursor: pointer; /* Change cursor to pointer */
+
+    }
+    .silver_arrow.red {
+        color: red; /* Color on mouseover */
+        cursor: pointer; /* Change cursor to pointer */
+    }
+
+
+
+
+
+
+
+
+
+
+.main-div_overlay {
+  background-color: lightblue;
+  width: 200px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.overlay_overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.small-div_overlay {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.close_overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
 </style>
 
-<div style="background-color: snow; width: 500px; height: 500px; position: absolute; right: 25px;">
+<div style="background-color: snow; width: 600px; height: 600px; position: absolute; right: 25px;">
 <div style="background-color: rgba(242, 249, 255, 255); height: 50px; padding-left: 5px; float: left;padding-top: 5px; width: 100%; ">
     <div style="float: left; padding-top: 5px; background-color: rgba(242, 249, 255, 255);; ">
     <h4>Short Order Description</h4>
 </div>
 
-<div style="background-color: red; width: 25px; height: 25px; float: left; top: 5px; position: relative; margin-left: 100px; display: flex; align-items: center; justify-content: center;">
+<div style="background-color: red; width: 25px; height: 25px; float: left; top: 5px; position: relative; margin-left: 10px; display: flex; align-items: center; justify-content: center;">
     <span style="font-size: 25px; color: white;">&#9733;</span>
 </div>
 
+<div style="background-color: red; width: 25px; height: 25px; float: left; top: 5px; position: relative; margin-left: 15px; display: flex; align-items: center; justify-content: center;">
+    <span style="font-size: 25px; color: white;">&#9733;</span>
+</div>
+<div style="background-color: red; width: 25px; height: 25px; float: left; top: 5px; position: relative; margin-left: 15px; display: flex; align-items: center; justify-content: center;">
+    <span style="font-size: 25px; color: white;">&#9733;</span>
+</div>
+<div style="background-color: red; width: 25px; height: 25px; float: left; top: 5px; position: relative; margin-left: 15px; display: flex; align-items: center; justify-content: center;">
+    <span style="font-size: 25px; color: white;">&#9733;</span>
+</div>
+<div style="background-color: red; width: 25px; height: 25px; float: left; top: 5px; position: relative; margin-left: 15px; display: flex; align-items: center; justify-content: center;">
+    <span style="font-size: 25px; color: white;">&#9733;</span>
+</div>
+<div style="background-color: red; width: 25px; height: 25px; float: left; top: 5px; position: relative; margin-left: 15px; display: flex; align-items: center; justify-content: center;">
+    <span style="font-size: 25px; color: white;">&#9733;</span>
+</div>
 <div style="background-color: red; width: 25px; height: 25px; float: left; top: 5px; position: relative; margin-left: 15px; display: flex; align-items: center; justify-content: center;">
     <span style="font-size: 25px; color: white;">&#9733;</span>
 </div>
@@ -35,18 +112,202 @@
 <div>
     <!-- Main Content -->
      <div>
-        <div style="height: 80px; width: 98%; background-color: white; margin-top:50px">
+        <div style="height: 80px; width: 98%; background-color: snowwhite; margin-top:50px;     border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px 0px rgba(7, 159, 179, 0.589);">
             <p>&nbsp;</p>
           
             <div style="display: flex; align-items: center;">
                 <img style="width: 50px; height: 50px; margin-left: 10px; margin-top: -25px;" src="{% static 'assets/imgs/home_checkout.png' %}">
+                <a id="Get_My_Location" style="text-decoration: none; border-color: transparent; max-width: fit-content; height: fit-content; display: flex; align-items: center;">
+
                 <h4 style="color: rgba(1, 122, 254, 255); margin-left: 10px; margin-top: -20px;">Choose Delivery Site</h4>
-                <h4 class="hover_choose_site_Arrow" onmouseover="this.classList.add('green')" onmouseout="this.classList.remove('green')" style="margin-top: -10px; font-size: 30px; margin-left: auto; margin-right: 25px;">&#10148;</h4>
+                <h4 class="hover_choose_site_Arrow" onmouseover="this.classList.add('blue')" onmouseout="this.classList.remove('blue')" style="margin-top: -15px; font-size: 30px; margin-left: 220px; margin-right: 15px;">&#10148;</h4>
+                </a>
             </div>
-             
         </div>
+        <div style="height: 80px; width: 98%; background-color: snow; margin-top:25px;    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px 0px rgba(7, 159, 179, 0.589);">
+
+        <div style="display: flex; align-items: center;">
+            <img style="width: 50px; height: 50px; margin-left: 10px; margin-top: 15px;" src="{% static 'assets/imgs/discount_coupon.png' %}">
+
+            <h4 onclick="openSmallDiv()" style="color: rgba(1, 122, 254, 255); margin-left: 10px; margin-top: 15px;">Apply Coupon</h4>
+            <h4 class="silver_arrow" onmouseover="this.classList.add('red')" onmouseout="this.classList.remove('red')" style="margin-top: 15px; font-size: 30px; margin-left: 287px; margin-right: 15px;">&#10148;</h4>
+
+        </div>
+    </div>
+    <div style="height: 80px; width: 98%; background-color: snow; margin-top:12px;    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px 0px rgba(7, 159, 179, 0.589);">
+<div style="display: flex; align-items: center;">
+
+    <h6 style="color: rgba(1, 122, 254, 255); margin-left: 10px; margin-top: 15px; color: black;">Subtotal</h6>
+
+    <!-- Add h5 element here -->
+    <h5 style="margin-left: auto; margin-top: 15px; margin-right: 10px; color: black;">$100.00</h5>
+
+</div>
+
+    </div>
+    <div style="height: 80px; width: 98%; background-color: snow; margin-top:12px;    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px 0px rgba(7, 159, 179, 0.589);">
+
+        <div style="display: flex; align-items: center;">
+
+            <h6 style="color: rgba(1, 122, 254, 255); margin-left: 10px; margin-top: 15px; color: black;">Delivery Fees</h6>
+            <h5 style="margin-left: auto; margin-top: 15px; margin-right: 10px; color: black;">$100.00</h5>
+
+        </div>
+    </div>
+
+
+    
+        
+            
+            <div class="overlay_overlay" onclick="closeSmallDiv()"></div>
+            <div class="small-div_overlay" id="smallDiv">
+            <span onclick="closeSmallDiv()" class="close_overlay">&times;</span>
+            <p>This is a small div</p>
+            </div>
+
+            <input type="text" id="get_location_status"  value="None" data-getlocation="" hidden>
+            <input type="text" id="latitude" value="None" data-latitude="" hidden>
+            <input type="text" id="longitude"  value="None" data-longitude="" hidden>
+        
+            <p style="width: 80%;
+            border: none;
+            height: 1px;
+            background-color: black; 
+            margin: 20px auto; "></p>
+    <div style="height: 80px; width: 98%; background-color: snow; margin-top:12px;    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px 0px rgba(7, 159, 179, 0.589);">
+
+        <div style="display: flex; align-items: center;">
+
+            <h6 style="color: rgba(1, 122, 254, 255); margin-left: 10px; margin-top: 15px; color: black;">Total</h6>
+            <h5 style="margin-left: auto; margin-top: 15px; margin-right: 10px; color: black;">$100.00</h5>
+
+        </div>
+    </div>
+
      </div>
 </div>
 </div>
+
+<script src="{% static 'assets/js/vendor/jquery-3.6.0.min.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        var latitude = "";
+    var longitude = "";
+    var locationStatus = "";
+
+    // Getter method for latitude
+    function getLatitude() {
+        return latitude;
+    }
+
+    // Setter method for latitude
+    function setLatitude(lat) {
+        latitude = lat;
+    }
+
+    // Getter method for longitude
+    function getLongitude() {
+        return longitude;
+    }
+
+    // Setter method for longitude
+    function setLongitude(long) {
+        longitude = long;
+    }
+
+    // Getter method for location status
+    function getLocationStatus() {
+        return locationStatus;
+    }
+
+    // Setter method for location status
+    function setLocationStatus(status) {
+        locationStatus = status;
+    }
+
+    function getLocation() {
+        console.log("getLocation called");
+        if (navigator.geolocation) {
+            console.log("Geolocation is supported");
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
+            console.log("Geolocation is not supported by this browser");
+            $("#get_location_status").val("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function showPosition(position) {
+        console.log("showPosition called");
+        $("#get_location_status").val("Success");
+        $("#latitude").val(position.coords.latitude.toString());
+        $("#longitude").val(position.coords.longitude.toString());
+
+        alert("Status: " + $("#get_location_status").val());
+        alert("Latitude: " + $("#latitude").val());
+        alert("Longitude: " + $("#longitude").val());
+        
+        console.log("Latitude: " + position.coords.latitude);
+        console.log("Longitude: " + position.coords.longitude);
+        setLatitude(position.coords.latitude.toString());
+        setLongitude(position.coords.longitude.toString());
+        setLocationStatus("Success")
+        console.log("Latitude: " + getLatitude());
+        console.log("Longitude: " + getLongitude());
+        console.log("Longitude: " + getLocationStatus());
+
+    }
+
+    function showError(error) {
+        console.log("showError called");
+        var errorMessage = "";
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+                errorMessage = "User denied the request for Geolocation.";
+                break;
+            case error.POSITION_UNAVAILABLE:
+                errorMessage = "Location information is unavailable.";
+                break;
+            case error.TIMEOUT:
+                errorMessage = "The request to get user location timed out.";
+                break;
+            case error.UNKNOWN_ERROR:
+                errorMessage = "An unknown error occurred.";
+                break;
+        }
+        $("#get_location_status").val(errorMessage);
+        setLocationStatus(errorMessage);
+
+        alert(errorMessage);
+        console.log(errorMessage);
+    }
+
+    // Listen for clicks on the "Get My Location" link
+    $("#Get_My_Location").on("click", function(event) {
+        event.preventDefault(); // Prevent the default behavior of the link
+        console.log("Get My Location link clicked");
+        getLocation();
+    });
+});
+
+
+function openSmallDiv() {
+  document.getElementById("smallDiv").style.display = "block";
+  document.querySelector('.overlay_overlay').style.display = 'block';
+}
+
+function closeSmallDiv() {
+  document.getElementById("smallDiv").style.display = "none";
+  document.querySelector('.overlay_overlay').style.display = 'none';
+}
+
+
+    </script>
+     
 </div>
+
 {% endblock content %}
