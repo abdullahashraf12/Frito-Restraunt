@@ -424,7 +424,7 @@ $(document).ready(function() {
             success: function(data) {
                 const tbody = $('#dynamicTable tbody');
                 tbody.empty(); // Clear any existing rows
-                total_price_sub=parseFloat(data.total_price).toFixed(1).toString()
+                total_price_sub=parseFloat(data.total_price).toFixed(2).toString()
                 // alert(total_price_sub)
     
                 $("#Subtotal_mini_card").html(total_price_sub+" L.E")
@@ -450,7 +450,7 @@ $(document).ready(function() {
                             row += '<td>' + i.MealType + '</td>';
                             row += '<td>' + i.MealSideDishes + '</td>';
                             row += '<td>' + i.MealAdditions + '</td>';
-                            row += '<td>' + parseFloat(i.total_price_for_all).toFixed(1).toString() + ' L.E</td>';
+                            row += '<td>' + parseFloat(i.total_price_for_all).toFixed(2).toString() + ' L.E</td>';
                         } else {
                             // Special Meal Type
                             row += '<td>Special</td>';
@@ -481,7 +481,7 @@ i.MealAdditions.forEach(function(p, index) {
 row += ']';
 row += '</td>';
 
-row += '<td>' + parseFloat(i.total_price_for_all).toFixed(1).toString() + ' L.E</td>';
+row += '<td>' + parseFloat(i.total_price_for_all).toFixed(2).toString() + ' L.E</td>';
 
                         }
                         

@@ -228,7 +228,7 @@ function get_from_Card(){
     <h5><b style="color:red; padding-right: 10px;">Price ${total_for_all_products} L.E</b></h5>
 </div>
  `)
- $("#Add_Products_from_card_here").append("<form method='GET' action='core/checkout' ><button style='width:100%; height:50px; color: white; background-color:red; font-weight:bold;'>Checkout</button></form>");
+ $("#Add_Products_from_card_here").append("<form method='GET' action='/core/checkout' ><button style='width:100%; height:50px; color: white; background-color:red; font-weight:bold;'>Checkout</button></form>");
  
 
                 // Handle the response data here
