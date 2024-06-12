@@ -413,6 +413,9 @@ function closeSmallDiv() {
      <script>
 
 $(document).ready(function() {
+    const tbody = $('#dynamicTable tbody');
+    var total_price_table=$("#Subtotal_mini_card")
+    var Subtotal_mini_card_= $("#Subtotal_table")
     function loadTableData() {
         $.ajax({
             url: '/core/ajax/', // Ensure this URL matches your view endpoint
@@ -422,7 +425,6 @@ $(document).ready(function() {
                 'X-Requested-With': 'XMLHttpRequest' // Set the X-Requested-With header
             },
             success: function(data) {
-                const tbody = $('#dynamicTable tbody');
                 tbody.empty(); // Clear any existing rows
                 total_price_sub=parseFloat(data.total_price).toFixed(2).toString()
                 // alert(total_price_sub)
@@ -495,6 +497,9 @@ row += '<td>' + parseFloat(i.total_price_for_all).toFixed(2).toString() + ' L.E<
             },
             error: function(error) {
                 console.error('Error fetching data', error);
+                tbody.empty()
+                total_price_table.html("0.00 L.E")
+                Subtotal_mini_card_.html("0.00 L.E")
             }
         });
     }
