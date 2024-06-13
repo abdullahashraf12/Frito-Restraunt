@@ -487,6 +487,83 @@
             </div>
         </div>
     </div>
+    <script src="{% static 'assets/js/vendor/jquery-3.6.0.min.js' %}"></script>
 
+    <script>
+        $(document).ready(function() {
+            var zoomContainer__2 = null; // Initialize zoomContainer__2 to store copied HTML
+        
+            // Function to copy HTML of .zoomContainer and its children
+            function copyHtmlContent(element) {
+                if (element.length === 0) {
+                    return ''; // Return empty string if element does not exist
+                }
+                var containerHtml = element[0].outerHTML; // Get outer HTML of the element
+                return containerHtml; // Return the HTML content as string
+            }
+        
+            // Function to initialize ElevateZoom on an image
+            function initializeZoom(imgElement) {
+                $(imgElement).elevateZoom({
+                    zoomType: "inner",
+                    cursor: "crosshair",
+                    zoomWindowFadeIn: 500,
+                    zoomWindowFadeOut: 750
+                });
+            }
+        
+            // Event handler for .categories-button-active click
+            $('.categories-button-active').on('click', function() {
+                var targetElement = $(this);
+                var zoomContainer__1 = $('.zoomContainer');
+        
+                // Check if zoomContainer__2 is null or not defined, copy .zoomContainer HTML
+                if (zoomContainer__2 === null || typeof zoomContainer__2 === 'undefined') {
+                    zoomContainer__2 = copyHtmlContent(zoomContainer__1);
+                }
+        
+                if (targetElement.hasClass('open')) {
+                    console.log('The "open" class has been added!');
+                    // Remove zoomContainer__1 from the body tag
+                    zoomContainer__1.remove();
+                } else {
+                    console.log('The "open" class has been removed!');
+                    // Re-add zoomContainer__2 to the body tag
+                    $('body').append(zoomContainer__2);
+                                // Event handler for .product-image-slider beforeChange event
+            $('.product-image-slider').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+                var img = $(slick.$slides[nextSlide]).find("img");
+                $('.zoomWindowContainer, .zoomContainer').remove();
+                if ($(window).width() > 768) {
+                    initializeZoom(img);
+                }
+            });
+        
+            // Initialize zoom on page load for initial image
+            var initialImg = $('.product-image-slider').find("img").first();
+            initializeZoom(initialImg);
+                    
+                }
+        
+                // Toggle the 'open' class on targetElement
+                // targetElement.toggleClass('open');
+            });
+        
+            // Event handler for .product-image-slider beforeChange event
+            // $('.product-image-slider').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+            //     var img = $(slick.$slides[nextSlide]).find("img");
+            //     $('.zoomWindowContainer, .zoomContainer').remove();
+            //     if ($(window).width() > 768) {
+            //         initializeZoom(img);
+            //     }
+            // });
+        
+            // // Initialize zoom on page load for initial image
+            // var initialImg = $('.product-image-slider').find("img").first();
+            // initializeZoom(initialImg);
+        
+        });
+        </script>
+        
 </main>
     {% endblock content %}
