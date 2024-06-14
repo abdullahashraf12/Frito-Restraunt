@@ -5,7 +5,8 @@ from userauths.models import UserToken  # Adjust the import according to your pr
 import json
 import asyncio
 from django.core.exceptions import ObjectDoesNotExist
-
+from django.db.models import Sum
+from django.db.models import F
 class GetCart(AsyncWebsocketConsumer):
 
     @sync_to_async
@@ -33,6 +34,17 @@ class GetCart(AsyncWebsocketConsumer):
     @sync_to_async
     def fetch_cart_items(self, user):
         all_in_cards_for_this_user = list(CardOrderItems.objects.filter(user=user).values())
+        get_all_from_card = CardOrderItems.objects.filter(user=user)
+        total_price = get_all_from_card.aggregate(total_price=Sum('total_price_for_all'))['total_price']
+        data = {
+                "items": list(get_all_from_card.annotate(
+                    image_url=F('uoc_prod__image')
+                ).values(
+                    'uoc_prod__title', 'image_url', 'user_meal_type', 'quantity',
+                    'MealType', 'MealSideDishes', 'MealAdditions', 'total_price_for_all'
+                )),
+                "total_price": float(total_price)
+            }
         for item in all_in_cards_for_this_user:
             card_order_item = CardOrderItems.objects.get(id=item.get("id"))
             item["product_name"] = card_order_item.uoc_prod.title
@@ -40,7 +52,7 @@ class GetCart(AsyncWebsocketConsumer):
                 item["default_image"] = card_order_item.uoc_prod.image.url
             except CardOrderItems.DoesNotExist:
                 item["default_image"] = None
-        return {'success_cart_data': all_in_cards_for_this_user}
+        return {'success_cart_data': all_in_cards_for_this_user,"success_checkout_data":data}
 
     async def get_from_db_to_cart(self, token):
         try:
