@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-fp%+_8@lq$sc3)y1yfh)1u9(z-(v&==(-9vwo*3cb#stex5n*_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*","http://www.frito-restraunt.com","192.168.1.6"]
+ALLOWED_HOSTS = ["*","http://www.frito-restraunt.com","192.168.1.6","192.168.56.1"]
 
 
 # Application definition
@@ -51,7 +51,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("192.168.1.7", 6379)],
+            "hosts": [("192.168.1.6", 6379)],
         },
     },
 }
@@ -182,6 +182,6 @@ JAZZMIN_SETTINGS = {
 AUTH_USER_MODEL = 'userauths.User'
 # X_FRAME_OPTIONS = 'SAMEORIGIN'
 X_FRAME_OPTIONS = 'ALLOW-FROM *'
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True

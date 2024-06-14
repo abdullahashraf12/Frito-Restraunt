@@ -490,6 +490,7 @@ body, html {
 </style>
 </head>
 <body style="overflow-y: auto;">
+    <input id="user_token" value="{{ user_token }}" hidden>
 <!-- zoom: 100%; transform: scale(1); transform-origin: 0 0;  -->
 
 
@@ -1255,7 +1256,43 @@ body, html {
 
     <script src="{% static 'assets/js/get_from_Card.js' %}"></script>
     <script src="{% static 'assets/js/remove_from_Card.js' %}"></script>
+    {% if request.user.is_authenticated %}
+    <script>
+    $(document).ready(function() {
+        // Get the user token from the hidden input field
+        const userToken = $('#user_token').val();
+        document.cookie = 'user_token=' + userToken + '; path=/';
 
+        // Establish a WebSocket connection with SSL
+        const socket = new WebSocket('ws://192.168.1.6/cart/');
+        
+        socket.onopen = function(event) {
+            console.log('WebSocket is connected.');
+        
+            // Send the token as part of the message
+        };
+
+
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            console.log('Message from server ', data);
+        };
+        
+
+        socket.onclose = function(event) {
+            console.log('WebSocket is closed now.');
+        };
+
+        socket.onerror = function(error) {
+            console.error('WebSocket error observed:', error);
+        };
+    });
+
+    </script>
+
+    {% else %}
+    <!-- Content for anonymous users -->
+{% endif %}
     <!-- <script src="{% static 'assets/js/add_client_review.js' %}"></script> -->
     <!-- <script src="{% static 'assets/js/get_review.js' %}"></script> -->
     <script>

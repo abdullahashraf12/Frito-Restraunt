@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import include,path
 from core.views import index,product_list,category_list,category_product_list_view,get_product_by_id,get_products_name,AddToCardView,show_card,RemoveFromCardView,wishlist,AddToWishCardView,RemoveFromWishCardView,AddReview,message_socket,offers_product_list_view,add_to_cart,remove_from_Card,checkout,checkout_ajax
+from .consumer import GetCart
+from django.urls import re_path
 app_name = "core"
 urlpatterns = [
 path("",include("home.urls", namespace='home')),
@@ -30,6 +32,10 @@ path("offers/<oid>/",offers_product_list_view,name="offers_product_list_view"),
 path('checkout/', checkout),
 
 path('admin/', admin.site.urls),
-path("user/",include("userauths.urls"))
+path("user/",include("userauths.urls")),
+
 ]
 
+# websocket_route=[
+#     re_path(r'core/ws/cart/$', GetCart.as_asgi()),
+# ]

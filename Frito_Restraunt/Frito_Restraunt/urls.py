@@ -19,7 +19,7 @@ from django.urls import path,include,re_path
 from django.conf import settings
 
 from django.views.static import serve
-
+from core.consumer import GetCart
 
 urlpatterns = [
 path('admin/', admin.site.urls),
@@ -31,4 +31,8 @@ path('core/', include('core.urls', namespace='core')),
 path('userauths/', include('userauths.urls')),
     path('product/', include('product.urls')),  # Include the product app URLs
 
+]
+
+websocket_route=[
+ path("cart/",GetCart.as_asgi()),
 ]
