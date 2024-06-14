@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.crypto import get_random_string
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.core.exceptions import ObjectDoesNotExist
 
 class User(AbstractUser):
     email = models.EmailField(unique=True)
@@ -24,7 +25,13 @@ class UserToken(models.Model):
         if not self.token:
             self.token = get_random_string(length=64)
         return super().save(*args, **kwargs)
-
+    @classmethod
+    def get_user_by_token(cls, token):
+        try:
+            user_token = cls.objects.get(token=token)
+            return user_token.user
+        except ObjectDoesNotExist:
+            return None
 @receiver(post_save, sender=User)
 def create_user_token(sender, instance, created, **kwargs):
     if created:
