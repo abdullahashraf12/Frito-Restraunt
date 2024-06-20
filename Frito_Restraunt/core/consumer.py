@@ -12,20 +12,7 @@ class GetCart(AsyncWebsocketConsumer):
     @sync_to_async
     def get_user_by_token(self, token):
         print(token)
-        print(token)
-        print(token)
-        print(token)
-        print(token)
-        print(token)
-        print(token)
-        print(token)
-        print(token)
-        print(token)
-        print(token)
-        print(token)
-        print(token)
-        print(token)
-        print(token)
+
         try:
             return UserToken.get_user_by_token(token)
         except ObjectDoesNotExist:
@@ -105,7 +92,7 @@ class GetCart(AsyncWebsocketConsumer):
                 if cart_data:
                     json_str = json.dumps(cart_data)
                     await self.send(text_data=json_str)
-                await asyncio.sleep(2)  # Wait for 2 seconds before sending the next message
+                await asyncio.sleep(1)  # Wait for 2 seconds before sending the next message
             except Exception as e:
                 print(f"Error sending message: {e}")
                 break  # Exit the loop on error or close flag

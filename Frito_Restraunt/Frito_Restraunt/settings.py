@@ -51,7 +51,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("192.168.1.6", 6379)],
+            "hosts": [("192.168.1.3", 6379)],
         },
     },
 }
@@ -185,3 +185,5 @@ X_FRAME_OPTIONS = 'ALLOW-FROM *'
 # SECURE_SSL_REDIRECT = True
 # SESSION_COOKIE_SECURE = True
 # CSRF_COOKIE_SECURE = True
+# SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin"
+SECURE_CROSS_ORIGIN_OPENER_POLICY = None
