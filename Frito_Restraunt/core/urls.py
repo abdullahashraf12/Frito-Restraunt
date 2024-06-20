@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import include,path
-from core.views import index,product_list,category_list,category_product_list_view,get_product_by_id,get_products_name,AddToCardView,show_card,RemoveFromCardView,wishlist,AddToWishCardView,RemoveFromWishCardView,AddReview,message_socket,offers_product_list_view,add_to_cart,remove_from_Card,checkout,checkout_ajax
+from core.views import index,product_list,category_list,category_product_list_view,get_product_by_id,get_products_name,AddToCardView,show_card,RemoveFromCardView,wishlist,AddToWishCardView,RemoveFromWishCardView,AddReview,message_socket,offers_product_list_view,add_to_cart,remove_from_Card,checkout,checkout_ajax,user_checked_items
 from .consumer import GetCart
 from django.urls import re_path
 app_name = "core"
@@ -27,6 +27,8 @@ path("get_products_name/",get_products_name,name="get_products_name"),
 path("products/",product_list,name="product_list"),
 
 path("category/",category_list,name="category_list"),
+path("user_checked_items/<user>/",user_checked_items,name="user_checked_items"),
+
 path("category/<cid>/",category_product_list_view,name="category_product_list"),
 path("offers/<oid>/",offers_product_list_view,name="offers_product_list_view"),
 path('checkout/', checkout),

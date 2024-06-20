@@ -16,6 +16,32 @@ from django.db.models import F
 
 # Create your views here.
 
+
+def user_checked_items(request,user):
+    if request.user.is_authenticated and request.user.is_staff:
+        # print(request.user.is_staff)
+        # print(request.user.is_staff)
+        # print(request.user.is_staff)
+        # print(request.user.is_staff)
+        # print(request.user.is_staff)
+        # print(request.user.is_staff)
+        # print(request.user.is_staff)
+        # print(request.user.is_staff)
+        cards_data = CardOrderItems.objects.filter(user=user)
+        return render(request,"user_ordered_items.html",context={"cards_data":cards_data})
+
+
+def all_users_ordered_items(request):
+    cards_data = CardOrderItems.objects.all()
+    return JsonResponse("all_Cards_for_All_users")
+
+
+
+
+
+
+
+
 def checkout_ajax(request):
     if str(request.user) != "AnonymousUser":
         get_all_from_card = CardOrderItems.objects.filter(user=request.user)

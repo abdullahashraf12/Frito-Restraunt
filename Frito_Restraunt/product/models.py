@@ -467,4 +467,4 @@ class CardOrderItems(models.Model):
     total_price_for_MealAdditions=models.FloatField(default=0.00)
     total_price_for_all=models.FloatField(default=0.00)
     product_offers = models.ForeignKey(Offers, on_delete=models.SET_NULL, null=True, related_name="Products_Offers")
-
+    checked_out_status = models.BooleanField(default=False)
