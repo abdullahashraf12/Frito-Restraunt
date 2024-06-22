@@ -249,17 +249,19 @@
                 </a>
             </div>
         </div>
-        <div style="height: 80px; width: 98%; background-color: snow; margin-top:25px;    border: 1px solid #ccc;
+        <!-- <div style="height: 80px; width: 98%; background-color: snow; margin-top:25px;    border: 1px solid #ccc;
     box-shadow: 0px 0px 10px 0px rgba(7, 159, 179, 0.589);">
 
-        <div onclick="openSmallDiv()" style="display: flex; align-items: center;">
+        <div onclick="openSmallDiv_Coupon()" style="display: flex; align-items: center;">
+            <a id="Get_Coupon" style="text-decoration: none; border-color: transparent; max-width: fit-content; height: fit-content; display: flex; align-items: center;">
+
             <img style="width: 50px; height: 50px; margin-left: 10px; margin-top: 15px;" src="{% static 'assets/imgs/discount_coupon.png' %}">
 
             <h4  style="color: rgba(1, 122, 254, 255); margin-left: 10px; margin-top: 15px;">Apply Coupon</h4>
             <h4 class="silver_arrow" onmouseover="this.classList.add('red')" onmouseout="this.classList.remove('red')" style="margin-top: 15px; font-size: 30px; margin-left: 287px; margin-right: 15px;">&#10148;</h4>
-
+            </a>
         </div>
-    </div>
+    </div> -->
     <div style="height: 80px; width: 98%; background-color: snow; margin-top:12px;    border: 1px solid #ccc;
     box-shadow: 0px 0px 10px 0px rgba(7, 159, 179, 0.589);">
 <div style="display: flex; align-items: center;">
@@ -268,7 +270,7 @@
 
     <!-- Add h5 element here -->
      {% if total_price %}  
-    <h5 id="Subtotal_mini_card" style="margin-left: auto; margin-top: 15px; margin-right: 10px; color: red;">{{ total_price }} L.E</h5>
+    <h5 id="Subtotal_mini_card" style="margin-left: auto; margin-top: 15px;  font-weight: bold; margin-right: 10px; color: red;">{{ total_price }} L.E</h5>
     {% endif %}
 </div>
 
@@ -276,11 +278,11 @@
     <div style="height: 80px; width: 98%; background-color: snow; margin-top:12px;    border: 1px solid #ccc;
     box-shadow: 0px 0px 10px 0px rgba(7, 159, 179, 0.589);">
 
-        <div style="display: flex; align-items: center;">
-
+        <div style="display: flex; align-items: center; margin-top: 15px;">
             <h6 style="color: rgba(1, 122, 254, 255); margin-left: 10px; margin-top: 15px; color: black;">Delivery Fees</h6>
-            <h5 style="margin-left: auto; margin-top: 15px; margin-right: 10px; color: black;">$100.00</h5>
-
+            <h5 style="display: inline-block; margin-left: auto;  margin-right: 10px; color: red; font-weight: bold;">25.00 L.E</h5>
+            <h5 style="display: inline-block; color: red; font-weight: bold; margin-right: 10px; margin-left: 10px;">To</h5>
+            <h5 style="display: inline-block; color: red; font-weight: bold; margin-right: 10px;">50.00 L.E</h5>
         </div>
     </div>
 
@@ -288,11 +290,60 @@
     
         
             
-            <div class="overlay_overlay" onclick="closeSmallDiv()"></div>
-            <div class="small-div_overlay" id="smallDiv">
-            <span onclick="closeSmallDiv()" class="close_overlay">&times;</span>
-            <p>This is a small div</p>
+            <div class="overlay_overlay" onclick="closeSmallDiv_Location()"></div>
+             <div class="small-div_overlay" id="smallDiv_location">
+            <span onclick="closeSmallDiv_Location()" class="close_overlay">&times;</span>
+            <label for="Address1">Address 1</label>
+
+            <input type="text" id="Address1" name="Address 1">
+            <label for="Address2">Address 2</label>
+
+            <input type="text" id="Address2" name="Address 2">
+            <label for="Mobile">Mobile Number </label>
+
+            <input type="number" id="Mobile" name="Address 1">
+            <button onclick="closeSmallDiv_Location()" style=" width: 100%; height: 100%;  font-weight: bold; color:white; background-color: red; text-align: center; font-size: 25px;"> Save</button>
+
             </div>
+
+
+
+        
+            <!-- <div class="overlay_overlay" onclick="closeSmallDiv_Coupon()"></div>
+             <div class="small-div_overlay" id="closeSmallDiv_Coupon__">
+            <span onclick="closeSmallDiv_Coupon()" class="close_overlay">&times;</span>
+            <label for="Address1">Address 1</label>
+
+            <input type="text" id="Address1" name="Address 1">
+            <label for="Address2">Address 2</label>
+
+            <input type="text" id="Address2" name="Address 1">
+            <label for="Mobile">Mobile Number </label>
+
+            <input type="text" id="Mobile" name="Address 1">
+            <button onclick="closeSmallDiv_Coupon()" style=" width: 100%; height: 100%;  font-weight: bold; color:white; background-color: red; text-align: center; font-size: 25px;"> Save</button>
+            </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             <input type="text" id="get_location_status"  value="None" data-getlocation="" hidden>
             <input type="text" id="latitude" value="None" data-latitude="" hidden>
@@ -309,15 +360,16 @@
         <div style="display: flex; align-items: center;">
 
             <h6 style="color: rgba(1, 122, 254, 255); margin-left: 10px; margin-top: 15px; color: black;">Total</h6>
-            <h5 style="margin-left: auto; margin-top: 15px; margin-right: 10px; color: black;">$100.00</h5>
+            <h5 style="margin-left: auto; margin-top: 15px; margin-right: 10px; color: red; font-weight: bold;">{{ total_price_for_all_with_Delivery }} L.E</h5>
 
         </div>
     </div>
     <div style="height: 20px;"></div>
+
     <div class="_miniViewCart_1qirm_133">
         <div class="_checkoutSection_1qirm_51">
         <div class="_cartAmount_1qirm_87">
-            <h5><span>232.99</span><span>EGP</span></h5><p>* All prices are VAT Inclusive</p>
+            <h5><span>{{ total_price_for_all_with_Delivery }}</span><span>EGP</span></h5><p>* All prices are VAT Inclusive</p>
         </div>
         <div class="_checkoutButton_1qirm_110">
             <span class="_label_1qirm_120">Place Order</span><span class="_chevron_1qirm_125"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 20 20" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg></span>
@@ -334,7 +386,70 @@
 </div>
 <script src="{% static 'assets/js/vendor/jquery-3.6.0.min.js' %}"></script>
 <script>
+    
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+function openSmallDiv_Location() {
+  document.getElementById("smallDiv_location").style.display = "block";
+  document.querySelector('.overlay_overlay').style.display = 'block';
+
+}
+function closeSmallDiv_Location() {
+  document.getElementById("smallDiv_location").style.display = "none";
+  document.querySelector('.overlay_overlay').style.display = 'none';
+  document.getElementById("closeSmallDiv_Coupon__").style.display = "none";
+
+}
+
+function openSmallDiv_Coupon() {
+  document.getElementById("closeSmallDiv_Coupon__").style.display = "block";
+  document.querySelector('.overlay_overlay').style.display = 'block';
+  
+}
+
+function closeSmallDiv_Coupon() {
+    document.getElementById("smallDiv_location").style.display = "none";
+  document.querySelector('.overlay_overlay').style.display = 'none';
+  document.getElementById("closeSmallDiv_Coupon__").style.display = "none";
+
+}
+
+
     $(document).ready(function() {
+
+        
         var latitude = "";
     var longitude = "";
     var locationStatus = "";
@@ -380,6 +495,8 @@
         }
     }
 
+
+
     function showPosition(position) {
         console.log("showPosition called");
         $("#get_location_status").val("Success");
@@ -406,6 +523,7 @@
         var errorMessage = "";
         switch(error.code) {
             case error.PERMISSION_DENIED:
+            openSmallDiv_Location();
                 errorMessage = "User denied the request for Geolocation.";
                 break;
             case error.POSITION_UNAVAILABLE:
@@ -421,9 +539,12 @@
         $("#get_location_status").val(errorMessage);
         setLocationStatus(errorMessage);
 
-        alert(errorMessage);
+        // alert(errorMessage);
         console.log(errorMessage);
     }
+
+
+
 
     // Listen for clicks on the "Get My Location" link
     $("#Get_My_Location").on("click", function(event) {
@@ -431,18 +552,21 @@
         console.log("Get My Location link clicked");
         getLocation();
     });
+
+    
+    
+
+
+
 });
 
 
-function openSmallDiv() {
-  document.getElementById("smallDiv").style.display = "block";
-  document.querySelector('.overlay_overlay').style.display = 'block';
-}
 
-function closeSmallDiv() {
-  document.getElementById("smallDiv").style.display = "none";
-  document.querySelector('.overlay_overlay').style.display = 'none';
-}
+
+
+
+
+
 
 
     </script>

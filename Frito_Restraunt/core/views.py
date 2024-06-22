@@ -16,6 +16,8 @@ from django.db.models import F
 
 # Create your views here.
 
+def my_orders(request):
+    return render(request,"MyOrders.html")
 
 def user_checked_items(request,user):
     if request.user.is_authenticated and request.user.is_staff:
@@ -114,7 +116,9 @@ def checkout(request):
         total_price = CardOrderItems.objects.filter(user=request.user).aggregate(total_price=Sum('total_price_for_all'))['total_price']
         print("==================")
         print("Total Prices = "+str(total_price))
-        return render(request,"checkout.html",context={"all_from_Card":get_all_from_card,"total_price":total_price})
+        if total_price ==None:
+            total_price = 0.00
+        return render(request,"checkout.html",context={"all_from_Card":get_all_from_card,"total_price":total_price,"total_price_for_all_with_Delivery":str(float(total_price+50.00))})
 
     else:
         return render(request,"checkout.html",context={})

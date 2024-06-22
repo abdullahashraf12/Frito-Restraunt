@@ -12,9 +12,16 @@ try{
                 console.log("Success:", response);
                 if(response.error=="User Empty"){
                     $("#Add_Products_from_card_here").html("<h4 style='color:darkblue; font-weight:bolder; font-size=medium; text-align: center; '>Nothing To Show <h4>")
-    
+                    $("#Add_Products_from_card_here").append(`
+                        <button style='width:100%; height:50px; color: white; background-color:blue; font-weight:bold;'>My Orders</button>
+                        `)
                 } else if (response.success && Array.isArray(response.success) && response.success.length === 0) {
                     $("#Add_Products_from_card_here").html("<h4 style='color:darkblue; font-weight:bolder; font-size=medium; text-align: center; '>Nothing To Show <h4>")
+                    $("#Add_Products_from_card_here").append(`
+                        <form method="GET" action="/core/my_orders">
+                        <button type="submit" style='width:100%; height:50px; color: white; background-color:blue; font-weight:bold;'>My Orders</button>
+                        </form>
+                        `)
                     let number_of_ordered_items = 0
                     $("#number_of_ordered_items").html(number_of_ordered_items)
                     total_for_all_products=0.00
@@ -99,13 +106,18 @@ try{
                             
                         }
                     }
+                  
                     $("#Add_Products_from_card_here").append(`<div style="display: flex; justify-content: space-between; padding-left: 10px; padding-right: 10px;">
         <h4>Total Price:</h4>
         <h5><b style="color:red; padding-right: 10px;">Price ${total_for_all_products} L.E</b></h5>
     </div>
      `)
      $("#Add_Products_from_card_here").append("<form method='GET' action='/core/checkout' ><button style='width:100%; height:50px; color: white; background-color:red; font-weight:bold;'>Checkout</button></form>");
-     
+     $("#Add_Products_from_card_here").append(`
+        <form method="GET" action="/core/my_orders">
+        <button type="submit" style='width:100%; height:50px; color: white; background-color:blue; font-weight:bold;'>My Orders</button>
+        </form>
+        `)
     
                     // Handle the response data here
                     console.log("Response success:", response.success);
