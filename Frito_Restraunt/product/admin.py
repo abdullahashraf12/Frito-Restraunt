@@ -4,7 +4,7 @@ from django.forms.models import BaseInlineFormSet
 from django.utils.html import format_html
 from .models import (Products, Category, Vendor, CardOrder, ProductImages, ProductReview, WishList, Address, Tags, 
                      UserOrderCard, Offers, ProductMealType, ProductSideDish, ProdutsAdditions, ProductAdditionsNames, 
-                     ProductMealTypeNames, ProductSideDishNames, OffersNames, CardOrderItems, ProductsOffers)
+                     ProductMealTypeNames, ProductSideDishNames, OffersNames, CardOrderItems, ProductsOffers,CashierTable)
 import logging
 
 # Register your models here.
@@ -144,6 +144,37 @@ class Offers_Admin(admin.ModelAdmin):
     search_fields = ['oid', "product_offers"]
     list_display = ["oid", "product_offers"]
 
+
+class CasherOrderItemsAdmin(admin.ModelAdmin):
+    search_fields = ['client__username', 'SalesRep__username', 'client_status']  # Adjust fields based on your actual model structure
+    
+    list_display = [
+        "order_number",
+        "order_date",
+        "client",
+        "address",
+        "client_number",
+        "total_price",
+        "client_status",
+        "SalesRep"
+    ]
+    
+    def get_search_results(self, request, queryset, search_term):
+        queryset, use_distinct = super().get_search_results(request, queryset, search_term)
+        
+        try:
+            # Filter by client name
+            queryset |= self.model.objects.filter(client__username__icontains=search_term)
+            
+            # Filter by SalesRep name
+            queryset |= self.model.objects.filter(SalesRep__username__icontains=search_term)
+            
+        except (TypeError, ValueError):
+            pass  # Handle errors if any
+        
+        return queryset, use_distinct
+
+
 admin.site.register(Products, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Vendor, VendorAdmin)
@@ -158,6 +189,7 @@ admin.site.register(ProductSideDishNames, ProductSideDishNamesAdmin)
 admin.site.register(ProductAdditionsNames, ProdutsAdditionsAdmin)
 admin.site.register(OffersNames, OffersNamesdmin)
 admin.site.register(CardOrderItems, CardOrderedItemsAdmin)
+admin.site.register(CashierTable, CasherOrderItemsAdmin)
 
 
 
