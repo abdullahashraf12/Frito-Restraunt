@@ -354,22 +354,32 @@
             height: 1px;
             background-color: black; 
             margin: 20px auto; "></p>
-    <div style="height: 80px; width: 98%; background-color: snow; margin-top:12px;    border: 1px solid #ccc;
-    box-shadow: 0px 0px 10px 0px rgba(7, 159, 179, 0.589);">
+<div style="height: 80px; width: 98%; background-color: snow; margin-top: 12px; border: 1px solid #ccc; box-shadow: 0px 0px 10px 0px rgba(7, 159, 179, 0.589);">
 
+    <div style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
+
+        <!-- First row -->
         <div style="display: flex; align-items: center;">
-
-            <h6 style="color: rgba(1, 122, 254, 255); margin-left: 10px; margin-top: 15px; color: black;">Total</h6>
-            <h5 style="margin-left: auto; margin-top: 15px; margin-right: 10px; color: red; font-weight: bold;">{{ total_price_for_all_with_Delivery }} L.E</h5>
-
+            <h6 style="color: rgba(1, 122, 254, 255); margin-left: 10px; color: black;">Total</h6>
+            <h5 style="margin-left: auto; margin-right: 10px; color: red; font-weight: bold;">
+                {{ total_price_for_all_with_Delivery | floatformat:2 }} L.E
+            </h5>
         </div>
+
+        <!-- Second row -->
+        <h6 style="margin-left: 10px; margin-top: 5px;"> <span style="color: red;">Note:</span> Max Price Delivery is Applied</h6>
+
     </div>
+
+</div>
+
+
     <div style="height: 20px;"></div>
 
     <div class="_miniViewCart_1qirm_133">
         <div class="_checkoutSection_1qirm_51">
         <div class="_cartAmount_1qirm_87">
-            <h5><span>{{ total_price_for_all_with_Delivery }}</span><span>EGP</span></h5><p>* All prices are VAT Inclusive</p>
+            <h5><span>{{ total_price_for_all_with_Delivery| floatformat:2 }}</span><span>EGP</span></h5><p>* All prices are VAT Inclusive</p>
         </div>
         <div class="_checkoutButton_1qirm_110">
             <span class="_label_1qirm_120">Place Order</span><span class="_chevron_1qirm_125"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 20 20" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg></span>
