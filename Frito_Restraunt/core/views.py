@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render ,redirect
 from rest_framework.response import Response
-from product.models import Products,Category,CardOrder,CardOrderItems,ProductImages,ProductReview,WishList,Address,Tags,UserOrderCard,WishList,ProductReview,ProductMealType,ProductSideDish,ProdutsAdditions,Offers , ProductsOffers,OffersNames
+from product.models import Products,Category,CardOrder,CardOrderItems,ProductImages,ProductReview,WishList,Address,Tags,UserOrderCard,WishList,ProductReview,ProductMealType,ProductSideDish,ProdutsAdditions,Offers , ProductsOffers,OffersNames ,CashierTable
 from rest_framework.views import APIView
 from rest_framework import status
 from django.db.models import Q
@@ -13,10 +13,47 @@ from django.core.serializers.json import DjangoJSONEncoder
 import json
 from django.db.models import Sum
 from django.db.models import F
+from django.db import models
+from django.utils import timezone
 
 # Create your views here.
+def place_order(request):
+    if request.user.is_authenticated :
+        if request.method == 'POST' :
+            max_order_number = CashierTable.objects.aggregate(models.Max('order_number'))['order_number__max']
+
+            # If max_order_number is None or 0, set next_order_number to 1; otherwise, increment max_order_number by 1
+            next_order_number = 1 if max_order_number is None or max_order_number == 0 else max_order_number + 1
+
+            # Update CardOrderItems for the current user where order_number is 0
+            get_Card = CardOrderItems.objects.filter(user=request.user)
+            get_Card.update(checked_out_status=True, order_number=next_order_number)
+            address = request.POST.get("address_1")
+            client_number= request.POST.get("mobile_number")
+            # ['total_sum']
+            aggregated_result = get_Card.aggregate(total_sum=Sum('total_price_for_all'))
+
+            # Extract the aggregated value from the result
+            total_price = aggregated_result['total_sum'] if aggregated_result['total_sum'] else 0
+
+            # Add 50 for cashier
+            total_price_with_cashier = total_price + 50
+            # +50
+            print(total_price_with_cashier)
+            print(total_price_with_cashier)
+            print(total_price_with_cashier)
+            casheir = CashierTable(order_number=next_order_number,order_date=timezone.now().isoformat(),client=request.user,address=address,client_number=client_number,total_price=total_price_with_cashier)
+            casheir.save()
+            return redirect("core:my_orders")
+        else:
+            return redirect("core:checkout")
+
+    else:
+        return redirect("core:checkout")
+
 
 def my_orders(request):
+
     return render(request,"MyOrders.html")
 
 def user_checked_items(request,user):
@@ -58,7 +95,9 @@ def checkout_ajax(request):
         print("close headers")
         if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
             print(get_all_from_card)
-
+            if(total_price==None) :
+                total_price = 0.00
+                        
             data = {
                 "items": list(get_all_from_card.annotate(
                     image_url=F('uoc_prod__image')

@@ -5,12 +5,21 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.exceptions import ObjectDoesNotExist
 
+USER_TYPE = [
+
+    ("Client","Client"),
+    ("Cashier","Cashier"),
+    ("Sales Representative","Sales Representative"),
+
+
+    ]
 class User(AbstractUser):
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=100)
     bio = models.CharField(max_length=100)
     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)  # Model field
-
+    client_status = models.CharField(choices=USER_TYPE,max_length=30,default="Client")
+    Address = models.CharField(max_length=2000 , default="")
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 

@@ -4,6 +4,7 @@ from django.utils.safestring import mark_safe
 from userauths.models import User
 from django.core.exceptions import ValidationError
 from django.utils.html import format_html
+from django.utils import timezone
 
 # Create your models here.
 
@@ -468,3 +469,25 @@ class CardOrderItems(models.Model):
     total_price_for_all=models.FloatField(default=0.00)
     product_offers = models.ForeignKey(Offers, on_delete=models.SET_NULL, null=True, related_name="Products_Offers")
     checked_out_status = models.BooleanField(default=False)
+    order_number = models.IntegerField(default=0)
+
+CLIENT_ORDER_STATUS = [
+
+    ("New","New"),
+    ("In Progress","In Progress"),
+    ("On Delivery","On Delivery"),
+    ("Finished","Finished"),
+
+
+    ]
+class CashierTable(models.Model):
+    order_number = models.IntegerField(default=0)
+    order_date = models.DateTimeField(default=timezone.now)
+    client = models.ForeignKey(User,on_delete=models.CASCADE,related_name="client")
+    address = models.CharField(max_length=2000)
+    client_number = models.IntegerField()
+    total_price = models.FloatField(default=0.00)
+    client_status = models.CharField(choices=CLIENT_ORDER_STATUS,max_length=30,default="New")
+    SalesRep = models.ForeignKey(User,on_delete=models.CASCADE,related_name="sale_rep",default="" , null=True)
+
+
