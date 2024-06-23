@@ -15,6 +15,41 @@ from django.db.models import Sum
 from django.db.models import F
 from django.db import models
 from django.utils import timezone
+from django.http import JsonResponse, HttpResponseNotAllowed
+from userauths.models import User
+
+
+
+def save_cashier_table(request, id):
+    if request.method == 'POST':
+        # Process the POST data
+        client_status = request.POST.get('client_status')
+        sales_rep = request.POST.get('SalesRep')
+        print(User.objects.get(id=int(sales_rep)))
+        print(request.user)
+        # Save the data (example: update the model instance)
+        cashier_instance = CashierTable.objects.get(pk=id)
+        cashier_instance.client_status = client_status
+        cashier_instance.SalesRep = User.objects.get(id=int(sales_rep))
+        cashier_instance.save()
+        print(cashier_instance)
+        # Return updated data as JSON response
+        return JsonResponse({
+            'client_status': cashier_instance.client_status,
+            "SalesRep":User.objects.get(id=int(sales_rep)).username
+            # 'SalesRep': cashier_instance.sales_rep,
+        })
+    else:
+        # Handle other HTTP methods if necessary
+        return HttpResponseNotAllowed(['POST'])
+
+
+
+
+
+
+
+
 
 def user_ordered_items(request,user_email):
     print(user_email)

@@ -1,6 +1,76 @@
 
 
 $(document).ready(function() {
+
+
+
+
+   
+  // Add save button functionality
+  $('.save-button').on('click', function(e) {
+    e.preventDefault();
+    
+    var row = $(this).closest('tr');
+    var id = row.find('th.field-id a').text().trim();
+    var clientStatus = row.find('select[name="client_status"]').val();
+    var salesRep = row.find('select[name="SalesRep"]').val();
+    
+    var data = {
+        'pk': id,
+        'client_status': clientStatus,
+        'SalesRep': salesRep
+    };
+
+    // Perform AJAX request to save data
+    $.ajax({
+        url: '/core/save_cashier_table/' + data.pk ,
+        method: 'POST',
+        data: {
+            'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+            'client_status': data.client_status,
+            'SalesRep': data.SalesRep,
+            'id': parseInt(data.pk)  // Include the ID in the POST data
+        },
+        success: function(response) {
+            // Optional: Handle success response if needed
+            console.log('Data saved successfully!');
+            // Example: Update UI or show a success message
+            console.log(response.client_status)
+            console.log(response.SalesRep)
+            // Assuming response contains updated data, you can update the row
+            // For example, if your response includes updated client_status and SalesRep values
+         
+            // Alternatively, you can reload the entire row from the server if needed
+            // Example: row.load('/admin/product/cashiertable/' + data.pk + '/'); // Reloads the row
+            
+        },
+        error: function(xhr, status, error) {
+            // Optional: Handle error response if needed
+            console.error('Error saving data:', error);
+            // Example: Show an error message to the user
+        }
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     var $currentIframe = null;
 
     // Open or close popup when a link with class 'openPopup' is clicked
@@ -76,6 +146,21 @@ $(document).ready(function() {
             }
         }
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 });
 
 // $(document).ready(function() {
