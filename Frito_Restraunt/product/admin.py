@@ -201,17 +201,21 @@ class CasherOrderItemsAdmin(admin.ModelAdmin):
     
     def open_popup_button(self, obj):
         if obj.client.email:
-            return format_html(
-                f"""
-                <a href="#popupVideo" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">Open Client Data</a>
-<div data-role="popup" id="popupVideo" data-overlay-theme="b" data-theme="a" data-tolerance="15,15" class="ui-content">
-    <iframe src="/core/user_ordered_items/{obj.client.email}" width="497" height="298" seamless=""></iframe>
-</div>"""
-                # email=obj.client.email
-            )
+            return format_html(f"""
+<div class="popup-container">
+    <a href="#" class="openPopup ui-btn ui-corner-all ui-shadow ui-btn-inline">Open Client Data</a>
+    <div class="popup">
+        <div class="popup-content">
+            <iframe name="my_iframe" data-src="/core/user_ordered_items/{obj.client.email}" class="videoIframe" style="display: none; margin-left: -360%; margin-top: 10%;" width="450%" height="400px" seamless=""></iframe>
+        </div>
+    </div>
+</div>
+
+
+            """)
         else:
-            return "No email available"  # Handle case where email is None or empty
-    
+            return "No email available"
+
 
 
 

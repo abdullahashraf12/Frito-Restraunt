@@ -1,46 +1,137 @@
-// popup examples
-$( document ).on( "pagecreate", function() {
-        // The window width and height are decreased by 30 to take the tolerance of 15 pixels at each side into account
-        function scale( width, height, padding, border ) {
-            var scrWidth = $( window ).width() - 30,
-                scrHeight = $( window ).height() - 30,
-                ifrPadding = 2 * padding,
-                ifrBorder = 2 * border,
-                ifrWidth = width + ifrPadding + ifrBorder,
-                ifrHeight = height + ifrPadding + ifrBorder,
-                h, w;
-            if ( ifrWidth < scrWidth && ifrHeight < scrHeight ) {
-                w = ifrWidth;
-                h = ifrHeight;
-            } else if ( ( ifrWidth / scrWidth ) > ( ifrHeight / scrHeight ) ) {
-                w = scrWidth;
-                h = ( scrWidth / ifrWidth ) * ifrHeight;
-            } else {
-                h = scrHeight;
-                w = ( scrHeight / ifrHeight ) * ifrWidth;
-            }
-            return {
-                'width': w - ( ifrPadding + ifrBorder ),
-                'height': h - ( ifrPadding + ifrBorder )
-            };
-        };
-        $( ".ui-popup iframe" )
-            .attr( "width", 0 )
-            .attr( "height", "auto" );
-        $( "#popupVideo" ).on({
-            popupbeforeposition: function() {
-                // call our custom function scale() to get the width and height
-                var size = scale( 497, 298, 15, 1 ),
-                    w = size.width,
-                    h = size.height;
-                $( "#popupVideo iframe" )
-                    .attr( "width", w )
-                    .attr( "height", h );
-            },
-            popupafterclose: function() {
-                $( "#popupVideo iframe" )
-                    .attr( "width", 0 )
-                    .attr( "height", 0 );
-            }
-        });
+
+
+$(document).ready(function() {
+    var $currentIframe = null;
+
+    // Open or close popup when a link with class 'openPopup' is clicked
+    $('.openPopup').click(function(e) {
+        e.preventDefault();
+
+        var $popup = $(this).siblings('.popup');
+        var $iframe = $popup.find('.videoIframe');
+
+        // Close all other popups
+        // $('.popup').not($popup).fadeOut();
+
+        // Toggle the clicked popup
+        $popup.fadeToggle(function() {
+            // Check if the popup is now visible
+            
+            var isVisible = $popup.is(':visible');
+            console.log(isVisible)
+            if (isVisible) {
+                // Popup is now visible, load iframe content if not already loaded
+                var iframeSrc = $iframe.attr('data-src');
+                if (iframeSrc && !$iframe.attr('src')) {
+                    $iframe.attr('src', iframeSrc).on('load', function() {
+                        $iframe.fadeIn();
+                        $currentIframe = $iframe;
+                    });
+                }
+            } else {
+                var iframeSrc = $iframe.attr('data-src');
+                if (iframeSrc && !$iframe.attr('src')) {
+                    $iframe.attr('src', iframeSrc).on('load', function() {
+                        $iframe.fadeIn();
+                        $currentIframe = $iframe;
+                        $popup.fadeIn();
+                    });
+                }
+                // Popup is now hidden, remove iframe if it exists
+                if ($currentIframe && $currentIframe.parent().is($popup)) {
+                    $currentIframe.fadeOut('fast', function() {
+                        $(this).remove(); // Remove the iframe from DOM
+                    });
+                    $currentIframe = null;
+                }
+            }
+        });
     });
+
+    // Close popup when close button or outside popup content is clicked
+    $('.popup .close, .popup-overlay').click(function() {
+        var $popup = $(this).closest('.popup');
+        var $iframe = $popup.find('.videoIframe');
+
+        $popup.fadeOut();
+
+        // Check if $currentIframe is in this popup and remove it
+        if ($currentIframe && $currentIframe.parent().is($popup)) {
+            $currentIframe.fadeOut('fast', function() {
+                $(this).remove(); // Remove the iframe from DOM
+            });
+            $currentIframe = null;
+        }
+    });
+
+    // Optional: Close popup when Escape key is pressed
+    $(document).keyup(function(e) {
+        if (e.key === "Escape") {
+            $('.popup').fadeOut();
+            if ($currentIframe) {
+                $currentIframe.fadeOut('fast', function() {
+                    $(this).remove(); // Remove the iframe from DOM
+                });
+                $currentIframe = null;
+            }
+        }
+    });
+});
+
+// $(document).ready(function() {
+//     var $currentIframe = null;
+
+//     // Open or close popup when a link with class 'openPopup' is clicked
+//     $('.openPopup').click(function(e) {
+//         e.preventDefault();
+
+//         var $popup = $(this).siblings('.popup');
+
+//         // Close all other popups and reset currently displayed iframe
+//         $('.popup').not($popup).fadeOut();
+//         if ($currentIframe) {
+//             $currentIframe.fadeOut('fast', function() {
+//                 $currentIframe.remove();
+//             });
+//             $currentIframe = null;
+//         }
+
+//         // Toggle the clicked popup
+//         $popup.fadeToggle();
+
+//         // Load iframe content if not already loaded
+//         var $iframe = $popup.find('.videoIframe');
+//         var iframeSrc = $iframe.attr('data-src');
+//         if (iframeSrc && !$iframe.attr('src')) {
+//             $iframe.attr('src', iframeSrc).on('load', function() {
+//                 $iframe.fadeIn();
+//                 $currentIframe = $iframe;
+//             });
+//         }
+//     });
+
+//     // Close popup when close button or outside popup content is clicked
+//     $('.popup .close, .popup-overlay').click(function() {
+//         var $popup = $(this).closest('.popup');
+//         $popup.fadeOut();
+//         if ($currentIframe) {
+//             $currentIframe.fadeOut('fast', function() {
+//                 $currentIframe.remove();
+//             });
+//             $currentIframe = null;
+//         }
+//     });
+
+//     // Optional: Close popup when Escape key is pressed
+//     $(document).keyup(function(e) {
+//         if (e.key === "Escape") {
+//             $('.popup').fadeOut();
+//             if ($currentIframe) {
+//                 $currentIframe.fadeOut('fast', function() {
+//                     $currentIframe.remove();
+//                 });
+//                 $currentIframe = null;
+//             }
+//         }
+//     });
+// });
