@@ -51,7 +51,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("192.168.1.3", 6379)],
+            "hosts": [("192.168.1.8", 6379)],
         },
     },
 }
@@ -180,8 +180,8 @@ JAZZMIN_SETTINGS = {
     "site_logo":"assets/imgs/loading.gif"
 }
 AUTH_USER_MODEL = 'userauths.User'
-# X_FRAME_OPTIONS = 'SAMEORIGIN'
-X_FRAME_OPTIONS = 'ALLOW-FROM *'
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+# X_FRAME_OPTIONS = 'ALLOW-FROM *'
 # SECURE_SSL_REDIRECT = True
 # SESSION_COOKIE_SECURE = True
 # CSRF_COOKIE_SECURE = True

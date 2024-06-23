@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import include,path
-from core.views import index,product_list,category_list,category_product_list_view,get_product_by_id,get_products_name,AddToCardView,show_card,RemoveFromCardView,wishlist,AddToWishCardView,RemoveFromWishCardView,AddReview,message_socket,offers_product_list_view,add_to_cart,remove_from_Card,checkout,checkout_ajax,user_checked_items,my_orders,place_order
+from core.views import index,product_list,category_list,category_product_list_view,get_product_by_id,get_products_name,AddToCardView,show_card,RemoveFromCardView,wishlist,AddToWishCardView,RemoveFromWishCardView,AddReview,message_socket,offers_product_list_view,add_to_cart,remove_from_Card,checkout,checkout_ajax,user_checked_items,my_orders,place_order,user_ordered_items
 from .consumer import GetCart
 from django.urls import re_path
 app_name = "core"
@@ -33,6 +33,7 @@ path("category/<cid>/",category_product_list_view,name="category_product_list"),
 path("offers/<oid>/",offers_product_list_view,name="offers_product_list_view"),
 path('checkout/', checkout,name="checkout"),
 path('my_orders/', my_orders,name="my_orders"),
+path('user_ordered_items/<user_email>', user_ordered_items,name="user_ordered_items"),
 
 path('admin/', admin.site.urls),
 path("user/",include("userauths.urls")),

@@ -16,6 +16,17 @@ from django.db.models import F
 from django.db import models
 from django.utils import timezone
 
+def user_ordered_items(request,user_email):
+    print(user_email)
+    print(user_email)
+    print(user_email)
+    print(user_email)
+    print(user_email)
+    print(user_email)
+    print(user_email)
+    return render(request,"user_ordered_items.html")
+
+
 # Create your views here.
 def place_order(request):
     if request.user.is_authenticated :
@@ -28,6 +39,7 @@ def place_order(request):
             # Update CardOrderItems for the current user where order_number is 0
             get_Card = CardOrderItems.objects.filter(user=request.user)
             get_Card.update(checked_out_status=True, order_number=next_order_number)
+            # get_Card.delete()
             address = request.POST.get("address_1")
             client_number= request.POST.get("mobile_number")
             # ['total_sum']
@@ -83,7 +95,7 @@ def all_users_ordered_items(request):
 
 def checkout_ajax(request):
     if str(request.user) != "AnonymousUser":
-        get_all_from_card = CardOrderItems.objects.filter(user=request.user)
+        get_all_from_card = CardOrderItems.objects.filter(user=request.user,checked_out_status=False)
         total_price = get_all_from_card.aggregate(total_price=Sum('total_price_for_all'))['total_price']
         print("open headers")
         print(request.headers.get('X-Requested-With'))
@@ -149,10 +161,10 @@ def checkout(request):
         print(request.user)
         print(request.user)
         print("here 234")
-        get_all_from_card=CardOrderItems.objects.filter(user=request.user)
+        get_all_from_card=CardOrderItems.objects.filter(user=request.user,checked_out_status=False)
         print(list(get_all_from_card.values()))
 
-        total_price = CardOrderItems.objects.filter(user=request.user).aggregate(total_price=Sum('total_price_for_all'))['total_price']
+        total_price = CardOrderItems.objects.filter(user=request.user,checked_out_status=False).aggregate(total_price=Sum('total_price_for_all'))['total_price']
         print("==================")
         print("Total Prices = "+str(total_price))
         if total_price ==None:
@@ -243,7 +255,8 @@ def add_to_cart(request):
                     user=request.user, 
                     uoc_prod=Prod, 
                     user_meal_type="Default",
-                    product_offers=ProductsOffers.objects.get(product=Prod,default=True).product_offers
+                    product_offers=ProductsOffers.objects.get(product=Prod,default=True).product_offers,
+                    checked_out_status=False
                 )
 
 
@@ -271,7 +284,7 @@ def add_to_cart(request):
                     existing_object = CardOrderItems.objects.get(user=request.user, 
                     uoc_prod=Prod, 
                     user_meal_type="Default",
-                    product_offers=ProductsOffers.objects.get(product=Prod,default=True).product_offers)
+                    product_offers=ProductsOffers.objects.get(product=Prod,default=True,checked_out_status=False).product_offers)
                     existing_object.quantity = product_quantity   # Increment the quantity by 1
                     print("i am here 100")
 
@@ -342,7 +355,7 @@ def add_to_cart(request):
                 print(offer_oid)
                 Prod= Products.objects.get(pid=pid)
                 print("222222222222222222222")
-                data_exists = CardOrderItems.objects.filter(user=request.user, uoc_prod=Prod, user_meal_type="Special Order").exists()
+                data_exists = CardOrderItems.objects.filter(user=request.user, uoc_prod=Prod, user_meal_type="Special Order",checked_out_status=False).exists()
                 print("444444444444444444444444")
 
                 mealType = request.POST.get("mealType")
@@ -436,7 +449,7 @@ def add_to_cart(request):
                 else:
                         print("90909909")
                         try:
-                            existing_object=CardOrderItems.objects.get(user=request.user, uoc_prod=Prod, user_meal_type="Special Order",product_offers= Offers.objects.get(oid=offer_oid))
+                            existing_object=CardOrderItems.objects.get(user=request.user, uoc_prod=Prod, user_meal_type="Special Order",product_offers= Offers.objects.get(oid=offer_oid),checked_out_status=False)
                             print("58585885855")
 
                             existing_object.quantity = 0  
@@ -465,7 +478,7 @@ def add_to_cart(request):
             return JsonResponse({'error': 'User Must Login To Add To Card'}, status=200)
         elif request.method == 'GET' and request.user != "AnonymousUser":
             user = request.user
-            all_in_cards_for_this_user = list(CardOrderItems.objects.filter(user=user).values())
+            all_in_cards_for_this_user = list(CardOrderItems.objects.filter(user=user,checked_out_status=False).values())
 
             print("++++++++++++++++++++++++++++++")
             print(all_in_cards_for_this_user)
@@ -475,7 +488,7 @@ def add_to_cart(request):
             # data = []
             n=0
             for item in all_in_cards_for_this_user:
-                card_order_item = CardOrderItems.objects.get(id=item.get("id"))
+                card_order_item = CardOrderItems.objects.get(id=item.get("id"),checked_out_status=False)
 
                 item["product_name"] = card_order_item.uoc_prod.title
                 try:
@@ -554,7 +567,7 @@ def remove_from_Card(request):
         print(product_id_remove_from_button)
         print(product_type_def_special)
         try:
-            get_from_Card_by_user_and_product_id = CardOrderItems.objects.get(user=user, uoc_prod=product_id_remove_from_button,user_meal_type=product_type_def_special,product_offers= Offers.objects.get(product_offers= OffersNames.objects.get(product_offers_offers=offer_type))  )
+            get_from_Card_by_user_and_product_id = CardOrderItems.objects.get(user=user, uoc_prod=product_id_remove_from_button,user_meal_type=product_type_def_special,product_offers= Offers.objects.get(product_offers= OffersNames.objects.get(product_offers_offers=offer_type)),checked_out_status=False  )
         except CardOrderItems.DoesNotExist:
             pass
 

@@ -145,8 +145,47 @@ class Offers_Admin(admin.ModelAdmin):
     list_display = ["oid", "product_offers"]
 
 
+# class CasherOrderItemsAdmin(admin.ModelAdmin):
+#     search_fields = ['client__username', 'SalesRep__username', 'client_status']  # Adjust fields based on your actual model structure
+    
+#     list_display = [
+#         "order_number",
+#         "order_date",
+#         "client",
+#         "address",
+#         "client_number",
+#         "total_price",
+#         "client_status",
+#         "SalesRep"
+#     ]
+    
+#     def get_search_results(self, request, queryset, search_term):
+#         queryset, use_distinct = super().get_search_results(request, queryset, search_term)
+        
+#         try:
+#             # Filter by client name
+#             queryset |= self.model.objects.filter(client__username__icontains=search_term)
+            
+#             # Filter by SalesRep name
+#             queryset |= self.model.objects.filter(SalesRep__username__icontains=search_term)
+            
+#         except (TypeError, ValueError):
+#             pass  # Handle errors if any
+        
+#         return queryset, use_distinct
+
+
+
+
+
+
+# admin.py
+from django.contrib import admin
+from .models import CashierTable
+            # f'<a href={obj.get_popup_url()}>Hello</a>'
+
 class CasherOrderItemsAdmin(admin.ModelAdmin):
-    search_fields = ['client__username', 'SalesRep__username', 'client_status']  # Adjust fields based on your actual model structure
+    search_fields = ['client__username', 'SalesRep__username', 'client_status']
     
     list_display = [
         "order_number",
@@ -156,8 +195,27 @@ class CasherOrderItemsAdmin(admin.ModelAdmin):
         "client_number",
         "total_price",
         "client_status",
-        "SalesRep"
+        "SalesRep",
+        "open_popup_button"  # Custom method for the button
     ]
+    
+    def open_popup_button(self, obj):
+        if obj.client.email:
+            return format_html(
+                f"""
+                <a href="#popupVideo" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">Open Client Data</a>
+<div data-role="popup" id="popupVideo" data-overlay-theme="b" data-theme="a" data-tolerance="15,15" class="ui-content">
+    <iframe src="/core/user_ordered_items/{obj.client.email}" width="497" height="298" seamless=""></iframe>
+</div>"""
+                # email=obj.client.email
+            )
+        else:
+            return "No email available"  # Handle case where email is None or empty
+    
+
+
+
+    open_popup_button.short_description = 'Open Client Data'  # Set the column header text
     
     def get_search_results(self, request, queryset, search_term):
         queryset, use_distinct = super().get_search_results(request, queryset, search_term)
@@ -173,6 +231,25 @@ class CasherOrderItemsAdmin(admin.ModelAdmin):
             pass  # Handle errors if any
         
         return queryset, use_distinct
+    class Media:
+        css= ("/static/admin/css/admin_button_client.css")
+        js = ("/static/assets/js/vendor/jquery-3.6.0.min.js",'/static/admin/js/open_popup.js',)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 admin.site.register(Products, ProductAdmin)
