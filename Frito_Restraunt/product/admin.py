@@ -569,7 +569,7 @@ class CasherOrderItemsAdmin(admin.ModelAdmin):
     <a href="#" class="openPopup ui-btn ui-corner-all ui-shadow ui-btn-inline">Open Client Data</a>
     <div class="popup">
         <div class="popup-content">
-            <iframe name="my_iframe" data-src="{self.get_popup_url(obj)}" class="videoIframe" style="display: none; margin-left: -480%; margin-top: 15%;" width="550%" height="450px" seamless=""></iframe>
+            <iframe name="my_iframe" data-src="{self.get_popup_url(obj)}" class="videoIframe" style="display: none; margin-left: -920%; margin-top: 15%;" width="1000%" height="550px" seamless=""></iframe>
         </div>
     </div>
 </div>

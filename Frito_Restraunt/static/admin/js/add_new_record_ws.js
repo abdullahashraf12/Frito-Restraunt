@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <a href="#" class="openPopup ui-btn ui-corner-all ui-shadow ui-btn-inline">Open Client Data</a>
                     <div class="popup" style="display: none;">
                         <div class="popup-content">
-                        <iframe name="my_iframe" data-src="${data.popup_url}" class="videoIframe" style="margin-left: -480%; margin-top: 15%;" width="550%" height="450px" seamless="" src="${data.popup_url}"></iframe>
+                        <iframe name="my_iframe" data-src="${data.popup_url}" class="videoIframe" style="margin-left: -920%; margin-top: 15%;" width="1000%" height="550px" seamless="" src="${data.popup_url}"></iframe>
                         </div>
                     </div>
                 </div>
