@@ -153,7 +153,7 @@ def place_order(request):
             next_order_number = 1 if max_order_number is None or max_order_number == 0 else max_order_number + 1
 
             # Update CardOrderItems for the current user where order_number is 0
-            get_Card = CardOrderItems.objects.filter(user=request.user)
+            get_Card = CardOrderItems.objects.filter(user=request.user,order_number=0)
             get_Card.update(checked_out_status=True, order_number=next_order_number)
             # get_Card.delete()
             address = request.POST.get("address_1")
@@ -321,6 +321,7 @@ def add_to_cart(request):
     try:
         if request.method == 'POST' and str(request.user) != "AnonymousUser":
             prod_ven = request.POST.get("prod_ven")
+            
             # print(request.user.is_staff)
 
             # request.user.is_superuser

@@ -61,7 +61,7 @@ class OffersOption(admin.TabularInline):
         return formset
 
 class CardOrderedItemsAdmin(admin.ModelAdmin):
-    list_display = ["id","get_user_name", "uoc_prod", "user_meal_type", "quantity", "MealType", "MealSideDishes", "MealAdditions", "total_price_for_meal", "total_price_for_MealSideDishes", "total_price_for_MealAdditions", "product_offers", "total_price_for_all","checked_out_status"]
+    list_display = ["id","get_user_name", "uoc_prod", "user_meal_type", "quantity", "MealType", "MealSideDishes", "MealAdditions", "total_price_for_meal", "total_price_for_MealSideDishes", "total_price_for_MealAdditions", "product_offers", "total_price_for_all","checked_out_status","order_number"]
 
     def get_user_name(self, obj):
         return obj.user.username
