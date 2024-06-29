@@ -20,7 +20,7 @@ from django.conf import settings
 
 from django.views.static import serve
 from core.consumer import GetCart
-
+from core.consumer import GetCashierItems
 urlpatterns = [
 path('admin/', admin.site.urls),
 re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
@@ -34,5 +34,8 @@ path('userauths/', include('userauths.urls')),
 ]
 
 websocket_route=[
- path("cart/",GetCart.as_asgi()),
+    path('core/ws/cart/admin/', GetCashierItems.as_asgi()),
+
+    path("cart/",GetCart.as_asgi()),
+
 ]

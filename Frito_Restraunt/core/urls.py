@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import include,path
 from core.views import index,product_list,category_list,category_product_list_view,get_product_by_id,get_products_name,AddToCardView,show_card,RemoveFromCardView,wishlist,AddToWishCardView,RemoveFromWishCardView,AddReview,message_socket,offers_product_list_view,add_to_cart,remove_from_Card,checkout,checkout_ajax,user_checked_items,my_orders,place_order,user_ordered_items,save_cashier_table
-from .consumer import GetCart
+from .consumer import GetCart,GetCashierItems
 from django.urls import re_path
 app_name = "core"
 urlpatterns = [
@@ -34,6 +34,8 @@ path("offers/<oid>/",offers_product_list_view,name="offers_product_list_view"),
 path('checkout/', checkout,name="checkout"),
 path('my_orders/', my_orders,name="my_orders"),
 path('user_ordered_items/<user_email>', user_ordered_items,name="user_ordered_items"),
+# path('all_useres_ordered/', user_ordered_items,name="user_ordered_items"),
+
 path('save_cashier_table/<int:id>', save_cashier_table, name="save_cashier_table"),
 
 path('admin/', admin.site.urls),
@@ -43,4 +45,5 @@ path("user/",include("userauths.urls")),
 
 # websocket_route=[
 #     re_path(r'core/ws/cart/$', GetCart.as_asgi()),
+#     re_path(r'^core/ws/cart/admin/$', GetCashierItems.as_asgi()),
 # ]

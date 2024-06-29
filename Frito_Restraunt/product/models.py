@@ -5,6 +5,8 @@ from userauths.models import User
 from django.core.exceptions import ValidationError
 from django.utils.html import format_html
 from django.utils import timezone
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -485,12 +487,18 @@ class CashierTable(models.Model):
     order_date = models.DateTimeField(default=timezone.now)
     client = models.ForeignKey(User,on_delete=models.CASCADE,related_name="client")
     address = models.CharField(max_length=2000)
-    client_number = models.IntegerField()
+    client_number = models.CharField(max_length=50)
     total_price = models.FloatField(default=0.00)
     client_status = models.CharField(choices=CLIENT_ORDER_STATUS,max_length=30,default="New")
     SalesRep = models.ForeignKey(User,on_delete=models.CASCADE,related_name="sale_rep",default=None, null=True)
     def get_popup_url(self):
         # Define logic to return the URL for the popup iframe
         print(self.client.email)
-        return f'/core/user_ordered_items/{self.client.email}/'
+        return f'/core/user_ordered_items/{self.client.email}'
 
+@receiver(post_save, sender=CashierTable)
+def update_related_order(sender, instance, created, **kwargs):
+    if created:
+        # Update related order in some way
+        print("row has been created")
+        pass  

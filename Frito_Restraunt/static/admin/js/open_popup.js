@@ -2,10 +2,6 @@
 
 $(document).ready(function() {
 
-
-
-
-   
   // Add save button functionality
   $('.save-button').on('click', function(e) {
     e.preventDefault();

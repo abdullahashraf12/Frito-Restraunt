@@ -12,6 +12,7 @@ logger = logging.getLogger(__name__)
 
 from django.forms.models import BaseInlineFormSet
 from django.core.exceptions import ValidationError
+from django.http import JsonResponse, HttpResponseNotAllowed
 
 
 
@@ -619,7 +620,7 @@ class CasherOrderItemsAdmin(admin.ModelAdmin):
     save_button.short_description = 'Save'  # Set the column header text
 
     class Media:
-        js = ("/static/assets/js/vendor/jquery-3.6.0.min.js", '/static/admin/js/open_popup.js')  # Include your custom JavaScript file
+        js = ("/static/assets/js/vendor/jquery-3.6.0.min.js", '/static/admin/js/open_popup.js','/static/admin/js/add_new_record_ws.js')  # Include your custom JavaScript file
 
     def changelist_view(self, request, extra_context=None):
         # Add custom context to include the save button

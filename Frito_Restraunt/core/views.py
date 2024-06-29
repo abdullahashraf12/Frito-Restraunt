@@ -49,8 +49,6 @@ def save_cashier_table(request, id):
 
 
 
-
-
 def user_ordered_items(request,user_email):
     print(user_email)
     print(user_email)
@@ -59,7 +57,90 @@ def user_ordered_items(request,user_email):
     print(user_email)
     print(user_email)
     print(user_email)
-    return render(request,"user_ordered_items.html")
+    get_all_from_card = CardOrderItems.objects.filter(user__email=user_email,checked_out_status=True)
+    total_price = get_all_from_card.aggregate(total_price=Sum('total_price_for_all'))['total_price']
+
+    print(get_all_from_card)
+    context= {
+        "my_ordered_items":get_all_from_card,
+        "total_price": str(float(total_price)+50.00)
+    }
+    return render(request,"user_ordered_items.html",context=context)
+
+
+
+
+
+
+
+
+
+# def user_ordered_items(request,user_email):
+#     if request.user.is_authenticated and request.user.is_staff:
+#         get_all_from_card = CardOrderItems.objects.filter(user__email=user_email,checked_out_status=True)
+#         total_price = get_all_from_card.aggregate(total_price=Sum('total_price_for_all'))['total_price']
+#         print("open headers")
+#         print(request.headers.get('X-Requested-With'))
+#         print(total_price)
+#         print(total_price)
+#         print(total_price)
+#         print(total_price)
+#         print(request.headers.get('X-Requested-With'))
+#         print("close headers")
+#         if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+#             print(get_all_from_card)
+#             if(total_price==None) :
+#                 total_price = 0.00
+                        
+#             data = {
+#                 "items": list(get_all_from_card.annotate(
+#                     image_url=F('uoc_prod__image')
+#                 ).values(
+#                     'uoc_prod__title', 'image_url', 'user_meal_type', 'quantity',
+#                     'MealType', 'MealSideDishes', 'MealAdditions', 'total_price_for_all'
+#                 )),
+#                 "total_price": float(total_price)
+#                 }
+            
+#             print(list(data.values()))
+#             print(list(data.values()))
+#             print(list(data.values()))
+            
+#             return JsonResponse(data)
+
+#         return render(request, "checkout.html", context={"all_from_Card": get_all_from_card, "total_price": total_price})
+
+#     else:
+#         return render(request, "checkout.html", context={})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # Create your views here.
@@ -165,6 +246,7 @@ def checkout_ajax(request):
 
     else:
         return render(request, "checkout.html", context={})
+
 
 
 

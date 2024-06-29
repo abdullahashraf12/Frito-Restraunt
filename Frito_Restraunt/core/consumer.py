@@ -1,12 +1,17 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
 from asgiref.sync import sync_to_async
-from product.models import CardOrderItems
+from product.models import CardOrderItems,CashierTable
 from userauths.models import UserToken  # Adjust the import according to your project structure
 import json
 import asyncio
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Sum
 from django.db.models import F
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+
 class GetCart(AsyncWebsocketConsumer):
 
     @sync_to_async
@@ -96,6 +101,66 @@ class GetCart(AsyncWebsocketConsumer):
             except Exception as e:
                 print(f"Error sending message: {e}")
                 break  # Exit the loop on error or close flag
+
+
+
+
+class GetCashierItems(AsyncWebsocketConsumer):
+    async def connect(self):
+        if self.scope["user"].is_staff:
+            await self.channel_layer.group_add("cashier_items", self.channel_name)
+            await self.accept()
+            print("Staff user connected")
+
+    async def disconnect(self, close_code):
+        await self.channel_layer.group_discard("cashier_items", self.channel_name)
+
+    async def send_new_record(self, event):
+        await self.send(text_data=json.dumps(event["data"]))
+
+@receiver(post_save, sender=CashierTable)
+def update_related_order(sender, instance, created, **kwargs):
+    channel_layer = get_channel_layer()
+
+    if created:
+        print("New row has been created")
+        print(instance.get_popup_url())
+        async_to_sync(channel_layer.group_send)(
+            "cashier_items",
+            {
+                "type": "send_new_record",
+                "data": {
+                    "id":instance.pk,
+                    "order_number": instance.order_number,
+                    "order_date": instance.order_date,
+                    "client": instance.client.username,
+                    "address": instance.address,
+                    "client_number": instance.client_number,
+                    "total_price": instance.total_price,
+                    "status": instance.client_status,
+                    "sales_rep": instance.SalesRep.username if instance.SalesRep else None,
+                    "popup_url": instance.get_popup_url(),  # Include popup_url here
+
+                },
+            },
+        )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # from channels.generic.websocket import AsyncWebsocketConsumer
 # from asgiref.sync import sync_to_async
