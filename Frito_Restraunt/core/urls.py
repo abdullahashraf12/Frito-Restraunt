@@ -33,7 +33,7 @@ path("category/<cid>/",category_product_list_view,name="category_product_list"),
 path("offers/<oid>/",offers_product_list_view,name="offers_product_list_view"),
 path('checkout/', checkout,name="checkout"),
 path('my_orders/', my_orders,name="my_orders"),
-path('user_ordered_items/<user_email>', user_ordered_items,name="user_ordered_items"),
+path('user_ordered_items/<user_email>/<int:order_number>/', user_ordered_items,name="user_ordered_items"),
 # path('all_useres_ordered/', user_ordered_items,name="user_ordered_items"),
 
 path('save_cashier_table/<int:id>', save_cashier_table, name="save_cashier_table"),

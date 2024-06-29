@@ -559,7 +559,11 @@ class CasherOrderItemsAdmin(admin.ModelAdmin):
     sales_rep.short_description = 'Sales Representative'  # Set the column header text
     
     def open_popup_button(self, obj):
+        print(self.get_popup_url(obj))
+
+
         if obj.client.email:
+
             return format_html(f"""
 <div class="popup-container" style="margin-left:50px;">
     <a href="#" class="openPopup ui-btn ui-corner-all ui-shadow ui-btn-inline">Open Client Data</a>
@@ -577,7 +581,7 @@ class CasherOrderItemsAdmin(admin.ModelAdmin):
     
     def get_popup_url(self, obj):
         # Define logic to return the URL for the popup iframe
-        return f'/core/user_ordered_items/{obj.client.email}'
+        return f'/core/user_ordered_items/{obj.client.email}/{str(obj.order_number)}'
     def save_ajax_data(self, request, object_id):
         if request.method == 'POST' and request.is_ajax():
             # Retrieve the CashierTable instance

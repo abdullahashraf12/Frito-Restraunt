@@ -1,4 +1,159 @@
+
 document.addEventListener('DOMContentLoaded', function() {
+    function runMe(){
+        $('.save-button').on('click', function(e) {
+          e.preventDefault();
+          
+          var row = $(this).closest('tr');
+          var id = row.find('th.field-id a').text().trim();
+          var clientStatus = row.find('select[name="client_status"]').val();
+          var salesRep = row.find('select[name="SalesRep"]').val();
+          
+          var data = {
+              'pk': id,
+              'client_status': clientStatus,
+              'SalesRep': salesRep
+          };
+      
+          // Perform AJAX request to save data
+          $.ajax({
+              url: '/core/save_cashier_table/' + data.pk ,
+              method: 'POST',
+              data: {
+                  'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+                  'client_status': data.client_status,
+                  'SalesRep': data.SalesRep,
+                  'id': parseInt(data.pk)  // Include the ID in the POST data
+              },
+              success: function(response) {
+                  // Optional: Handle success response if needed
+                  console.log('Data saved successfully!');
+                  // Example: Update UI or show a success message
+                  console.log(response.client_status)
+                  console.log(response.SalesRep)
+                  // Assuming response contains updated data, you can update the row
+                  // For example, if your response includes updated client_status and SalesRep values
+               
+                  // Alternatively, you can reload the entire row from the server if needed
+                  // Example: row.load('/admin/product/cashiertable/' + data.pk + '/'); // Reloads the row
+                  
+              },
+              error: function(xhr, status, error) {
+                  // Optional: Handle error response if needed
+                  console.error('Error saving data:', error);
+                  // Example: Show an error message to the user
+              }
+          });
+      });
+      
+          var $currentIframe = null;
+      
+          // Open or close popup when a link with class 'openPopup' is clicked
+          $('.openPopup').click(function(e) {
+              e.preventDefault();
+      
+              var $popup = $(this).siblings('.popup');
+              var $iframe = $popup.find('.videoIframe');
+      
+              // Close all other popups
+              // $('.popup').not($popup).fadeOut();
+      
+              // Toggle the clicked popup
+              $popup.fadeToggle(function() {
+                  // Check if the popup is now visible
+                  
+                  var isVisible = $popup.is(':visible');
+                  console.log(isVisible)
+                  if (isVisible) {
+                      // Popup is now visible, load iframe content if not already loaded
+                      var iframeSrc = $iframe.attr('data-src');
+                      if (iframeSrc && !$iframe.attr('src')) {
+                          $iframe.attr('src', iframeSrc).on('load', function() {
+                              $iframe.fadeIn();
+                              $currentIframe = $iframe;
+                          });
+                      }
+                  } else {
+                      var iframeSrc = $iframe.attr('data-src');
+                      if (iframeSrc && !$iframe.attr('src')) {
+                          $iframe.attr('src', iframeSrc).on('load', function() {
+                              $iframe.fadeIn();
+                              $currentIframe = $iframe;
+                              $popup.fadeIn();
+                          });
+                      }
+                      // Popup is now hidden, remove iframe if it exists
+                      if ($currentIframe && $currentIframe.parent().is($popup)) {
+                          $currentIframe.fadeOut('fast', function() {
+                              $(this).remove(); // Remove the iframe from DOM
+                          });
+                          $currentIframe = null;
+                      }
+                  }
+              });
+          });
+      
+          // Close popup when close button or outside popup content is clicked
+          $('.popup .close, .popup-overlay').click(function() {
+              var $popup = $(this).closest('.popup');
+              var $iframe = $popup.find('.videoIframe');
+      
+              $popup.fadeOut();
+      
+              // Check if $currentIframe is in this popup and remove it
+              if ($currentIframe && $currentIframe.parent().is($popup)) {
+                  $currentIframe.fadeOut('fast', function() {
+                      $(this).remove(); // Remove the iframe from DOM
+                  });
+                  $currentIframe = null;
+              }
+          });
+      
+          // Optional: Close popup when Escape key is pressed
+          $(document).keyup(function(e) {
+              if (e.key === "Escape") {
+                  $('.popup').fadeOut();
+                  if ($currentIframe) {
+                      $currentIframe.fadeOut('fast', function() {
+                          $(this).remove(); // Remove the iframe from DOM
+                      });
+                      $currentIframe = null;
+                  }
+              }
+          });
+          
+    
+      
+    }
+    function undoRunMe() {
+        // Remove event handlers from save buttons
+        $('.save-button').off('click');
+    
+        // Remove event handlers from openPopup links
+        $('.openPopup').off('click');
+    
+        // Remove event handlers from close buttons and overlay
+        $('.popup .close, .popup-overlay').off('click');
+    
+        // Unbind keyup event for Escape key
+        $(document).off('keyup');
+    
+        // Additional cleanup if necessary:
+        // - Remove any added elements
+        // - Reset global variables or states
+    
+        // Optional: Reset any specific variables or states introduced by runMe()
+        // $currentIframe = null; // Example reset if needed
+    
+        console.log('Effects of runMe() have been undone.');
+    }
+    
+    // Call undoRunMe() whenever you need to remove the effects of runMe()
+    // For example, you might trigger this on a certain event or condition in your application
+    undoRunMe();
+    
+    runMe();
+
     const socket = new WebSocket('ws://' + window.location.host + '/core/ws/cart/admin/');
 
     socket.onmessage = function(event) {
@@ -6,10 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     // Add save button functionality
-
-  
-  
-  
+    try{
       
   
         const data = JSON.parse(event.data);
@@ -61,130 +213,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 <input type="submit" class="save-button" value="Save">
             </td>
         `;
+   
 
         tableBody.prepend(newRow);
-        $('.save-button').on('click', function(e) {
-            e.preventDefault();
-            
-            var row = $(this).closest('tr');
-            var id = row.find('th.field-id a').text().trim();
-            var clientStatus = row.find('select[name="client_status"]').val();
-            var salesRep = row.find('select[name="SalesRep"]').val();
-            
-            var data = {
-                'pk': id,
-                'client_status': clientStatus,
-                'SalesRep': salesRep
-            };
-        
-            // Perform AJAX request to save data
-            $.ajax({
-                url: '/core/save_cashier_table/' + data.pk ,
-                method: 'POST',
-                data: {
-                    'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
-                    'client_status': data.client_status,
-                    'SalesRep': data.SalesRep,
-                    'id': parseInt(data.pk)  // Include the ID in the POST data
-                },
-                success: function(response) {
-                    // Optional: Handle success response if needed
-                    console.log('Data saved successfully!');
-                    // Example: Update UI or show a success message
-                    console.log(response.client_status)
-                    console.log(response.SalesRep)
-                    // Assuming response contains updated data, you can update the row
-                    // For example, if your response includes updated client_status and SalesRep values
-                 
-                    // Alternatively, you can reload the entire row from the server if needed
-                    // Example: row.load('/admin/product/cashiertable/' + data.pk + '/'); // Reloads the row
-                    
-                },
-                error: function(xhr, status, error) {
-                    // Optional: Handle error response if needed
-                    console.error('Error saving data:', error);
-                    // Example: Show an error message to the user
-                }
-            });
-        });
-      
-            var $currentIframe = null;
-        
-            // Open or close popup when a link with class 'openPopup' is clicked
-            $('.openPopup').click(function(e) {
-                e.preventDefault();
-        
-                var $popup = $(this).siblings('.popup');
-                var $iframe = $popup.find('.videoIframe');
-        
-                // Close all other popups
-                // $('.popup').not($popup).fadeOut();
-        
-                // Toggle the clicked popup
-                $popup.fadeToggle(function() {
-                    // Check if the popup is now visible
-                    
-                    var isVisible = $popup.is(':visible');
-                    console.log(isVisible)
-                    if (isVisible) {
-                        // Popup is now visible, load iframe content if not already loaded
-                        var iframeSrc = $iframe.attr('data-src');
-                        if (iframeSrc && !$iframe.attr('src')) {
-                            $iframe.attr('src', iframeSrc).on('load', function() {
-                                $iframe.fadeIn();
-                                $currentIframe = $iframe;
-                            });
-                        }
-                    } else {
-                        var iframeSrc = $iframe.attr('data-src');
-                        if (iframeSrc && !$iframe.attr('src')) {
-                            $iframe.attr('src', iframeSrc).on('load', function() {
-                                $iframe.fadeIn();
-                                $currentIframe = $iframe;
-                                $popup.fadeIn();
-                            });
-                        }
-                        // Popup is now hidden, remove iframe if it exists
-                        if ($currentIframe && $currentIframe.parent().is($popup)) {
-                            $currentIframe.fadeOut('fast', function() {
-                                $(this).remove(); // Remove the iframe from DOM
-                            });
-                            $currentIframe = null;
-                        }
-                    }
-                });
-            });
-        
-            // Close popup when close button or outside popup content is clicked
-            $('.popup .close, .popup-overlay').click(function() {
-                var $popup = $(this).closest('.popup');
-                var $iframe = $popup.find('.videoIframe');
-        
-                $popup.fadeOut();
-        
-                // Check if $currentIframe is in this popup and remove it
-                if ($currentIframe && $currentIframe.parent().is($popup)) {
-                    $currentIframe.fadeOut('fast', function() {
-                        $(this).remove(); // Remove the iframe from DOM
-                    });
-                    $currentIframe = null;
-                }
-            });
-        
-            // Optional: Close popup when Escape key is pressed
-            $(document).keyup(function(e) {
-                if (e.key === "Escape") {
-                    $('.popup').fadeOut();
-                    if ($currentIframe) {
-                        $currentIframe.fadeOut('fast', function() {
-                            $(this).remove(); // Remove the iframe from DOM
-                        });
-                        $currentIframe = null;
-                    }
-                }
-            });
-        
+        undoRunMe();
+        runMe();
+
         alert(`New Order Added: ${data.order_number} - Client: ${data.client}`);
+    }catch(Exception){
+        
+
+
+        location.reload()
+
+    }
+
     };
 
     socket.onopen = function() {
@@ -198,47 +241,5 @@ document.addEventListener('DOMContentLoaded', function() {
     socket.onerror = function(error) {
         console.error('WebSocket error:', error);
     };
+
 });
-
-// document.addEventListener('DOMContentLoaded', function() {
-//     const socket = new WebSocket('ws://' + window.location.host + '/core/ws/cart/admin/');
-
-//     socket.onmessage = function(event) {
-//         const data = JSON.parse(event.data);
-//         console.log('New record:', data);
-
-//         // Find the table body
-//         const tableBody = document.querySelector('#result_list tbody');
-
-//         // Create a new row with the received data
-//         const newRow = document.createElement('tr');
-//         newRow.innerHTML = `
-//             <td>${data.order_number}</td>
-//             <td>${new Date(data.order_date).toLocaleString()}</td>
-//             <td>${data.client}</td>
-//             <td>${data.address}</td>
-//             <td>${data.client_number}</td>
-//             <td>${data.total_price.toFixed(2)}</td>
-//             <td>${data.status}</td>
-//             <td>${data.sales_rep || 'N/A'}</td>
-//         `;
-
-//         // Append the new row to the table
-//         tableBody.prepend(newRow);
-
-//         // Optionally, display a notification
-//         alert(`New Order Added: ${data.order_number} - Client: ${data.client}`);
-//     };
-
-//     socket.onopen = function() {
-//         console.log('WebSocket connection opened.');
-//     };
-
-//     socket.onclose = function() {
-//         console.log('WebSocket connection closed.');
-//     };
-
-//     socket.onerror = function(error) {
-//         console.error('WebSocket error:', error);
-//     };
-// });

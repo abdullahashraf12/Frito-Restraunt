@@ -49,7 +49,7 @@ def save_cashier_table(request, id):
 
 
 
-def user_ordered_items(request,user_email):
+def user_ordered_items(request,user_email,order_number):
     print(user_email)
     print(user_email)
     print(user_email)
@@ -57,9 +57,9 @@ def user_ordered_items(request,user_email):
     print(user_email)
     print(user_email)
     print(user_email)
-    get_all_from_card = CardOrderItems.objects.filter(user__email=user_email,checked_out_status=True)
+    get_all_from_card = CardOrderItems.objects.filter(user__email=user_email,order_number=order_number,checked_out_status=True)
     total_price = get_all_from_card.aggregate(total_price=Sum('total_price_for_all'))['total_price']
-
+    print(total_price)
     print(get_all_from_card)
     context= {
         "my_ordered_items":get_all_from_card,
@@ -159,8 +159,13 @@ def place_order(request):
             address = request.POST.get("address_1")
             client_number= request.POST.get("mobile_number")
             # ['total_sum']
+            get_Card =  CardOrderItems.objects.filter(user=request.user,order_number=next_order_number)
             aggregated_result = get_Card.aggregate(total_sum=Sum('total_price_for_all'))
-
+            print(get_Card)
+            print(get_Card)
+            print(get_Card)
+            print(get_Card)
+            print(get_Card)
             # Extract the aggregated value from the result
             total_price = aggregated_result['total_sum'] if aggregated_result['total_sum'] else 0
 

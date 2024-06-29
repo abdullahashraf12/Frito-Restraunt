@@ -494,7 +494,7 @@ class CashierTable(models.Model):
     def get_popup_url(self):
         # Define logic to return the URL for the popup iframe
         print(self.client.email)
-        return f'/core/user_ordered_items/{self.client.email}'
+        return f'/core/user_ordered_items/{self.client.email}/{self.order_number}/'
 
 @receiver(post_save, sender=CashierTable)
 def update_related_order(sender, instance, created, **kwargs):
