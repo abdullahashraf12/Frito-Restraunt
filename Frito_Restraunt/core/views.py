@@ -16,32 +16,78 @@ from django.db.models import F
 from django.db import models
 from django.utils import timezone
 from django.http import JsonResponse, HttpResponseNotAllowed
-from userauths.models import User
+from userauths.models import User,UserToken
+from django.shortcuts import get_object_or_404
+
+
+
+
+
+
 
 
 
 def save_cashier_table(request, id):
-    if request.method == 'POST':
-        # Process the POST data
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        # Retrieve the CashierTable instance
+        cashier_instance = get_object_or_404(CashierTable, pk=id)
+        
+        # Extract data from POST request
         client_status = request.POST.get('client_status')
-        sales_rep = request.POST.get('SalesRep')
-        print(User.objects.get(id=int(sales_rep)))
-        print(request.user)
-        # Save the data (example: update the model instance)
-        cashier_instance = CashierTable.objects.get(pk=id)
+        sales_rep_id = request.POST.get('SalesRep')
+        
+        # Update instance fields based on conditions
+        if sales_rep_id:
+            # Convert sales_rep_id to integer if not empty
+            try:
+                sales_rep = User.objects.get(id=int(sales_rep_id))
+                cashier_instance.SalesRep = sales_rep
+            except (ValueError, User.DoesNotExist):
+                return JsonResponse({'error': 'Invalid SalesRep ID'}, status=400)
+        
+        # Always update client_status
         cashier_instance.client_status = client_status
-        cashier_instance.SalesRep = User.objects.get(id=int(sales_rep))
+        
+        # Save the updated instance
         cashier_instance.save()
-        print(cashier_instance)
+        
         # Return updated data as JSON response
         return JsonResponse({
             'client_status': cashier_instance.client_status,
-            "SalesRep":User.objects.get(id=int(sales_rep)).username
-            # 'SalesRep': cashier_instance.sales_rep,
+            'SalesRep': cashier_instance.SalesRep.username if cashier_instance.SalesRep else '',
         })
     else:
         # Handle other HTTP methods if necessary
         return HttpResponseNotAllowed(['POST'])
+
+
+
+
+
+
+
+# def save_cashier_table(request, id):
+#     if request.method == 'POST':
+#         # Process the POST data
+#         client_status = request.POST.get('client_status')
+#         sales_rep = request.POST.get('SalesRep')
+#         print(User.objects.get(id=int(sales_rep)))
+#         print(request.user)
+#         # Save the data (example: update the model instance)
+#         cashier_instance = CashierTable.objects.get(pk=id)
+#         cashier_instance.client_status = client_status
+#         cashier_instance.SalesRep = User.objects.get(id=int(sales_rep))
+#         cashier_instance.save()
+#         print(cashier_instance)
+#         # Return updated data as JSON response
+#         return JsonResponse({
+#             'client_status': cashier_instance.client_status,
+#             "SalesRep":User.objects.get(id=int(sales_rep)).username
+#             # 'SalesRep': cashier_instance.sales_rep,
+#         })
+#     else:
+#         # Handle other HTTP methods if necessary
+#         return HttpResponseNotAllowed(['POST'])
 
 
 
@@ -185,10 +231,41 @@ def place_order(request):
         return redirect("core:checkout")
 
 
+
+
+
 def my_orders(request):
+    if request.user.is_authenticated:
+        today = timezone.now().date()
+        
+        # Fetch CardOrderItems filtered by today's date, checked_out_status, and current user
+        user_ordered_items = CardOrderItems.objects.filter(
+            order_date__date=today,
+            checked_out_status=True,
+            user=request.user
+        ).order_by('-order_date')  # Ensure to order by order_number
 
-    return render(request,"MyOrders.html")
+        # Retrieve related CashierTable entries based on order_number
+        order_numbers = user_ordered_items.values_list('order_number', flat=True)
+        cashier_tables = CashierTable.objects.filter(order_number__in=order_numbers)
 
+        # Map CashierTable entries to CardOrderItems based on order_number
+        cashier_table_dict = {table.order_number: table for table in cashier_tables}
+
+        # Attach cashier_table to each CardOrderItems instance
+        for item in user_ordered_items:
+            item.cashier_table = cashier_table_dict.get(item.order_number)
+
+
+        context = {
+            "user_ordered_items": user_ordered_items
+        }
+        return render(request, "MyOrders.html", context=context)
+
+    else:
+        return render(request, "MyOrders.html")
+
+    
 def user_checked_items(request,user):
     if request.user.is_authenticated and request.user.is_staff:
         # print(request.user.is_staff)

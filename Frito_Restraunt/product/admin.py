@@ -582,6 +582,10 @@ class CasherOrderItemsAdmin(admin.ModelAdmin):
     def get_popup_url(self, obj):
         # Define logic to return the URL for the popup iframe
         return f'/core/user_ordered_items/{obj.client.email}/{str(obj.order_number)}'
+  
+  
+  
+  
     def save_ajax_data(self, request, object_id):
         if request.method == 'POST' and request.is_ajax():
             # Retrieve the CashierTable instance
@@ -590,7 +594,9 @@ class CasherOrderItemsAdmin(admin.ModelAdmin):
             # Extract data from POST request
             client_status = request.POST.get('client_status')
             sales_rep_id = request.POST.get('SalesRep')
-            
+            print(client_status)
+            print(sales_rep_id)
+
             # Update instance fields
             cashier_table_instance.client_status = client_status
             cashier_table_instance.SalesRep_id = sales_rep_id
@@ -600,6 +606,15 @@ class CasherOrderItemsAdmin(admin.ModelAdmin):
             
             # Optionally return a JSON response to confirm success
             return JsonResponse({'success': True})
+        
+
+
+
+
+
+
+
+
         
         # If method is not POST or not AJAX, return an error response
         return JsonResponse({'error': 'Invalid request'})

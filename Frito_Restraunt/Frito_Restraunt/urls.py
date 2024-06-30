@@ -19,8 +19,8 @@ from django.urls import path,include,re_path
 from django.conf import settings
 
 from django.views.static import serve
-from core.consumer import GetCart
-from core.consumer import GetCashierItems
+from core.consumer import GetCart , GetCashierItems , my_orders
+
 urlpatterns = [
 path('admin/', admin.site.urls),
 re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
@@ -37,5 +37,6 @@ websocket_route=[
     path('core/ws/cart/admin/', GetCashierItems.as_asgi()),
 
     path("cart/",GetCart.as_asgi()),
+    path("my_orders/orders/",my_orders.as_asgi())
 
 ]

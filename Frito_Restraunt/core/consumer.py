@@ -149,6 +149,56 @@ def update_related_order(sender, instance, created, **kwargs):
 
 
 
+class my_orders(AsyncWebsocketConsumer):
+
+
+    async def connect(self):
+        user_token = self.scope['cookies'].get('user_token')
+        self.room_group_name = None
+
+        if user_token:
+            user_token_exists = await sync_to_async(UserToken.objects.filter(token=user_token).exists)()
+            if user_token_exists:
+                self.room_group_name = user_token
+
+                await self.channel_layer.group_add(
+                    self.room_group_name,
+                    self.channel_name
+                )
+
+                await self.accept()
+                print(f"User token connected: {user_token}")
+                await self.send_cart_data(user_token)  # Start sending cart data
+
+            else:
+                await self.close()
+        else:
+            await self.close()
+
+    async def disconnect(self, close_code):
+        if self.room_group_name:
+            await self.channel_layer.group_discard(
+                self.room_group_name,
+                self.channel_name
+            )
+
+    async def receive(self, text_data=None, bytes_data=None):
+        data = json.loads(text_data)
+        print(f"Received message: {data}")
+
+    async def send_cart_data(self, token):
+        while True:
+            try:
+                cart_data = await self.get_from_db_to_cart(token)
+                if cart_data:
+                    json_str = json.dumps(cart_data)
+                    await self.send(text_data=json_str)
+                await asyncio.sleep(1)  # Wait for 2 seconds before sending the next message
+            except Exception as e:
+                print(f"Error sending message: {e}")
+                break  # Exit the loop on error or close flag
+
+
 
 
 

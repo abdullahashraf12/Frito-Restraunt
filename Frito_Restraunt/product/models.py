@@ -472,6 +472,7 @@ class CardOrderItems(models.Model):
     product_offers = models.ForeignKey(Offers, on_delete=models.SET_NULL, null=True, related_name="Products_Offers")
     checked_out_status = models.BooleanField(default=False)
     order_number = models.IntegerField(default=0)
+    order_date = models.DateTimeField(default=timezone.now)
 
 CLIENT_ORDER_STATUS = [
 
