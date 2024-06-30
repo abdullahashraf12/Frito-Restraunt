@@ -1,7 +1,7 @@
 ﻿{% extends 'partials/base.html' %}
     {% load static %}
     {% block content %}
-    <main class="main">
+    <main class="main" style="width: auto; height: auto;">
         <div class="page-header mt-30 mb-50">
             <div class="container">
               
@@ -67,9 +67,14 @@
                                     <div class="product-cart-wrap mb-30 wow animate__animated animate__fadeIn" data-wow-delay=".1s">
                                         <div class="product-cart-wrap" style="display: flex; flex-direction: column; justify-content: space-between;">
                                             <div class="">
-                                                <div>
-                                                    <a href="{% url 'core:get_products' i.pid %}">
-                                                        <img class="default-img" src="{{ i.image.url }}" style="max-width: 100%; max-height: 100%; width: auto; height: max-content; object-fit: contain;" alt="" />
+                                                <div class="image-link">
+                                                    <a href="{% url 'core:get_products' i.pid %}" class="image-link-anchor">
+                                                        {% if  "product.jpg" in i.back_image.url %}
+                                                        <img class="card-img-top img-fluid" src="{{ i.image.url }}" data-original-image="{{ i.image.url }}" data-back-image="{{ i.image.url }}" alt="{{ i.title }}">
+                                                        {% else %}
+                                                        <img class="card-img-top img-fluid" src="{{ i.image.url }}" data-original-image="{{ i.image.url }}" data-back-image="{{ i.back_image.url }}" alt="{{ i.title }}">
+            
+                                                        {% endif %}
                                                     </a>
                                                 </div>
                                                 <div class="product-badges product-badges-position product-badges-mrg">

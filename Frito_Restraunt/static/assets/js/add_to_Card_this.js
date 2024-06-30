@@ -22,6 +22,16 @@ try{
                 $("#message").empty();
             }, 2000);
     }
+    function display_message_error_user_login(){
+        $("#message").html(`
+     <div class="alert alert-danger" role="alert">
+  User Must Login First
+</div>
+            `)
+            setTimeout(function() {
+                $("#message").empty();
+            }, 2000);
+    }
     function get_from_Card(){
         const csrftoken = getCookie('csrftoken');
     
@@ -231,9 +241,14 @@ try{
                 },
                 success: function(response) {
                     // Print the JSON response to the browser console
-                    console.log(response);
-                    get_from_Card();
-                    display_message_success();
+                    if(response.error=="User Must Login To Add To Card"){
+                        display_message_error_user_login();
+                    }else{
+                        get_from_Card();
+                        display_message_success();
+    
+                    }
+
 
                 },
                 error: function(xhr, status, error) {
@@ -329,15 +344,13 @@ try{
                     'X-CSRFToken': csrftoken
                 },
                 success: function(response) {
-                    console.log(checkedValues_items_for_MealType);
-                    console.log(checkedValues_items_for_Side_Dishes);
-                    console.log(checkedValues_items_for_Products_Additions);
-       
-                    // Print the JSON response to the browser console
-                    console.log(response);
-                    get_from_Card();
-                    display_message_success();
-
+                    if(response.error=="User Must Login To Add To Card"){
+                        display_message_error_user_login();
+                    }else{
+                        get_from_Card();
+                        display_message_success();
+    
+                    }
 
                 },
                 error: function(xhr, status, error) {
