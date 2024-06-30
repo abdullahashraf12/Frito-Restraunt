@@ -565,18 +565,23 @@ class CasherOrderItemsAdmin(admin.ModelAdmin):
         if obj.client.email:
 
             return format_html(f"""
-<div class="popup-container" style="margin-left:50px;">
-    <a href="#" class="openPopup ui-btn ui-corner-all ui-shadow ui-btn-inline">Open Client Data</a>
+<div class="popup-container" style="margin-left:50px; ">
+    <a href="#" class="openPopup ui-btn ui-corner-all ui-shadow ui-btn-inline" >Open Client Data</a>
     <div class="popup">
-        <div class="popup-content">
-            <iframe name="my_iframe" data-src="{self.get_popup_url(obj)}" class="videoIframe" style="display: none; margin-left: -920%; margin-top: 15%;" width="1000%" height="550px" seamless=""></iframe>
+        <div class="popup-content" style=" margin-top: 15%; ">
+            <iframe name="my_iframe" data-src="{self.get_popup_url(obj)}" class="videoIframe" style="margin-left:-1000px; display: none;  position: relative; margin-top: 15%; width: 1000px; height: 550px; border: none;" seamless="" ></iframe>
         </div>
     </div>
 </div>
             """)
+        
         else:
             return "No email available"
-    
+        
+        
+    #             <iframe name="my_iframe" data-src="{self.get_popup_url(obj)}" class="videoIframe" style="display: none; margin-top: 10%; margin-right:auto; left:1px; "  width="100%" height="550px" seamless=""></iframe>
+
+# 
     open_popup_button.short_description = 'Open Client Data'  # Set the column header text
     
     def get_popup_url(self, obj):
