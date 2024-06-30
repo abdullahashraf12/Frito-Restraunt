@@ -448,7 +448,7 @@ function openSmallDiv_Location() {
 function closeSmallDiv_Location() {
   document.getElementById("smallDiv_location").style.display = "none";
   document.querySelector('.overlay_overlay').style.display = 'none';
-  document.getElementById("closeSmallDiv_Coupon__").style.display = "none";
+//   document.getElementById("closeSmallDiv_Coupon__").style.display = "none";
 
 }
 
@@ -461,7 +461,7 @@ function openSmallDiv_Coupon() {
 function closeSmallDiv_Coupon() {
     document.getElementById("smallDiv_location").style.display = "none";
   document.querySelector('.overlay_overlay').style.display = 'none';
-  document.getElementById("closeSmallDiv_Coupon__").style.display = "none";
+//   document.getElementById("closeSmallDiv_Coupon__").style.display = "none";
 
 }
 
@@ -583,6 +583,9 @@ function closeSmallDiv_Coupon() {
             openSmallDiv_Location();
         }else{
             closeSmallDiv_Location()
+            document.getElementById('orderForm').submit();
+
+
         }
     })
     // Add an event listener to the button or clickable element
@@ -591,7 +594,7 @@ function closeSmallDiv_Coupon() {
         $("#address_1").val($("#Address1").val()+" , "+$("#Address2").val())
         $("#mobile_number").val($("#Mobile").val())
         if($("#Address1").val() =="" || $("#Address2").val() =="" ||  $("#Mobile").val() =="" ){
-            alert("please Put Address 1 and 2 an phone number")
+            // alert("please Put Address 1 and 2 an phone number")
             getLocation();
         }else
         {

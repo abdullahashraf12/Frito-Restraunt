@@ -25,7 +25,7 @@
                 <td>{{ item.order_number }}</td>
                 <td>{{ item.uoc_prod.title }}</td>
                 <td>{{ item.quantity }}</td>
-                <td>${{ item.total_price_for_all }}</td>
+                <td>{{ item.total_price_for_all }} L.E</td>
                 <td>{{ item.user_meal_type }}</td>
                 <td>
                     {% for dish in item.MealSideDishes %}

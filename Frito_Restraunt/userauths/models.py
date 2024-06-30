@@ -19,7 +19,8 @@ class User(AbstractUser):
     bio = models.CharField(max_length=100)
     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)  # Model field
     client_status = models.CharField(choices=USER_TYPE,max_length=30,default="Client")
-    Address = models.CharField(max_length=2000 , default="")
+    Address = models.CharField(max_length=2000 , blank=True, default="")
+    mobile_Number =models.CharField(max_length=2000, blank=True,default="")
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
