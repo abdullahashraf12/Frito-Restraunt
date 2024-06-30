@@ -7,6 +7,8 @@ from django.utils.html import format_html
 from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from datetime import date,datetime
+from django.db.models.signals import pre_save
 
 # Create your models here.
 
@@ -215,17 +217,56 @@ class Products(models.Model):
             # Set the current logged-in user as the default value
             self.user = kwargs.pop('user', None)
         super().save(*args, **kwargs)
-class Offers(models.Model):
-    oid = ShortUUIDField(unique=True,length=10,max_length= 20,prefix="off",alphabet="abcdefgh12345")
-    product_offers = models.ForeignKey(OffersNames,on_delete=models.SET_NULL,null=True,related_name="product_offers_offers")
-    gallery_image = models.ImageField(upload_to="global_/off/",default="product.jpg")
-    offer_image = models.ImageField(upload_to="off_/off/",default="product.jpg")
-    # product = models.ForeignKey(Products, on_delete=models.CASCADE)  # ForeignKey to Products
-    # default = models.BooleanField(default=False)
+# class Offers(models.Model):
+#     oid = ShortUUIDField(unique=True,length=10,max_length= 20,prefix="off",alphabet="abcdefgh12345")
+#     product_offers = models.ForeignKey(OffersNames,on_delete=models.SET_NULL,null=True,related_name="product_offers_offers")
+#     gallery_image = models.ImageField(upload_to="global_/off/",default="product.jpg")
+#     offer_image = models.ImageField(upload_to="off_/off/",default="product.jpg")
+#     # product = models.ForeignKey(Products, on_delete=models.CASCADE)  # ForeignKey to Products
+#     # default = models.BooleanField(default=False)
 
+#     def __str__(self):
+#         return str(self.product_offers)
+
+
+
+class Offers(models.Model):
+    oid = ShortUUIDField(unique=True, length=10, max_length=20, prefix="off", alphabet="abcdefgh12345")
+    product_offers = models.ForeignKey(OffersNames, on_delete=models.SET_NULL, null=True, related_name="product_offers_offers")
+    gallery_image = models.ImageField(upload_to="global_/off/", default="product.jpg")
+    offer_image = models.ImageField(upload_to="off_/off/", default="product.jpg")
+    offer_image_welcome = models.ImageField(upload_to="off_/welcome/", default="product.jpg",null=True)
+
+    valid_for_today = models.BooleanField(default=False)  # Field to indicate if the offer is valid only for today
+    created_at = models.DateTimeField(auto_now_add=True)  # Field to store when the offer was created
     def __str__(self):
         return str(self.product_offers)
 
+    def clean(self):
+        # Check if any other offer is valid for today
+        if self.valid_for_today:
+            existing_offer = Offers.objects.filter(valid_for_today=True).exclude(pk=self.pk).first()
+            if existing_offer:
+                raise ValidationError(
+                    f"There can only be one offer valid for today. The offer that is already registered is '({existing_offer.product_offers})'."
+                )
+            if self.offer_image_welcome == "product.jpg" or self.offer_image_welcome=="" :
+                raise ValidationError("Offer image welcome must be set if the offer is valid for today.")
+        super().clean()
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+
+    def is_valid_today(self):
+        """Check if the offer is valid for today."""
+        return self.valid_for_today and self.created_at.date() == date.today()
+
+@receiver(pre_save, sender=Offers)
+def ensure_single_valid_offer(sender, instance, **kwargs):
+    # Check if any other offer is valid for today before saving
+    if instance.valid_for_today:
+        Offers.objects.filter(valid_for_today=True).update(valid_for_today=False)        
 class ProductImages(models.Model):
     images = models.ImageField(upload_to="product-images",default="product.jpg")
     product = models.ForeignKey(Products,on_delete=models.SET_NULL,null=True,related_name="p_images")
