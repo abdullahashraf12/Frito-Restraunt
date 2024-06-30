@@ -55,7 +55,18 @@
                 <td colspan="8">No items found.</td>
             </tr>
             {% endfor %}
+            
         </tbody>
     </table>
+
+
 </div>
+{% if total_price %}  
+<div style=" margin-left: 220px; background-color: cyan; width: 100vw; height: 100px; display: flex; justify-content: center; align-items: center;">
+    <h5 style="font-weight: bold; color: black; margin: 0;">
+        Total Price: <span id="Subtotal_mini_card" style="color: red;">{{ total_price }} L.E</span>
+    </h5>
+</div>
+
+{% endif %}
 {% endblock content %}

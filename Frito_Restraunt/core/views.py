@@ -193,6 +193,8 @@ def user_ordered_items(request,user_email,order_number):
 # Create your views here.
 def place_order(request):
     if request.user.is_authenticated :
+
+#  "total_price": total_price
         if request.method == 'POST' :
             try:
                 max_order_number = CashierTable.objects.aggregate(models.Max('order_number'))['order_number__max']
@@ -246,7 +248,9 @@ def place_order(request):
 def my_orders(request):
     if request.user.is_authenticated:
         today = timezone.now().date()
-        
+        get_all_from_card = CashierTable.objects.filter(client=request.user).exclude(client_status="Finished")
+
+        total_price = get_all_from_card.aggregate(total_price=Sum('total_price'))['total_price']
         # Fetch CardOrderItems filtered by today's date, checked_out_status, and current user
         user_ordered_items = CardOrderItems.objects.filter(
             order_date__date=today,
@@ -267,7 +271,8 @@ def my_orders(request):
 
 
         context = {
-            "user_ordered_items": user_ordered_items
+            "user_ordered_items": user_ordered_items,
+            "total_price":total_price
         }
         return render(request, "MyOrders.html", context=context)
 
