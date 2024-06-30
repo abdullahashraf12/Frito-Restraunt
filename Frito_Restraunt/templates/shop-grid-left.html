@@ -1,7 +1,7 @@
 ﻿{% extends 'partials/base.html' %}
     {% load static %}
     {% block content %}
-    <main class="main">
+    <main class="main" style="width: auto; height: auto;" >
         <div class="page-header mt-30 mb-50">
             <div class="container">
               
@@ -9,7 +9,7 @@
         </div>
         <div class="container mb-30">
             <div class="row flex-row-reverse">
-                <div class="col-lg-4-5">
+                <div class="col-lg-4-5" style="" >
                     <div class="shop-product-fillter">
                         <div class="totall-product">
                             <p>We found <strong class="text-brand">{{products.count}}</strong> items for you!</p>
@@ -60,32 +60,41 @@
                     <div id="Add_To_Prod_Status"></div>
                     <div id="Add_To_Prod_wish_list_Status"></div>
     
-                    <div class="row no-gutters product-grid">
-                        {% for i in products %}
-                        <div class="col-lg-2 col-md-3 col-sm-6 col-12">
-                            <div class="mb-30 wow animate__animated animate__fadeIn" data-wow-delay=".1s">
-                                <div class="product-cart-wrap mb-30 wow animate__animated animate__fadeIn" data-wow-delay=".1s">
-                                    <div class="product-cart-wrap" style="display: flex; flex-direction: column; justify-content: space-between;">
-                                        <div class="">
-                                            <div>
-                                                <a href="{% url 'core:get_products' i.pid %}">
-                                                    <img class="default-img" src="{{ i.image.url }}" style="max-width: 100%; max-height: 100%; width: auto; height: max-content; object-fit: contain;" alt="" />
-                                                </a>
-                                            </div>
-                                            <div class="product-badges product-badges-position product-badges-mrg">
-                                                <span class="hot">-{{i.precentage|floatformat}}%</span>
-                                            </div>
+                    <div class="row no-gutters product-grid" >
+                        {% for p in products %}
+                        <div name="product_card" data-product-tag="{{ p.tags.title }}" data-product-price="{{ p.price|floatformat }}" data-categ_name="{{ p.category.title }}" data-categ_id="{{ p.category.cid }}" data-product_id="{{ p.pid }}" class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                            <div class="card product-card position-relative">
+                                {% if p.precentage %}
+                                <div class="badge badge-primary position-absolute top-0 start-0 mt-2 ms-2">
+                                    -{{ p.precentage|floatformat }}%
+                                </div>
+                                {% endif %}
+                                <div class="product-img-action-wrap">
+                                    <a href="{% url 'core:get_products' p.pid %}">
+                                        <img class="card-img-top img-fluid" src="{{ p.image.url }}" alt="{{ p.title }}">
+                                        <!-- <img class="hover-img" src="{{ p.back_image.url }}" alt="{{ p.title }}"> -->
+                                    </a>
+                                    <div class="product-action-1">
+                                        <div class="action-btns">
+                                            <form method="POST">
+                                                {% csrf_token %}
+                                                <input name="product_pid_to_card" value="{{ p.pid }}" type="hidden" />
+                                            </form>
                                         </div>
-                                        <div class="product-content-wrap" style="flex-grow: 0; margin-top: 50px;">
-                                            <h2><a href="{% url 'core:get_products' i.pid %}">{{ i.title }}</a></h2>
-                                            <div class="product-price mt-10">
-                                                <span>{{i.price}} L.E</span>
-                                                <span class="old-price">{{i.old_Price}} L.E</span>
-                                            </div>
-                                            <div class="add-cart" style="text-align: center;">
-                                                <h2><a href="{% url 'core:get_products' i.pid %}" style="text-decoration: none; color: darkblue;">View Product</a></h2>
-                                            </div>
-                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body product-content-wrap">
+                                    <div class="product-category">
+                                        <a href="#">{{ p.category.title }}</a>
+                                    </div>
+                                    <h5 class="card-title product-title"><a href="{% url 'core:get_products' p.pid %}">{{ p.title }}</a></h5>
+                                    <div class="product-price">
+                                        <span class="price">{{ p.price }} L.E</span>
+                                        <!-- Display old price if needed -->
+                                     
+                                    </div>
+                                    <div class="add-cart">
+                                        <a href="{% url 'core:get_products' p.pid %}" class="btn btn-primary btn-sm">View Product</a>
                                     </div>
                                 </div>
                             </div>

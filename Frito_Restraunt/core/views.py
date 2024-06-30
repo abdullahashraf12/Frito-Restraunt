@@ -455,10 +455,8 @@ def add_to_cart(request):
                 Prod= Products.objects.get(pid=prod_pid)
                 # Filter ProductsOffers directly
                 default_products_offers = ProductsOffers.objects.filter(default=True, product=Prod)
-
                 # Get the IDs of these ProductsOffers
                 default_products_offers_ids = default_products_offers.values_list('id', flat=True)
-
                 # Now filter CardOrderItems based on these ProductsOffers IDs
                 data_exists = CardOrderItems.objects.filter(
                     user=request.user, 
@@ -467,7 +465,6 @@ def add_to_cart(request):
                     product_offers=ProductsOffers.objects.get(product=Prod,default=True).product_offers,
                     checked_out_status=False
                 )
-
 
 
                 # data_exists=False
