@@ -106,6 +106,7 @@ def user_ordered_items(request,user_email,order_number):
     print(user_email)
     get_all_from_card = CardOrderItems.objects.filter(user__email=user_email,order_number=order_number,checked_out_status=True)
     total_price = get_all_from_card.aggregate(total_price=Sum('total_price_for_all'))['total_price']
+    print(order_number)
     print(total_price)
     print(get_all_from_card)
     context= {
@@ -207,6 +208,7 @@ def place_order(request):
                 get_Card.update(checked_out_status=True, order_number=next_order_number)
                 # get_Card.delete()
                 address = request.POST.get("address_1")
+                print("address",address)
                 client_number= request.POST.get("mobile_number")
                 latitude = request.POST.get("latitude","")
                 longitude= request.POST.get("longitude","")

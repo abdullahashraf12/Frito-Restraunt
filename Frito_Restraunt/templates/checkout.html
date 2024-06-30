@@ -583,6 +583,7 @@ function closeSmallDiv_Coupon() {
             openSmallDiv_Location();
         }else{
             closeSmallDiv_Location()
+            $("#address_1").val($("#Address1").val()+" , "+$("#Address2").val())
             document.getElementById('orderForm').submit();
 
 
