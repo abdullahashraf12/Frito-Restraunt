@@ -270,10 +270,17 @@
                                   <!-- width: 600px !important; height: 600px !important; -->
                                   <div class="">
                                       <div >
-                                          <a href="{% url 'core:get_products' i.pid %}">
-                                              <img class="default-img" src="{{ i.image.url }}" style="max-width: 100%; max-height: 100%; width: auto; height: max-content; object-fit: contain;" alt="" />
-                                              <!-- <img class="hover-img" src="{{ i.image.url }}" height="50%" alt="" /> -->
-                                          </a>
+                                      
+                                          <div class="image-link">
+                                            <a href="{% url 'core:get_products' i.pid %}" class="image-link-anchor">
+                                                {% if  "product.jpg" in i.back_image.url %}
+                                                <img class="card-img-top img-fluid" src="{{ i.image.url }}" data-original-image="{{ i.image.url }}" data-back-image="{{ i.image.url }}" alt="{{ i.title }}">
+                                                {% else %}
+                                                <img class="card-img-top img-fluid" src="{{ i.image.url }}" data-original-image="{{ i.image.url }}" data-back-image="{{ i.back_image.url }}" alt="{{ i.title }}">
+    
+                                                {% endif %}
+                                            </a>
+                                        </div>
                                       </div>
                                       <div class="product-badges product-badges-position product-badges-mrg">
                                         <span class="hot">-{{i.precentage|floatformat}}%</span>

@@ -241,10 +241,16 @@
                                 </div>
                                 {% endif %}
                                 <div class="product-img-action-wrap">
-                                    <a href="{% url 'core:get_products' p.pid %}">
-                                        <img class="card-img-top img-fluid" src="{{ p.image.url }}" alt="{{ p.title }}">
-                                        <!-- <img class="hover-img" src="{{ p.back_image.url }}" alt="{{ p.title }}"> -->
-                                    </a>
+                                    <div class="image-link">
+                                        <a href="{% url 'core:get_products' p.pid %}" class="image-link-anchor">
+                                            {% if  "product.jpg" in p.back_image.url %}
+                                            <img class="card-img-top img-fluid" src="{{ p.image.url }}" data-original-image="{{ p.image.url }}" data-back-image="{{ p.image.url }}" alt="{{ p.title }}">
+                                            {% else %}
+                                            <img class="card-img-top img-fluid" src="{{ p.image.url }}" data-original-image="{{ p.image.url }}" data-back-image="{{ p.back_image.url }}" alt="{{ p.title }}">
+
+                                            {% endif %}
+                                        </a>
+                                    </div>
                                     <div class="product-action-1">
                                         <div class="action-btns">
                                             <form method="POST">

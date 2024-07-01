@@ -481,6 +481,45 @@ body, html {
 
 
 
+/* .image-link {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+
+.image-link .card-img-top {
+    width: 100%; 
+    height: 100%; 
+    background-size: cover;
+    background-position: center;
+    transition: opacity 0.3s ease;
+    background-color: white; 
+}
+
+.image-link:hover .card-img-top {
+    opacity: 0; 
+}
+
+.image-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white; 
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.image-link:hover::before {
+    opacity: 1; 
+}
+ */
+
+
+
+
 
 
 
@@ -1385,6 +1424,20 @@ $(document).ready(function() {
 //   });
 
   // No need for mouseenter/mouseleave on smallWindow itself
+});
+
+</script>
+<script>
+$(document).ready(function() {
+    $('.image-link').mouseenter(function() {
+        var $img = $(this).find('.card-img-top');
+        var backImageUrl = $img.data('back-image');
+        $img.attr('src', backImageUrl);
+    }).mouseleave(function() {
+        var $img = $(this).find('.card-img-top');
+        var originalImageUrl = $img.data('original-image');
+        $img.attr('src', originalImageUrl);
+    });
 });
 
 </script>
