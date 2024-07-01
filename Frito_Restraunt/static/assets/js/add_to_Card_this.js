@@ -2,6 +2,16 @@ $(document).ready(function() {
 
 
 try{
+    function display_message(){
+        $("#message").html(`
+            <div class="alert alert-success" role="alert">
+            Product Has Been Added or (Modified) Sucessfully
+            </div>
+            `)
+            setTimeout(function() {
+                $("#message").empty();
+            }, 2000);
+    }
     function get_from_Card(){
         const csrftoken = getCookie('csrftoken');
     
@@ -213,6 +223,7 @@ try{
                     // Print the JSON response to the browser console
                     console.log(response);
                     get_from_Card();
+                    display_message();
 
                 },
                 error: function(xhr, status, error) {
@@ -314,6 +325,9 @@ try{
                     // Print the JSON response to the browser console
                     console.log(response);
                     get_from_Card();
+                    display_message();
+
+
                 },
                 error: function(xhr, status, error) {
                     // Print the error to the browser console
