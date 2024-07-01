@@ -834,26 +834,26 @@ class CustomChartsAdmin(admin.AdminSite):
         if start_date and end_date:
             finished_chart_data = [{
                 'date': entry['day'].strftime('%Y-%m-%d'),
-                'total_sales':  str(float(entry['total_sales']) if entry['total_sales'] is not None else 0.0),
+                'total_sales':  float(entry['total_sales']) if entry['total_sales'] is not None else 0.0,
                 'num_orders': entry['num_orders']
             } for entry in finished_data]
 
             not_finished_chart_data = [{
                 'date': entry['day'].strftime('%Y-%m-%d'),
-                'total_sales':  str(float(entry['total_sales']) if entry['total_sales'] is not None else 0.0),
+                'total_sales':  float(entry['total_sales']) if entry['total_sales'] is not None else 0.0,
                 'num_orders': entry['num_orders']
             } for entry in not_finished_data]
 
         # Prepare overall data for the charts
         overall_finished_chart_data = [{
             'status': 'Finished',
-            'total_sales':  str(float(entry['total_sales']) if entry['total_sales'] is not None else 0.0),
+            'total_sales':  float(entry['total_sales']) if entry['total_sales'] is not None else 0.0,
             'total_orders': entry['total_orders']
         } for entry in overall_finished_data]
 
         overall_not_finished_chart_data = [{
             'status': 'Not Finished',
-            'total_sales':  str(float(entry['total_sales']) if entry['total_sales'] is not None else 0.0),
+            'total_sales':  float(entry['total_sales']) if entry['total_sales'] is not None else 0.0,
             'total_orders': entry['total_orders']
         } for entry in overall_not_finished_data]
 
