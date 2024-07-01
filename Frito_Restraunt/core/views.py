@@ -18,6 +18,7 @@ from django.utils import timezone
 from django.http import JsonResponse, HttpResponseNotAllowed
 from userauths.models import User,UserToken
 from django.shortcuts import get_object_or_404
+from redis.exceptions import TimeoutError ,ConnectionError
 
 
 
@@ -193,41 +194,45 @@ def user_ordered_items(request,user_email,order_number):
 def place_order(request):
     if request.user.is_authenticated :
         if request.method == 'POST' :
-            max_order_number = CashierTable.objects.aggregate(models.Max('order_number'))['order_number__max']
+            try:
+                max_order_number = CashierTable.objects.aggregate(models.Max('order_number'))['order_number__max']
 
-            # If max_order_number is None or 0, set next_order_number to 1; otherwise, increment max_order_number by 1
-            next_order_number = 1 if max_order_number is None or max_order_number == 0 else max_order_number + 1
+                # If max_order_number is None or 0, set next_order_number to 1; otherwise, increment max_order_number by 1
+                next_order_number = 1 if max_order_number is None or max_order_number == 0 else max_order_number + 1
 
-            # Update CardOrderItems for the current user where order_number is 0
-            get_Card = CardOrderItems.objects.filter(user=request.user,order_number=0)
-            get_Card.update(checked_out_status=True, order_number=next_order_number)
-            # get_Card.delete()
-            address = request.POST.get("address_1")
-            client_number= request.POST.get("mobile_number")
-            latitude = request.POST.get("latitude","")
-            longitude= request.POST.get("longitude","")
+                # Update CardOrderItems for the current user where order_number is 0
+                get_Card = CardOrderItems.objects.filter(user=request.user,order_number=0)
+                get_Card.update(checked_out_status=True, order_number=next_order_number)
+                # get_Card.delete()
+                address = request.POST.get("address_1")
+                client_number= request.POST.get("mobile_number")
+                latitude = request.POST.get("latitude","")
+                longitude= request.POST.get("longitude","")
 
 
-            # ['total_sum']
-            get_Card =  CardOrderItems.objects.filter(user=request.user,order_number=next_order_number)
-            aggregated_result = get_Card.aggregate(total_sum=Sum('total_price_for_all'))
-            print(get_Card)
-            print(get_Card)
-            print(get_Card)
-            print(get_Card)
-            print(get_Card)
-            # Extract the aggregated value from the result
-            total_price = aggregated_result['total_sum'] if aggregated_result['total_sum'] else 0
+                # ['total_sum']
+                get_Card =  CardOrderItems.objects.filter(user=request.user,order_number=next_order_number)
+                aggregated_result = get_Card.aggregate(total_sum=Sum('total_price_for_all'))
+                print(get_Card)
+                print(get_Card)
+                print(get_Card)
+                print(get_Card)
+                print(get_Card)
+                # Extract the aggregated value from the result
+                total_price = aggregated_result['total_sum'] if aggregated_result['total_sum'] else 0
 
-            # Add 50 for cashier
-            total_price_with_cashier = total_price + 50
-            # +50
-            print(total_price_with_cashier)
-            print(total_price_with_cashier)
-            print(total_price_with_cashier)
-            casheir = CashierTable(order_number=next_order_number,order_date=timezone.now().isoformat(),client=request.user,address=address,client_number=client_number,total_price=total_price_with_cashier,latitude=latitude,longitude=longitude)
-            casheir.save()
-            return redirect("core:my_orders")
+                # Add 50 for cashier
+                total_price_with_cashier = total_price + 50
+                # +50
+                print(total_price_with_cashier)
+                print(total_price_with_cashier)
+                print(total_price_with_cashier)
+                casheir = CashierTable(order_number=next_order_number,order_date=timezone.now().isoformat(),client=request.user,address=address,client_number=client_number,total_price=total_price_with_cashier,latitude=latitude,longitude=longitude)
+                casheir.save()
+                return redirect("core:my_orders")
+            except (TimeoutError, ConnectionError):
+                return redirect('core:my_orders')
+            
         else:
             return redirect("core:checkout")
 

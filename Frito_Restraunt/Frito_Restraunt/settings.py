@@ -63,6 +63,7 @@ CHANNEL_LAYERS = {
 # }
 
 MIDDLEWARE = [
+    'core.middleware.RedisTimeoutMiddleware',  # Add your custom middleware here
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

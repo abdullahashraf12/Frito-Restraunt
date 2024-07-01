@@ -1,10 +1,11 @@
 <!-- custom_charts.html -->
 <!DOCTYPE html>
 <html>
+    {% load static %}
 <head>
     <title>Custom Charts</title>
     <!-- Include any necessary CSS/JS libraries here -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="{% static 'admin/js/chart.min.js' %}"></script>
     <style>
         .chart-container {
             display: flex;
