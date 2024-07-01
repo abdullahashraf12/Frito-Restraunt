@@ -204,6 +204,10 @@ def place_order(request):
             # get_Card.delete()
             address = request.POST.get("address_1")
             client_number= request.POST.get("mobile_number")
+            latitude = request.POST.get("latitude","")
+            longitude= request.POST.get("longitude","")
+
+
             # ['total_sum']
             get_Card =  CardOrderItems.objects.filter(user=request.user,order_number=next_order_number)
             aggregated_result = get_Card.aggregate(total_sum=Sum('total_price_for_all'))
@@ -221,7 +225,7 @@ def place_order(request):
             print(total_price_with_cashier)
             print(total_price_with_cashier)
             print(total_price_with_cashier)
-            casheir = CashierTable(order_number=next_order_number,order_date=timezone.now().isoformat(),client=request.user,address=address,client_number=client_number,total_price=total_price_with_cashier)
+            casheir = CashierTable(order_number=next_order_number,order_date=timezone.now().isoformat(),client=request.user,address=address,client_number=client_number,total_price=total_price_with_cashier,latitude=latitude,longitude=longitude)
             casheir.save()
             return redirect("core:my_orders")
         else:

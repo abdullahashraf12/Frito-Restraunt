@@ -346,9 +346,7 @@
 
 
             <input type="text" id="get_location_status"  value="None" data-getlocation="" hidden>
-            <input type="text" id="latitude" value="None" data-latitude="" hidden>
-            <input type="text" id="longitude"  value="None" data-longitude="" hidden>
-        
+  
             <p style="width: 80%;
             border: none;
             height: 1px;
@@ -377,6 +375,9 @@
     <div style="height: 20px;"></div>
     <form id="orderForm" method="POST" action="/core/place_order/">
         {% csrf_token  %}
+        <input type="text" id="latitude" name="latitude" data-latitude="" hidden>
+        <input type="text" id="longitude"  name="longitude" data-longitude="" hidden>
+  
         <div class="_miniViewCart_1qirm_133">
             <div class="_checkoutSection_1qirm_51">
                 <div class="_cartAmount_1qirm_87">
@@ -522,9 +523,9 @@ function closeSmallDiv_Coupon() {
         $("#latitude").val(position.coords.latitude.toString());
         $("#longitude").val(position.coords.longitude.toString());
 
-        alert("Status: " + $("#get_location_status").val());
-        alert("Latitude: " + $("#latitude").val());
-        alert("Longitude: " + $("#longitude").val());
+        // alert("Status: " + $("#get_location_status").val());
+        // alert("Latitude: " + $("#latitude").val());
+        // alert("Longitude: " + $("#longitude").val());
         
         console.log("Latitude: " + position.coords.latitude);
         console.log("Longitude: " + position.coords.longitude);
@@ -534,6 +535,8 @@ function closeSmallDiv_Coupon() {
         console.log("Latitude: " + getLatitude());
         console.log("Longitude: " + getLongitude());
         console.log("Longitude: " + getLocationStatus());
+        openSmallDiv_Location();
+
 
     }
 

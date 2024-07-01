@@ -492,6 +492,8 @@ class CashierTable(models.Model):
     total_price = models.FloatField(default=0.00)
     client_status = models.CharField(choices=CLIENT_ORDER_STATUS,max_length=30,default="New")
     SalesRep = models.ForeignKey(User,on_delete=models.CASCADE,related_name="sale_rep",default=None, null=True)
+    latitude = models.CharField(max_length=100,default=0.0)
+    longitude = models.CharField(max_length=100,default=0.0)
     def get_popup_url(self):
         # Define logic to return the URL for the popup iframe
         print(self.client.email)

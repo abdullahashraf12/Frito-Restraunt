@@ -533,6 +533,9 @@ class CasherOrderItemsAdmin(admin.ModelAdmin):
         "sales_rep",
         "open_popup_button",  # Custom method for the button
         "save_button",  # Custom method for save button
+        "latitude",
+        "longitude",
+        "open_map"
     ]
     
     # list_editable = ['client_status']  # Make client_status editable directly in the list view
@@ -649,6 +652,20 @@ class CasherOrderItemsAdmin(admin.ModelAdmin):
         return format_html('<input type="submit" class="save-button" value="Save">')
 
     save_button.short_description = 'Save'  # Set the column header text
+
+    def open_map(self, obj):
+        if obj.latitude != 0.0 and obj.latitude != "" and obj.longitude != 0.0 and obj.longitude != "":
+            # Use latitude and longitude if they are valid and not empty
+            map_url = f"https://www.google.com/maps?q={obj.latitude},{obj.longitude}&hl=ar"
+        elif obj.address:
+            # Use address if latitude and longitude are not available or invalid
+            address_query = "+".join(obj.address.split())
+            map_url = f"https://www.google.com/maps?q={address_query}&hl=ar"
+        else:
+            # Handle case where neither coordinates nor address are available
+            return "Location information not available"
+        
+        return format_html(f'<a href="{map_url}" target="_blank">Open Map</a>')
 
     class Media:
         js = ("/static/assets/js/vendor/jquery-3.6.0.min.js", '/static/admin/js/open_popup.js','/static/admin/js/add_new_record_ws.js')  # Include your custom JavaScript file
