@@ -832,17 +832,20 @@ class CustomChartsAdmin(admin.AdminSite):
 
         # Prepare data for the charts if filters are applied
         if start_date and end_date:
+
             finished_chart_data = [{
                 'date': entry['day'].strftime('%Y-%m-%d'),
                 'total_sales':  float(entry['total_sales']) if entry['total_sales'] is not None else 0.0,
                 'num_orders': entry['num_orders']
-            } for entry in finished_data]
+            
+            }  for entry in finished_data]
 
             not_finished_chart_data = [{
                 'date': entry['day'].strftime('%Y-%m-%d'),
                 'total_sales':  float(entry['total_sales']) if entry['total_sales'] is not None else 0.0,
                 'num_orders': entry['num_orders']
-            } for entry in not_finished_data]
+            }  for entry in not_finished_data]
+            
 
         # Prepare overall data for the charts
         overall_finished_chart_data = [{
