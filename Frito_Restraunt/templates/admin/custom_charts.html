@@ -74,9 +74,10 @@
     </style>
 </head>
 <body>
+    {% if user.is_superuser %}
     <h1>Custom Charts</h1>
 
-    <form method="GET" action="{% url 'admin:custom_charts' %}">
+    <form method="GET" action="{% url 'custom_charts' %}">
         <label for="datepicker_start">Start Date:</label>
         <input type="date" id="datepicker_start" name="datepicker_start" required value="{{ start_date }}">
 
@@ -356,5 +357,10 @@
         });
         {% endif %}
     </script>
+    {% else %}
+    <script>
+        window.location.href="/"
+    </script>
+    {% endif %}
 </body>
 </html>

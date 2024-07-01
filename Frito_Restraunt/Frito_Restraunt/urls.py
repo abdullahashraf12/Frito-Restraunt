@@ -20,6 +20,7 @@ from django.conf import settings
 
 from django.views.static import serve
 from core.consumer import GetCart , GetCashierItems , my_orders
+from product.admin import CustomChartsAdmin
 # from product.admin import custom_admin_site
 urlpatterns = [
 path('admin/', admin.site.urls),
@@ -30,6 +31,7 @@ path('core/', include('core.urls', namespace='core')),
 
 path('userauths/', include('userauths.urls')),
     path('product/', include('product.urls')),  # Include the product app URLs
+    path('custom_charts/', CustomChartsAdmin().custom_charts_view, name='custom_charts'),
 
     # path('custom_admin/', custom_admin_site.urls),  # Custom admin site URL
 
