@@ -208,7 +208,7 @@ class Products(models.Model):
     def __str__(self):
         return str(self.title)
     def precentage(self):
-        new_price = (self.price/self.old_Price) * 100
+        new_price = (100- ((self.price/self.old_Price) * 100) )
         return new_price
     def save(self, *args, **kwargs):
         if not self.pk and not self.user_id:  # If the instance is being created and user is not set
