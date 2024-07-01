@@ -1,5 +1,25 @@
+$(document).ready(function() {
 
+try{
+    $("input.save-button").click(function() {
+        var successAlert = `
+    <div class="alert alert-success" role="alert" style=text-weight:bold;"">
+        Record Has Been Saved
+    </div>
+`;
 
+// Prepend the success alert to the specified div
+$(".change-list-actions.row.pb-3").prepend(successAlert);
+
+// Remove the alert after 2 seconds
+setTimeout(function() {
+    $(".alert-success").remove();
+}, 2000);
+    });
+}catch(Err){
+
+}
+});
 // $(document).ready(function() {
 
 //   // Add save button functionality

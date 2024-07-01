@@ -2,11 +2,21 @@ $(document).ready(function() {
 
 
 try{
-    function display_message(){
+    function display_message_success(){
         $("#message").html(`
             <div class="alert alert-success" role="alert">
             Product Has Been Added or (Modified) Sucessfully
             </div>
+            `)
+            setTimeout(function() {
+                $("#message").empty();
+            }, 2000);
+    }
+    function display_message_error(){
+        $("#message").html(`
+     <div class="alert alert-danger" role="alert">
+  Error Happened
+</div>
             `)
             setTimeout(function() {
                 $("#message").empty();
@@ -223,12 +233,13 @@ try{
                     // Print the JSON response to the browser console
                     console.log(response);
                     get_from_Card();
-                    display_message();
+                    display_message_success();
 
                 },
                 error: function(xhr, status, error) {
                     // Print the error to the browser console
                     console.log('Error adding product to cart:', xhr.responseText);
+                    display_message_error();
                 }
             });
         });
@@ -325,13 +336,14 @@ try{
                     // Print the JSON response to the browser console
                     console.log(response);
                     get_from_Card();
-                    display_message();
+                    display_message_success();
 
 
                 },
                 error: function(xhr, status, error) {
                     // Print the error to the browser console
                     console.log('Error adding product to cart:', xhr.responseText);
+                    display_message_error();
                 }
             });
         

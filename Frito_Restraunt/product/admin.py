@@ -648,8 +648,22 @@ class CasherOrderItemsAdmin(admin.ModelAdmin):
         
         return queryset, use_distinct
 
+
     def save_button(self, obj):
-        return format_html('<input type="submit" class="save-button" value="Save">')
+        return format_html('<input type="submit" class="save-button" style="\
+            padding: 10px 20px; \
+            background-color: blue; \
+            color: white; \
+            border: none; \
+            border-radius: 5px; \
+            text-align: center; \
+            text-decoration: none; \
+            display: inline-block; \
+            font-size: 16px; \
+            margin: 4px 2px; \
+            transition-duration: 0.4s; \
+            cursor: pointer;" \
+            value="Save">')
 
     save_button.short_description = 'Save'  # Set the column header text
 
@@ -665,10 +679,21 @@ class CasherOrderItemsAdmin(admin.ModelAdmin):
             # Handle case where neither coordinates nor address are available
             return "Location information not available"
         
-        return format_html(f'<a href="{map_url}" target="_blank">Open Map</a>')
-
+        return format_html(
+                '<a href="{0}" target="_blank" style="\
+                    display: inline-block; \
+                    width: 100px; \
+                    padding: 10px; \
+                    text-align: center; \
+                    background-color: #007bff; \
+                    color: white; \
+                    text-decoration: none; \
+                    border-radius: 5px; \
+                    transition: background-color 0.3s;">Open Map</a>',
+                map_url
+            )
     class Media:
-        js = ("/static/assets/js/vendor/jquery-3.6.0.min.js", '/static/admin/js/open_popup.js','/static/admin/js/add_new_record_ws.js')  # Include your custom JavaScript file
+        js = ("/static/assets/js/vendor/jquery-3.6.0.min.js", '/static/admin/js/SaveButton.js','/static/admin/js/add_new_record_ws.js')  # Include your custom JavaScript file
 
     def changelist_view(self, request, extra_context=None):
         # Add custom context to include the save button
