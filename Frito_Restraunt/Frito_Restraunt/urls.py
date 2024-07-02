@@ -20,7 +20,7 @@ from django.conf import settings
 
 from django.views.static import serve
 from core.consumer import GetCart , GetCashierItems , my_orders
-
+# from product.admin import custom_admin_site
 urlpatterns = [
 path('admin/', admin.site.urls),
 re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
@@ -30,6 +30,8 @@ path('core/', include('core.urls', namespace='core')),
 
 path('userauths/', include('userauths.urls')),
     path('product/', include('product.urls')),  # Include the product app URLs
+
+    # path('custom_admin/', custom_admin_site.urls),  # Custom admin site URL
 
 ]
 

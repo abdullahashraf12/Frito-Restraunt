@@ -13,8 +13,15 @@ logger = logging.getLogger(__name__)
 from django.forms.models import BaseInlineFormSet
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse, HttpResponseNotAllowed
+from django.contrib import admin
+from django.db.models import Count
+from django.db.models.functions import TruncDay, TruncYear
 
-
+from django.template.response import TemplateResponse
+from datetime import datetime, timedelta
+from django.db.models.functions import TruncDay, ExtractYear
+from django.db.models import Sum
+from django.urls import path
 
 
 class BaseProductMealTYPEFormSet(BaseInlineFormSet):
@@ -652,12 +659,47 @@ class CasherOrderItemsAdmin(admin.ModelAdmin):
             extra_context = {}
         extra_context['show_save_button'] = True
         return super().changelist_view(request, extra_context=extra_context)
-
+    # def get_urls(self):
+    #     from django.urls import path
+        
+    #     urls = super().get_urls()
+    #     custom_urls = [
+    #         path('sales_charts/', self.admin_site.admin_view(self.sales_charts_view), name='sales_charts'),
+    #     ]
+    #     return custom_urls + urls
+    
+    # def sales_charts_view(self, request):
+    #     # Sales per day chart
+    #     sales_per_day_data = self.get_sales_per_day_data()
+        
+    #     # Sales per year chart
+    #     sales_per_year_data = self.get_sales_per_year_data()
+        
+    #     context = {
+    #         'sales_per_day_data': sales_per_day_data,
+    #         'sales_per_year_data': sales_per_year_data,
+    #     }
+    #     return TemplateResponse(request, 'admin/cashiertable/sales_charts.html', context)
+    
+    # def get_sales_per_day_data(self):
+    #     data = CashierTable.objects.filter(
+    #         client_status='Finished',
+    #         order_date__gte=datetime.now().date() - timedelta(days=6)
+    #     ).annotate(day=TruncDay('order_date')).values('day').annotate(total_sales=Sum('total_price')).order_by('day')
+        
+    #     return data
+    
+    # def get_sales_per_year_data(self):
+    #     data = CashierTable.objects.filter(client_status='Finished').annotate(year=ExtractYear('order_date')).values('year').annotate(total_sales=Sum('total_price')).order_by('year')
+        
+    #     return data
+        
 # Register the admin class with your model
 
 
 
 
+# In admin.py of your app
 
 
 
@@ -671,6 +713,13 @@ class CasherOrderItemsAdmin(admin.ModelAdmin):
 
 
 
+from django.contrib import admin
+from django.utils import timezone
+from django.db.models import Count, Sum
+from django.db.models.functions import TruncDay, Cast
+from django.db.models import F, Value, CharField, ExpressionWrapper
+from .models import CashierTable
+from datetime import timedelta
 
 
 
@@ -679,18 +728,137 @@ class CasherOrderItemsAdmin(admin.ModelAdmin):
 
 
 
+from django.contrib import admin
+from django.urls import path
+from django.utils import timezone
+from django.db.models import Count, Sum
+from django.db.models.functions import TruncDay
+from datetime import timedelta
+from .models import CashierTable
+from django.shortcuts import render
+
+class CustomChartsAdmin(admin.AdminSite):
+    site_header = "Custom Charts Admin"
+    site_title = "Custom Charts Admin"
+
+    def get_urls(self):
+        urlpatterns = [
+            path('custom_charts/', self.admin_view(self.custom_charts_view), name='custom_charts'),
+        ]
+        return urlpatterns + super().get_urls()
 
 
+    def custom_charts_view(self, request):
+        start_date = None
+        end_date = None
+        finished_chart_data = []
+        not_finished_chart_data = []
+        overall_finished_chart_data = []
+        overall_not_finished_chart_data = []
+
+        if 'datepicker_start' in request.GET and 'datepicker_end' in request.GET:
+            start_date = timezone.make_aware(timezone.datetime.strptime(request.GET['datepicker_start'], '%Y-%m-%d'))
+            end_date = timezone.make_aware(timezone.datetime.strptime(request.GET['datepicker_end'], '%Y-%m-%d')) + timedelta(days=1)
+
+            # Filter CashierTable entries within the date range for finished orders
+            finished_data = CashierTable.objects.filter(
+                order_date__gte=start_date,
+                order_date__lt=end_date,
+                client_status='Finished'
+            ).annotate(
+                day=TruncDay('order_date')  # Use TruncDay for date truncation
+            ).values(
+                'day'
+            ).annotate(
+                total_sales=Sum('total_price'),  # Use Sum('total_price') for total sales
+                num_orders=Count('id')  # Count number of orders
+            ).order_by('day')
+
+            # Filter CashierTable entries within the date range for not finished orders
+            not_finished_data = CashierTable.objects.filter(
+                order_date__gte=start_date,
+                order_date__lt=end_date,
+            ).exclude(
+                client_status='Finished'
+            ).annotate(
+                day=TruncDay('order_date')  # Use TruncDay for date truncation
+            ).values(
+                'day'
+            ).annotate(
+                total_sales=Sum('total_price'),  # Use Sum('total_price') for total sales
+                num_orders=Count('id')  # Count number of orders
+            ).order_by('day')
+
+        # Overall finished orders (irrespective of date range)
+        overall_finished_data = CashierTable.objects.filter(
+            client_status='Finished'
+        ).annotate(
+            status=Count('client_status')
+        ).values(
+            'status'
+        ).annotate(
+            total_sales=Sum('total_price'),  # Use Sum('total_price') for total sales
+            total_orders=Count('id')  # Count number of orders
+        )
+
+        # Overall not finished orders (irrespective of date range)
+        overall_not_finished_data = CashierTable.objects.exclude(
+            client_status='Finished'
+        ).annotate(
+            status=Count('client_status')
+        ).values(
+            'status'
+        ).annotate(
+            total_sales=Sum('total_price'),  # Use Sum('total_price') for total sales
+            total_orders=Count('id')  # Count number of orders
+        )
+
+        # Prepare data for the charts if filters are applied
+        if start_date and end_date:
+            finished_chart_data = [{
+                'date': entry['day'].strftime('%Y-%m-%d'),
+                'total_sales': entry['total_sales'],
+                'num_orders': entry['num_orders']
+            } for entry in finished_data]
+
+            not_finished_chart_data = [{
+                'date': entry['day'].strftime('%Y-%m-%d'),
+                'total_sales': entry['total_sales'],
+                'num_orders': entry['num_orders']
+            } for entry in not_finished_data]
+
+        # Prepare overall data for the charts
+        overall_finished_chart_data = [{
+            'status': 'Finished',
+            'total_sales': entry['total_sales'],
+            'total_orders': entry['total_orders']
+        } for entry in overall_finished_data]
+
+        overall_not_finished_chart_data = [{
+            'status': 'Not Finished',
+            'total_sales': entry['total_sales'],
+            'total_orders': entry['total_orders']
+        } for entry in overall_not_finished_data]
+
+        context = {
+            'finished_chart_data': finished_chart_data,
+            'not_finished_chart_data': not_finished_chart_data,
+            'overall_finished_chart_data': overall_finished_chart_data,
+            'overall_not_finished_chart_data': overall_not_finished_chart_data,
+            'start_date': start_date.strftime('%Y-%m-%d') if start_date else None,
+            'end_date': (end_date - timedelta(days=1)).strftime('%Y-%m-%d') if end_date else None,
+        }
+
+        return render(request, 'admin/custom_charts.html', context)
 
 
+# Register your models here if necessary
+# admin.site.register(CashierTable)
 
+# Register CustomChartsAdmin with the default admin site
+# admin.site = CustomChartsAdmin()
 
-
-
-
-
-
-
+admin.site = CustomChartsAdmin()
 
 
 

@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'home',
     'userauths',
     'product',
-    'core'
+    'core',
+
 ]
 CHANNEL_LAYERS = {
     "default": {
