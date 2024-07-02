@@ -858,7 +858,7 @@ class CustomChartsAdmin(admin.AdminSite):
 # Register CustomChartsAdmin with the default admin site
 # admin.site = CustomChartsAdmin()
 
-admin.site = CustomChartsAdmin()
+# admin.site = CustomChartsAdmin()
 
 
 
