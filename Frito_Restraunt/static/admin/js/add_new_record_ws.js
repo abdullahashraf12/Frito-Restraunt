@@ -210,9 +210,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </td>
             <td class="field-save_button">
-                <input type="submit" class="save-button" value="Save">
-            </td>
-        `;
+  <input type="submit" class="save-button" style=" padding: 10px 20px; background-color: blue;  color: white;   border: none;  border-radius: 5px;   text-align: center;  text-decoration: none;  display: inline-block;   font-size: 16px;     margin: 4px 2px;   transition-duration: 0.4s;     cursor: pointer;" value="Save">
+            </td>          
+            <td class="field-latitude">${data.latitude}</td>
+            <td class="field-longitude">${data.longitude}</td>
+            `;
+            if (data.latitude.toString()=="undefined"){
+                newRow.innerHTML+=`<td class="field-open_map"><a  href="https://www.google.com/maps?q=${data.address}&amp;hl=ar" target="_blank" style="                    display: inline-block;                     width: 100px;                     padding: 10px;                     text-align: center;                     background-color: #007bff;                     color: white;                     text-decoration: none;                     border-radius: 5px;                     transition: background-color 0.3s;">Open Map</a></td>`;
+
+        }else{
+            newRow.innerHTML+=`<td class="field-open_map"><a href="https://www.google.com/maps?q=${data.latitude},${data.longitude}&amp;hl=ar" target="_blank" style="                    display: inline-block;                     width: 100px;                     padding: 10px;                     text-align: center;                     background-color: #007bff;                     color: white;                     text-decoration: none;                     border-radius: 5px;                     transition: background-color 0.3s;">Open Map</a></td>`;
+
+        }
+            
    
 
         tableBody.prepend(newRow);
