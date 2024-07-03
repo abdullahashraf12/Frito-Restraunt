@@ -363,33 +363,59 @@
         </div>
     </div>
 </section>
-<div>
+<div id="mainDiv">
   {% for i in offers %}
-  {% if i.valid_for_today %}
-  <div class="overlay_overlay" onclick="closeSmallDiv_Location()"></div>
-  <div class="small-div_overlay" id="smallDiv_location">
- <span onclick="closeSmallDiv_Location()" class="close_overlay">&times;</span>
- <a href="{% url 'core:offers_product_list_view' i.oid %}" style="text-decoration: none;">
-  <img src="{{ i.offer_image_welcome.url }}" width="max-width" height="max-width">
+    {% if i.is_valid_today %}
+      <div class="overlay_overlay" onclick="closeSmallDiv_Location()"></div>
+      <div class="small-div_overlay" id="smallDiv_location">
+        <span onclick="closeSmallDiv_Location()" class="close_overlay">&times;</span>
+        <a href="{% url 'core:offers_product_list_view' i.oid %}" style="text-decoration: none;">
+          <img src="{{ i.offer_image_welcome.url }}" width="max-width" height="max-width">
+        </a>
+      </div>
+      <div style="height: 150px;"></div>
+      <script>
+        // Function to set a session cookie with the given name and value
+        function setSessionCookie(cookieName, cookieValue) {
+          document.cookie = cookieName + "=" + cookieValue + ";path=/";
+        }
 
- </a>
- </div>
-<div style="height: 150px;"></div>
-<script>
-function openSmallDiv_Location() {
-document.getElementById("smallDiv_location").style.display = "block";
-document.querySelector('.overlay_overlay').style.display = 'block';
+        // Function to get the value of a cookie by its name
+        function getCookie(cookieName) {
+          var name = cookieName + "=";
+          var decodedCookie = decodeURIComponent(document.cookie);
+          var cookieArray = decodedCookie.split(';');
+          for (var i = 0; i < cookieArray.length; i++) {
+            var cookie = cookieArray[i].trim();
+            if (cookie.indexOf(name) == 0) {
+              return cookie.substring(name.length, cookie.length);
+            }
+          }
+          return "";
+        }
 
-}
-function closeSmallDiv_Location() {
-document.getElementById("smallDiv_location").style.display = "none";
-document.querySelector('.overlay_overlay').style.display = 'none';
-//   document.getElementById("closeSmallDiv_Coupon__").style.display = "none";
+        function openSmallDiv_Location() {
+          document.getElementById("smallDiv_location").style.display = "block";
+          document.querySelector('.overlay_overlay').style.display = 'block';
+        }
 
-}openSmallDiv_Location();
- </script>
+        function closeSmallDiv_Location() {
+          document.getElementById("smallDiv_location").style.display = "none";
+          document.querySelector('.overlay_overlay').style.display = 'none';
+          // Set a session cookie to remember that the user has seen the offer
+          setSessionCookie("seen_offer", "true");
+        }
 
- {% endif %}
- {% endfor %}
- </div>
+        // Check if the 'seen_offer' session cookie exists and its value is 'true'
+        var seenOfferCookie = getCookie("seen_offer");
+        if (seenOfferCookie == "true") {
+          // openSmallDiv_Location(); // Show the div if the user has already seen the offer
+        }else{
+          openSmallDiv_Location();
+        }
+      </script>
+    {% endif %}
+  {% endfor %}
+</div>
+
 {% endblock content %}

@@ -23,6 +23,11 @@ from redis.exceptions import TimeoutError ,ConnectionError
 
 
 
+def contact_us(request):
+    return render(request,"contact_us.html")
+
+
+
 
 
 

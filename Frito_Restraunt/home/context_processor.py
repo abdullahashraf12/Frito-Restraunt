@@ -4,6 +4,7 @@ def default(request):
     category = Category.objects.all().order_by('title')
     offers = Offers.objects.all().order_by('product_offers')
     all_products_featured = Products.objects.filter(featured=True)
+
     if request.user.is_authenticated:
         print(request.user.profile_picture == "")
         get_token = list(UserToken.objects.filter(user=request.user).values("token"))

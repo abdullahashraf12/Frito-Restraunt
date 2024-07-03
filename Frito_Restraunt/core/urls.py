@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import include,path
-from core.views import index,product_list,category_list,category_product_list_view,get_product_by_id,get_products_name,AddToCardView,show_card,RemoveFromCardView,wishlist,AddToWishCardView,RemoveFromWishCardView,AddReview,message_socket,offers_product_list_view,add_to_cart,remove_from_Card,checkout,checkout_ajax,user_checked_items,my_orders,place_order,user_ordered_items,save_cashier_table
+from core.views import (index,product_list,category_list,category_product_list_view,get_product_by_id,get_products_name,AddToCardView,show_card,RemoveFromCardView,wishlist,
+                        AddToWishCardView,RemoveFromWishCardView,AddReview,message_socket,offers_product_list_view,add_to_cart,
+                        remove_from_Card,checkout,checkout_ajax,user_checked_items,my_orders,place_order,user_ordered_items,save_cashier_table,contact_us)
 from .consumer import GetCart,GetCashierItems
 from django.urls import re_path
 app_name = "core"
@@ -37,7 +39,7 @@ path('user_ordered_items/<user_email>/<int:order_number>/', user_ordered_items,n
 # path('all_useres_ordered/', user_ordered_items,name="user_ordered_items"),
 
 path('save_cashier_table/<int:id>', save_cashier_table, name="save_cashier_table"),
-
+path('contact_us/', contact_us, name="contact_us"),
 path('admin/', admin.site.urls),
 path("user/",include("userauths.urls")),
 
