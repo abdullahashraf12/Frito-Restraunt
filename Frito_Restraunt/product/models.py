@@ -535,6 +535,16 @@ class CashierTable(models.Model):
     SalesRep = models.ForeignKey(User,on_delete=models.CASCADE,related_name="sale_rep",default=None, null=True)
     latitude = models.CharField(max_length=100,default=0.0)
     longitude = models.CharField(max_length=100,default=0.0)
+    client_status_date = models.DateTimeField(default=timezone.now)
+
+    def save(self, *args, **kwargs):
+        # Update client_status_date only when client_status field changes
+        if self.pk is not None:
+            original = CashierTable.objects.get(pk=self.pk)
+            if original.client_status != self.client_status:
+                self.client_status_date = timezone.now()
+        super(CashierTable, self).save(*args, **kwargs)
+
     def get_popup_url(self):
         # Define logic to return the URL for the popup iframe
         print(self.client.email)

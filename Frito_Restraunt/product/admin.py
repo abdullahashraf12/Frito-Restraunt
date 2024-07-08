@@ -22,6 +22,24 @@ from datetime import datetime, timedelta
 from django.db.models.functions import TruncDay, ExtractYear
 from django.db.models import Sum
 from django.urls import path
+from django.db.models import F, Q
+
+from django.contrib import admin
+from django.utils import timezone
+from django.db.models import Count, Sum
+from django.db.models.functions import TruncDay, Cast
+from django.db.models import F, Value, CharField, ExpressionWrapper
+from .models import CashierTable
+from datetime import timedelta
+
+from django.contrib import admin
+from django.urls import path
+from django.utils import timezone
+from django.db.models import Count, Sum
+from django.db.models.functions import TruncDay
+from datetime import timedelta
+from .models import CashierTable
+from django.shortcuts import render
 
 
 class BaseProductMealTYPEFormSet(BaseInlineFormSet):
@@ -634,20 +652,35 @@ class CasherOrderItemsAdmin(admin.ModelAdmin):
         # If method is not POST or not AJAX, return an error response
         return JsonResponse({'error': 'Invalid request'})
     def get_search_results(self, request, queryset, search_term):
-        queryset, use_distinct = super().get_search_results(request, queryset, search_term)
+        use_distinct = False  # Initialize use_distinct variable
         
-        try:
-            # Filter by client name
-            queryset |= self.model.objects.filter(client__username__icontains=search_term)
+        if search_term and search_term.strip():  # Check if search_term is not empty
+            # Call super to get the default behavior
+            queryset, use_distinct = super().get_search_results(request, queryset, search_term)
             
-            # Filter by SalesRep name
-            queryset |= self.model.objects.filter(SalesRep__username__icontains=search_term)
-            
-        except (TypeError, ValueError):
-            pass  # Handle errors if any
+            # Apply additional custom filters
+            try:
+                # Filter by client username
+                queryset |= self.model.objects.filter(client__username__icontains=search_term)
+                
+                # Filter by SalesRep username
+                queryset |= self.model.objects.filter(SalesRep__username__icontains=search_term)
+                
+                # Filter by SalesRep Order Number
+                queryset |= self.model.objects.filter(order_number__icontains=int(search_term))
+                # Filter by SalesRep Order Statud
+                queryset |= self.model.objects.filter(client_status__icontains=search_term)
+                print(queryset)
+                print(queryset)
+                print(queryset)
+                print(queryset)
+                print(queryset)
+                print(queryset)
+
+            except (TypeError, ValueError):
+                pass  # Handle errors if any
         
         return queryset, use_distinct
-
 
     def save_button(self, obj):
         return format_html('<input type="submit" class="save-button" style="\
@@ -701,67 +734,48 @@ class CasherOrderItemsAdmin(admin.ModelAdmin):
             extra_context = {}
         extra_context['show_save_button'] = True
         return super().changelist_view(request, extra_context=extra_context)
-    # def get_urls(self):
-    #     from django.urls import path
+
+    def get_queryset(self, request):
+        # Get the original queryset
+        queryset = super().get_queryset(request)
         
-    #     urls = super().get_urls()
-    #     custom_urls = [
-    #         path('sales_charts/', self.admin_site.admin_view(self.sales_charts_view), name='sales_charts'),
-    #     ]
-    #     return custom_urls + urls
-    
-    # def sales_charts_view(self, request):
-    #     # Sales per day chart
-    #     sales_per_day_data = self.get_sales_per_day_data()
+        # Calculate the datetime 24 hours ago
+        twenty_four_hours_ago = timezone.now() - timezone.timedelta(hours=24)
         
-    #     # Sales per year chart
-    #     sales_per_year_data = self.get_sales_per_year_data()
-        
-    #     context = {
-    #         'sales_per_day_data': sales_per_day_data,
-    #         'sales_per_year_data': sales_per_year_data,
-    #     }
-    #     return TemplateResponse(request, 'admin/cashiertable/sales_charts.html', context)
-    
-    # def get_sales_per_day_data(self):
-    #     data = CashierTable.objects.filter(
-    #         client_status='Finished',
-    #         order_date__gte=datetime.now().date() - timedelta(days=6)
-    #     ).annotate(day=TruncDay('order_date')).values('day').annotate(total_sales=Sum('total_price')).order_by('day')
-        
-    #     return data
-    
-    # def get_sales_per_year_data(self):
-    #     data = CashierTable.objects.filter(client_status='Finished').annotate(year=ExtractYear('order_date')).values('year').annotate(total_sales=Sum('total_price')).order_by('year')
-        
-    #     return data
-        
-# Register the admin class with your model
-
-
-
-
-# In admin.py of your app
-
-
-
-
-
-
-
-
-
-
-
-
-
-from django.contrib import admin
-from django.utils import timezone
-from django.db.models import Count, Sum
-from django.db.models.functions import TruncDay, Cast
-from django.db.models import F, Value, CharField, ExpressionWrapper
-from .models import CashierTable
-from datetime import timedelta
+        # Filter queryset based on conditions
+        queryset = queryset.exclude(
+            Q(client_status="Finished") &
+            Q(client_status_date__lt=twenty_four_hours_ago)
+        )
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(queryset)
+  
+        return queryset
 
 
 
@@ -770,14 +784,8 @@ from datetime import timedelta
 
 
 
-from django.contrib import admin
-from django.urls import path
-from django.utils import timezone
-from django.db.models import Count, Sum
-from django.db.models.functions import TruncDay
-from datetime import timedelta
-from .models import CashierTable
-from django.shortcuts import render
+
+
 
 class CustomChartsAdmin(admin.AdminSite):
     site_header = "Custom Charts Admin"
