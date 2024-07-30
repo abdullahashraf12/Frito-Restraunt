@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'userauths',
     'product',
     'core',
+    'core_api',
+    'userauths_api'
 
 ]
 CHANNEL_LAYERS = {

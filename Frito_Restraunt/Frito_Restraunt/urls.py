@@ -28,6 +28,7 @@ re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
 path("",include('home.urls', namespace='home')),
 path('core/', include('core.urls', namespace='core')),
+path('userauths_api/', include('userauths_api.urls', namespace='userauths_api')),
 
 path('userauths/', include('userauths.urls')),
     path('product/', include('product.urls')),  # Include the product app URLs
