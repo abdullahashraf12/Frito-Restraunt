@@ -26,7 +26,7 @@
 
 ## 🔒 Why Choose Frito-Restaurant?
 - **Modern UI/UX**: Designed for an intuitive experience for both clients and admins.
-- **Secure Transactions**: AES encryption for passwords and sensitive data.
+- **Secure Transactions**: (PBKDF2 with SHA256) encryption for passwords and sensitive data.
 - **Comprehensive Features**: Covers the entire process from ordering to delivery.
 - **Scalable Architecture**: Built with robust frameworks and technologies.
 
