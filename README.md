@@ -79,7 +79,7 @@ git clone https://github.com/yourusername/Frito-Restaurant.git
 3. Keep In Mind the local ip of your pc
 3. Run the Project By 
  ```bash
-  ../venv/Scripts/python.exe manage.py runsslserver  yourip:443 --certificate "C:\Frito Restraunt\frito\Frito-Restraunt-Beeb\Frito_Restraunt\certs\certificate.crt" --key "C:\Frito Restraunt\frito\Frito-Restraunt-Beeb\Frito_Restraunt\certs\key_nopass.pem"
+  ../venv/Scripts/python.exe manage.py runsslserver  yourip:443 --certificate "/certs/certificate.crt" --key "/certs/key_nopass.pem"
    ```
 ---
 ## 🌐 Use Cases
