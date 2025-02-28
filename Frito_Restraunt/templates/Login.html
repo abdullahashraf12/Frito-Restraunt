@@ -1,0 +1,249 @@
+<html>
+    {% load static%}
+    <head>
+        <link rel="stylesheet" href="{% static '/assets/css/bootstrap.min.css' %}">
+
+        <link rel="stylesheet" href="{% static '/assets/css/index.css' %}">
+        <link rel="stylesheet" href="{% static '/assets/css/login.css' %}">
+        <title>Login Page</title>
+        <link rel="icon" type="image/x-icon" href="{% static '/assets/imgs/fr.ico' %}">
+
+        <style>
+
+        </style>
+    </head>
+    <body >
+        <a class="fr_ico_home" href="{% url 'home:home' %}">
+            <!-- <div class="fr_ico_home"></div> -->
+
+    </a>
+        <div style="height:200px;  margin-left: 10%;">
+            <div class="left-image"></div>
+            <div class="right-image"></div>
+        </div>
+
+
+      
+    <div id="errors" data-errors='{"error_account":"{{ error_account }}","error_password": "{{ error_password }}"}'></div>
+    <div id="alert-container" style="position: fixed; top: 20px; right: 20px; z-index: 1050;"></div>
+    
+        <div class="flip-card-inner " style="height: 25%; width: 200%;  margin-top: -20%; margin-left: -20%;">
+
+          <div class="flip-card-front" style="margin-top: 50%; ">
+
+            <form action="{% url 'userauths:login' %}" id="Login_Form" method="POST">
+                <div class="flip-card center-content" style=" top: -450%; width: 55%; height: 400%;   background-color: rgba(0, 0, 0, 0.5); justify-content: center; flex-direction: column; border-radius: 20%;   ">
+
+                    <div style="height: 20px;"></div>
+                    <img src="{% static 'assets/imgs/S.png' %}" width="300px" height="300px" id="Login_img" style=" margin-left: 0%;  border-radius: 100%; " alt="Cinque Terre">
+                    <div style="height: 5%;">
+            </div>
+                {% csrf_token %}
+
+            <div class="row" style="display: flex; align-items: center; margin-bottom: 15px;">
+                <div class="col-1"></div>
+                <div class="text-center" style="margin-right: 5px;">
+                    <p style="color: white; margin: 0; font-size: xx-large;">Account&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                </div>
+                <div style="margin-right: 5px;">
+                    <p style="color: red; margin: 0;">*</p>
+                </div>
+                <div style="flex-grow: 1; position: relative;">
+                    <input type="email" name="email" id="email" style=" height: 50px;  background-color: white; border: 1px solid aqua; width: 98%; margin-right: 70%; box-sizing: border-box; color: black;  " placeholder="Your Account">
+                </div>
+                <div class="col-1"></div>
+            </div>
+            <div style="height: 15px;"></div>
+            <div class="row" style="display: flex; align-items: center;">
+
+                <div class="col-1"></div>
+                <div class="text-center" style="margin-right: 5px;">
+                    <p style="color: white; margin: 0; font-size: xx-large;">Password&nbsp;:&nbsp;</p>
+                </div>
+                <div style="margin-right: 5px;">
+                    <p style="color: red; margin: 0;">*</p>
+                </div>
+                <div style="flex-grow: 1; position: relative;">
+                    <input type="password" name="password" id="password" style=" height: 50px;  background-color: white; border: 1px solid aqua; width: 98%; margin-right: 70%; box-sizing: border-box; color: black;" placeholder="Your Password">
+                </div>
+                <div class="col-1"></div>
+            </div>
+            <div style="height: 10px;"></div>
+            <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                <div style="width: 15px;"></div>
+                <button type="button" id="Login_Flip_Card" class="SignUp" style="width: 40%; height: 10%;">Register</button>
+
+                <div style="flex-grow: 0; width: 3ch;"></div>
+                
+                <button type="submit" class="SignUp_login" id="login_submit_button" style="width: 40%; height: 10%;"  name="action" value="Login">Login</button>
+                
+                <div class="col-1"></div>
+            </div>
+            </div>
+            </form>
+        </div>
+
+
+
+
+    <div class="flip-card-back"  style="margin-top: 50%;">
+        <form method="POST" action="{% url 'userauths:register' %}" enctype="multipart/form-data" id="Register_Form">
+            {% csrf_token %}
+            <div class="flip-card center-content" style=" top: -450%; width: 55%; height: 400%;   background-color: rgba(0, 0, 0, 0.5); justify-content: center; flex-direction: column; border-radius: 20%;   ">
+
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+    
+            <div style="height: 20px;"></div>
+         
+            <label for="profile_picture" style="position: relative; pointer-events: none;">
+                <img src="{% static 'assets/imgs/S.png' %}" id="upload_register_photo" width="300px" height="300px" style=" margin-left: 0%;  border-radius: 100%; " alt="Cinque Terre">
+                <input type="file" name="profile_picture" id="profile_picture" style="position: absolute; display: none;">
+              </label>
+            
+            
+
+            <div style="height: 5%;">
+    </div>
+
+
+    <div class="row" style="display: flex; align-items: center; margin-bottom: 15px;">
+        <div class="col-1"></div>
+        <div class="text-center" style="margin-right: 5px;">
+            <p style="color: white; margin: 0; font-size: xx-large;">UserName&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+        </div>
+        <div style="margin-right: 5px;">
+            <p style="color: red; margin: 0;">*</p>
+        </div>
+        <div style="flex-grow: 1; position: relative;">
+            {{form.username}}
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row" style="display: flex; align-items: center; margin-bottom: 15px;">
+        <div class="col-1"></div>
+        <div class="text-center" style="margin-right: 5px;">
+            <p style="color: white; margin: 0; font-size: xx-large;">Account&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+        </div>
+        <div style="margin-right: 5px;">
+            <p style="color: red; margin: 0;">*</p>
+        </div>
+        <div style="flex-grow: 1; position: relative;">
+            {{form.email}}
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div style="height: 15px;"></div>
+
+
+    <div class="row" style="display: flex; align-items: center; margin-bottom: 15px;">
+        <div class="col-1"></div>
+        <div class="text-center" style="margin-right: 5px;">
+            <p style="color: white; margin: 0; font-size: xx-large;">Password&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+        </div>
+        <div style="margin-right: 5px;">
+            <p style="color: red; margin: 0;">*</p>
+        </div>
+        <div style="flex-grow: 1; position: relative;">
+            {{form.password1}}
+        </div>
+        <div class="col-1"></div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <div style="height: 15px;"></div>
+
+    <div class="row" style="display: flex; align-items: center;">
+    
+        <div class="col-1"></div>
+        <div class="text-center" style="margin-right: 5px;">
+            <p style="color: white; margin: 0; font-size: xx-large;">Confirm Password&nbsp;:&nbsp;</p>
+        </div>
+        <div style="margin-right: 5px;">
+            <p style="color: red; margin: 0;">*</p>
+        </div>
+        <div style="flex-grow: 1; position: relative;">
+
+            {{form.password2}}
+            
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div style="height: 10px;"></div>
+    
+
+    
+    <div class="row" style="display: flex; justify-content: center; align-items: center;">
+        <button type="submit" class="SignUp" name="action" value="Register">Register</button>
+        <div style="margin: 0 10px;"></div>
+        <button class="SignUp_login" id="Flib_Back_To_Login">Back To Login</button>
+    </div>
+    
+    
+    
+    
+    
+        </div>
+    
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </form>
+
+      </div>
+      </div>
+  
+      </div>
+
+    
+      <script>
+        var btn = document.getElementById("Login_Flip_Card");
+        var card = document.querySelector(".flip-card-inner");
+        var btn2 = document.getElementById("Flib_Back_To_Login");
+
+        btn.addEventListener("click", function() {
+          card.classList.toggle("flipped");
+        });
+        btn2.addEventListener("click", function() {
+          card.classList.toggle("flipped");
+        });
+        </script>
+
+
+    <!-- <script src="{% static 'assets/js/jquery-3.5.1.slim.min.js' %}"></script> -->
+    <script src="{% static 'assets/js/jquery-3.7.1.min.js' %}"></script>
+
+    <script src="{% static 'assets/js/popper.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/js/register.js' %}"></script>
+    <script src="{% static 'assets/js/get_img_ajax.js' %}"></script>
+    <script src="{% static 'assets/js/errors_registeration_or_login.js' %}"></script>
+    </body>
+    </html>
+    

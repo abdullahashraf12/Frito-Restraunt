@@ -1,0 +1,23 @@
+     /* Add some CSS styles to style the layout */
+     .my_ul{
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex; /* Use flexbox for layout */
+        flex-wrap: wrap; /* Allow items to wrap to the next line */
+    }
+
+    .my_li {
+        flex: 1; /* Equal flex distribution for each item */
+        margin: 5px; /* Adjust the margin as needed */
+        width: 48%; /* Set a specific width to ensure two columns */
+    }
+
+    /* Add a class for the fifth and sixth items to control their appearance */
+    .fifth-item,
+    .sixth-item {
+        width: 100%; /* Set full width for the fifth and sixth items */
+        margin-top: 10px; /* Adjust the margin as needed */
+    }
+
+

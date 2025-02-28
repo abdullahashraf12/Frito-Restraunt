@@ -1,0 +1,598 @@
+.wishlistbutton {
+    font-size: medium;
+    margin-top: 27px;
+    background-image: url(../imgs/shopwishlist.png);
+    background-color: transparent;
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-size: 70px 70px; /* Set background image size */
+    border-color: transparent;
+    position: relative; /* Add this line */
+    outline: none; /* Remove default button outline */
+}
+
+.wishlistbutton::after {
+    content: "Wishlist";
+    color: yellow;
+    font-weight: bold;
+    position: absolute;
+    top: 40%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+    
+    
+}
+
+.wishlistbutton:hover::after { /* Change color on hover */
+    color: red;
+    
+}
+
+
+.wishlistbutton:focus { /* Remove default focus outline */
+    outline: none;
+}
+
+.wishlistbutton:active { /* Adjust border color on button press */
+    border-color: transparent;
+}
+
+
+.Cardbutton {
+    font-size: medium;
+    margin-top: 27px;
+    background-image: url(../imgs/ShopCard2.png);
+    background-color: transparent;
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-size: 70px 70px; /* Set background image size */
+    border-color: transparent;
+    position: relative; /* Add this line */
+    outline: none; /* Remove default button outline */
+}
+
+.Cardbutton::after {
+    content: "Card";
+    color: yellow;
+    font-weight: bold;
+    position: absolute;
+    top: 40%;
+    left: 100%;
+    transform: translate(-50%, -50%);
+    
+    
+}
+
+.Cardbutton:hover::after { /* Change color on hover */
+    color: red;
+    
+}
+
+
+.Cardbutton:focus { /* Remove default focus outline */
+    outline: none;
+}
+
+.Cardbutton:active { /* Adjust border color on button press */
+    border-color: transparent;
+}
+
+
+
+
+
+.Loginbutton {
+    font-size: medium;
+    margin-top: 27px;
+    background-image: url(../imgs/pers.png);
+    background-color: transparent;
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-size: 70px 70px; /* Set background image size */
+    border-color: transparent;
+    position: relative; /* Add this line */
+    outline: none; /* Remove default button outline */
+}
+
+.Loginbutton::after {
+    content: "Login";
+    color: yellow;
+    font-weight: bold;
+    position: absolute;
+    top: 40%;
+    left: 100%;
+    transform: translate(-50%, -50%);
+    
+    
+}
+
+.Loginbutton:hover::after { /* Change color on hover */
+    color: red;
+    
+}
+
+
+.Loginbutton:focus { /* Remove default focus outline */
+    outline: none;
+}
+
+.Loginbutton:active { /* Adjust border color on button press */
+    border-color: transparent;
+}
+
+
+
+
+.SignUp {
+    height: 50px;
+    border-radius: 12px;
+    border: none;
+    font-size: 20px;
+    width:20%;
+    margin-right: 10%;
+    margin-bottom:10%;   
+    margin-top:10%;          
+    color:red;      
+    font-weight: bold;   
+    background-color:yellow;  
+ 
+ 
+}
+
+.SignUp:hover {
+    background-color:rgb(103, 229, 229); 
+}
+
+.SignUp:focus {
+    background-color:rgb(103, 229, 229);
+    border: none;
+    color: blue;
+}
+
+
+.ReturnToHome {
+    height: 50px;
+    border-radius: 12px;
+    border: none;
+    font-size: 20px;
+    width:80%;         
+    color:red;      
+    font-weight: bold;   
+    background-color:yellow;  
+    margin-left:5% ;
+    margin-bottom:10%;         
+    margin-top:7%;    
+ 
+}
+
+.ReturnToHome:hover {
+    background-color:rgb(103, 229, 229); /* Change background color on hover */
+}
+
+.ReturnToHome:focus {
+    background-color:rgb(103, 229, 229); /* Change background color on hover */
+    border: none;
+    color: blue;
+}
+
+
+
+
+
+
+.SignUp_login {
+    /* margin-top: -50px; */
+    height: 50px;
+    border-radius: 12px;
+    border: none;
+    
+    font-size: 20px;
+    width:20%;
+    /* margin-right: 10%;
+    margin-bottom:10%;   
+    margin-top:10%;           */
+    color:red;      
+    font-weight: bold;   
+    background-color:yellow;  
+ 
+ 
+}
+
+.SignUp_login:hover {
+    background-color: rgb(103, 229, 229); /* Change background color on hover */
+}
+
+.SignUp_login:focus {
+    background-color: rgb(103, 229, 229); /* Change background color on hover */
+    border: none;
+    color: blue;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+.Logoutbutton {
+    font-size: medium;
+    margin-top: 27px;
+    background-image: url(../imgs/pers.png);
+    background-color: transparent;
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-size: 70px 70px; /* Set background image size */
+    border-color: transparent;
+    position: relative; /* Add this line */
+    outline: none; /* Remove default button outline */
+}
+
+.Logoutbutton::after {
+    content: "Logout";
+    color: yellow;
+    font-weight: bold;
+    position: absolute;
+    top: 40%;
+    left: 100%;
+    transform: translate(-50%, -50%);
+    
+    
+}
+
+.Logoutbutton:hover::after { /* Change color on hover */
+    color: red;
+    
+}
+
+
+.Logoutbutton:focus { /* Remove default focus outline */
+    outline: none;
+}
+
+.Logoutbutton:active { /* Adjust border color on button press */
+    border-color: transparent;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.search_input {
+    /* margin-top: 35px; */
+    margin-right: 5px; /* Adjust margin as needed */
+    padding: 5px; /* Adjust padding as needed */
+    background-color: white; 
+    font-size: 14px; 
+    width: 800px; 
+    height: 40px; 
+    /* padding-right: 40px; */
+    color: black;
+}
+.search_input:focus {
+  border-color: blue;
+  outline-color: blue ;
+  background-color: white;
+  /* outline: none; */
+
+}
+
+.search_input:hover {
+    border-color: blue;
+    outline-color: blue ;
+
+  }
+  
+.sebtn {
+    width: 15%;
+    height: 40px;
+    background-color: yellow; 
+    color: red;
+    font-weight: bold;
+    border-color: transparent;
+    font-size: 20px;
+    align-content: center;
+}
+
+
+
+
+.fr_ico_home {
+    position: relative; 
+    background-image: url(../imgs/fr.png);
+    background-size: contain;
+    background-color: transparent;
+    width: 10%; 
+    height: 10%;
+    background-repeat: no-repeat;
+    border-color: transparent;
+    margin-bottom: 50%;
+    margin-top: 8%;
+    left: 3%;
+}
+    /* background-repeat: no-repeat;
+    background-size: 70px 70px; 
+    border-color: transparent;
+    position: relative;
+    outline: none;
+    margin-left:5%;
+    margin-top:-5%; */
+
+
+
+
+
+.fr_ico_home:focus { /* Remove default focus outline */
+    outline: none;
+}
+
+.fr_ico_home:active { /* Adjust border color on button press */
+    border-color: transparent;
+}
+
+
+
+
+
+
+
+
+
+   body {
+    zoom: 80%;
+    font-family: Arial, sans-serif; /* Specify your desired font family */
+    background-color: aliceblue;
+    /* background-image: url(../imgs/img.png); */
+
+}
+.tight-bond {
+    margin: 0;
+    padding: 0;
+}
+
+ul.horizontal {
+width: 100%;
+float: left;
+margin: 0 0 3em 0;
+padding: 0;
+list-style: none;
+}
+ul.horizontal li {
+float: left;
+
+}
+ul.horizontal {
+width: 100%;
+float: left;
+margin: 0 0 3em 0;
+padding: 0;
+list-style: none;
+background-color: transparent;
+border-bottom: 1px solid #ccc;
+border-top: 1px solid #ccc;
+border-color: transparent;
+
+}
+ul.horizontal li a {
+display: block;
+padding: 8px 15px;
+text-decoration: none;
+font-weight: bold;
+color: white;
+border-right: 1px solid #ccc;
+border-color: transparent;
+
+}
+ul.horizontal li a:hover {
+color: green;
+background-color: transparent;
+border-color: transparent;
+
+}
+ul.horizontal li a.active {
+background-color: transparent;
+border-color: transparent;
+
+}
+.Auth:hover {
+background-color: transparent;
+color: red;
+text-decoration: none; /* Remove underline on hover */
+border-color: transparent;
+font-weight: bold;
+}
+.Auth{
+color: darkblue;
+border-color: transparent;
+font-weight: bold;
+text-decoration: none; /* Remove underline on hover */
+font-size: larger;
+
+}
+
+
+
+
+
+.Wish_And_Card {
+    position: relative;
+    font-size: larger;
+    color: darkblue;
+    border-color: transparent;
+    font-weight: bold;
+    text-decoration: none; /* Remove underline on hover */
+    display: inline-block;
+    margin-left: 50px;
+}
+
+.Wish_And_Card:hover .content {
+    color: red;
+}
+
+.Wish_And_Card .content {
+    pointer-events: none; /* Enable pointer events for the content */
+    cursor: pointer; /* Set cursor to pointer */
+}
+
+.Wish_And_Card .notification {
+    position: absolute;
+    top: 0;
+    right: -5px;
+    background: red;
+    border-radius: 50%;
+    color: white;
+    padding: 2px 6px;
+    font-size: 12px;
+    z-index: 2; /* Ensure the notification is above the small window */
+}
+
+.Wish_And_Card .small-window {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px); /* Adjust based on the size of your image and desired offset */
+    left: -250px; /* Adjust left position by -250px */
+    width: 500px; /* Set the desired width including the additional 250px */
+    background-color: snow; /* Set the background color */
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1; /* Ensure the small window is below the notification */
+    padding: 10px;
+    height: auto; /* Let the height adjust based on content */
+    overflow: auto; /* Add scrollbars if the content overflows */
+}
+
+.Wish_And_Card img {
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
+}
+
+
+
+
+
+
+
+
+
+
+
+.card-container {
+position: relative;
+display: inline-block;
+}
+
+.product-count {
+position: absolute;
+top: -10px;
+right: -10px;
+background-color: red;
+color: white;
+border-radius: 50%;
+padding: 5px;
+font-size: 12px;
+}
+.listoption{
+color: red;
+background-color: yellow;
+font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+.slick-slide__ {
+    margin: 0 10px;
+  }
+
+  .section_gall_categ__ {
+    padding: 0 100px;
+  }
+
+  /* .slick-prev:before, .slick-next:before {
+    color: #000;
+  } */
+
+  .multiple-items__ {
+    position: relative;
+  }
+
+  .multiple-item__ img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+  }
+
+  .slick-dots__ {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex !important;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .slick-dots__ li {
+    margin: 0 5px;
+  }
+
+  .slick-dots__ li button:before {
+    font-size: 12px;
+    color: #fff;
+  }
+
+  .slick-dots__ li.slick-active button:before {
+    color: #fff;
+  }

@@ -1,0 +1,367 @@
+<!-- custom_charts.html -->
+<!DOCTYPE html>
+<html>
+    {% load static %}
+<head>
+    <title>Custom Charts</title>
+    <!-- Include any necessary CSS/JS libraries here -->
+    <script src="{% static 'admin/js/chart.min.js' %}"></script>
+    <style>
+        .chart-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .chart {
+            width: 20%;
+            margin-bottom: 20px;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-container {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .form-container input[type="date"],
+        .form-container button {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .form-container button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+        .chart-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+
+    </style>
+</head>
+<body>
+    {% if user.is_superuser %}
+    <h1>Custom Charts</h1>
+
+    <form method="GET" action="{% url 'custom_charts' %}">
+        <label for="datepicker_start">Start Date:</label>
+        <input type="date" id="datepicker_start" name="datepicker_start" required value="{{ start_date }}">
+
+        <label for="datepicker_end">End Date:</label>
+        <input type="date" id="datepicker_end" name="datepicker_end" required value="{{ end_date }}">
+
+        <button type="submit">Generate Charts</button>
+    </form>
+
+    <div class="chart-container">
+        {% if finished_chart_data %}
+        <div class="chart">
+            <h2>Finished Orders (Filtered)</h2>
+            <canvas id="finishedChart" width="400" height="400"></canvas>
+        </div>
+        {% endif %}
+
+        {% if not_finished_chart_data %}
+        <div class="chart">
+            <h2>Not Finished Orders (Filtered)</h2>
+            <canvas id="notFinishedChart" width="400" height="400"></canvas>
+        </div>
+        {% endif %}
+
+        {% if overall_finished_chart_data %}
+        <div class="chart">
+            <h2>Finished Orders (Overall)</h2>
+            <canvas id="overallFinishedChart" width="400" height="400"></canvas>
+        </div>
+        {% endif %}
+
+        {% if overall_not_finished_chart_data %}
+        <div class="chart">
+            <h2>Not Finished Orders (Overall)</h2>
+            <canvas id="overallNotFinishedChart" width="400" height="400"></canvas>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // Finished Orders (Filtered) Chart
+        {% if finished_chart_data %}
+        var finishedData = {{ finished_chart_data|safe }};
+        var finishedLabels = finishedData.map(entry => entry.date);
+        var finishedSales = finishedData.map(entry => entry.total_sales);
+        var finishedNumOrders = finishedData.map(entry => entry.num_orders);
+        var finishedCtx = document.getElementById('finishedChart').getContext('2d');
+        var finishedChart = new Chart(finishedCtx, {
+            type: 'pie',
+            data: {
+                labels: finishedLabels,
+                datasets: [{
+                    label: 'Sales',
+                    data: finishedSales,
+                    backgroundColor: [
+                        'rgba(99, 255, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)',
+                        'rgba(99, 255, 132, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                var label = finishedLabels || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += tooltipItem.raw.toFixed(2) + ' sales';
+                                label += ' (' + finishedNumOrders + ' orders)';
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        {% endif %}
+
+        // Not Finished Orders (Filtered) Chart
+        {% if not_finished_chart_data %}
+        var notFinishedData = {{ not_finished_chart_data|safe }};
+        var notFinishedLabels = notFinishedData.map(entry => entry.date);
+        var notFinishedSales = notFinishedData.map(entry => entry.total_sales);
+        var notFinishedNumOrders = notFinishedData.map(entry => entry.num_orders);
+
+        var notFinishedCtx = document.getElementById('notFinishedChart').getContext('2d');
+        var notFinishedChart = new Chart(notFinishedCtx, {
+            type: 'pie',
+            data: {
+                labels: notFinishedLabels,
+                datasets: [{
+                    label: 'Sales',
+                    data: notFinishedSales,
+                    backgroundColor: [
+                        'rgba(99, 255, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)',
+                        'rgba(99, 255, 132, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                var label = notFinishedLabels || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += tooltipItem.raw.toFixed(2) + ' sales';
+                                label += ' (' + notFinishedNumOrders + ' orders)';
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        {% endif %}
+
+        // Finished Orders (Overall) Chart
+        {% if overall_finished_chart_data %}
+        var overallFinishedData = {{ overall_finished_chart_data|safe }};
+        var overallFinishedLabels = overallFinishedData.map(entry => entry.status);
+        var overallFinishedSales = overallFinishedData.map(entry => entry.total_sales);
+        var overallFinishedNumOrders = overallFinishedData.map(entry => entry.total_orders);
+
+        var overallFinishedCtx = document.getElementById('overallFinishedChart').getContext('2d');
+        var overallFinishedChart = new Chart(overallFinishedCtx, {
+            type: 'pie',
+            data: {
+                labels: overallFinishedLabels,
+                datasets: [{
+                    label: 'Sales',
+                    data: overallFinishedSales,
+                    backgroundColor: [
+                        'rgba(99, 255, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)',
+                        'rgba(99, 255, 132, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                var label = overallFinishedLabels[tooltipItem.dataIndex] || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += tooltipItem.raw.toFixed(2) + ' sales';
+                                label += ' (' + overallFinishedNumOrders[tooltipItem.dataIndex] + ' orders)';
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        {% endif %}
+
+        // Not Finished Orders (Overall) Chart
+        {% if overall_not_finished_chart_data %}
+        var overallNotFinishedData = {{ overall_not_finished_chart_data|safe }};
+        var overallNotFinishedLabels = overallNotFinishedData.map(entry => entry.status);
+        var overallNotFinishedSales = overallNotFinishedData.map(entry => entry.total_sales);
+        var overallNotFinishedNumOrders = overallNotFinishedData.map(entry => entry.total_orders);
+
+        var overallNotFinishedCtx = document.getElementById('overallNotFinishedChart').getContext('2d');
+        var overallNotFinishedChart = new Chart(overallNotFinishedCtx, {
+            type: 'pie',
+            data: {
+                labels: overallNotFinishedLabels,
+                datasets: [{
+                    label: 'Sales',
+                    data: overallNotFinishedSales,
+                    backgroundColor: [
+                        'rgba(99, 255, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)',
+                        'rgba(99, 255, 132, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                var label = overallNotFinishedLabels[tooltipItem.dataIndex] || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += tooltipItem.raw.toFixed(2) + ' sales';
+                                label += ' (' + overallNotFinishedNumOrders[tooltipItem.dataIndex] + ' orders)';
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        {% endif %}
+    </script>
+    {% else %}
+    <script>
+        window.location.href="/"
+    </script>
+    {% endif %}
+</body>
+</html>

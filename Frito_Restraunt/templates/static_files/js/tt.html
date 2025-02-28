@@ -1,0 +1,25 @@
+<li>
+    <div class="shopping-cart-img">
+    <a href="/get_products/ userOrderCard.uoc_prod__pid + '"><img alt="Nest" src="/media/ userOrderCard.uoc_prod__image + '" /></a>
+    </div>
+    <div class="shopping-cart-title">
+    <h4><a href="/get_products/ userOrderCard.uoc_prod__pid + '"> userOrderCard.uoc_prod__title + '</a></h4>
+<h4><span> userOrderCard.qty + ' × </span> userOrderCard.weight + '</h4>
+    </div>
+    <div class="shopping-cart-delete">
+    <form class="delete-form" data-pid=" userOrderCard.uoc_prod__pid + '">
+    <input type="hidden" name="csrfmiddlewaretoken" value=" csrftoken + '">
+
+    <button type="submit" style="background-color: red; 
+border: 1px solid red; 
+    color: #fff; 
+    padding: 10px 20px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    border-radius: 4px; 
+    transition: background-color 0.3s ease;">X</button>
+
+    </form>
+    </div>
+    </li>;
+

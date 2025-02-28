@@ -1,0 +1,73 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+     .content_all {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .restaurant-info {
+        width: 45%; /* Adjust width as needed */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+    #map {
+        width: 50%; /* Adjust width as needed */
+        height: 400px;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .restaurant-info h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    .restaurant-info p {
+        margin-bottom: 10px;
+        line-height: 1.6;
+    }
+</style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+<div class="content_all">
+    <div class="restaurant-info">
+        <h2>Frito Restaurant</h2>
+        <p><strong>Address:</strong> 197 on Hours Gate at Hdaek El-Ahram</p>
+        <p><strong>Telephone:</strong> 01028440208, 01070124774</p>
+        <p><strong>Facebook:</strong> <a href="http://www.facebook.com/frito.friedchicken" target="_blank">www.facebook.com/frito.friedchicken</a></p>
+    </div>
+
+    <div id="map"></div>
+</div>
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var map = L.map('map').setView([29.9492149, 31.0950911], 15);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var customIcon = L.icon({
+        iconUrl: '{% static 'assets/imgs/red_marker.png' %}', // Replace with correct path to your marker icon
+        iconSize: [25, 41], // Size of the icon
+        iconAnchor: [12, 41], // Point of the icon which corresponds to marker's location
+        popupAnchor: [1, -34] // Point from which the popup should open relative to the iconAnchor
+    });
+
+    var marker = L.marker([29.9492149, 31.0950911], { icon: customIcon }).addTo(map)
+        .bindPopup('<b>Frito Restaurant</b><br>197 on Hours Gate at Hdaek El-Ahram')
+        .openPopup();
+});
+
+</script>
+{% endblock content %}

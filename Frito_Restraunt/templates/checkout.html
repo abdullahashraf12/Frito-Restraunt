@@ -1,0 +1,743 @@
+{% extends 'partials/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+    /* Define hover effect for the class */
+    .hover_choose_site_Arrow {
+        color: green; /* Default color */
+        cursor: pointer; /* Change cursor to pointer */
+
+    }
+    .hover_choose_site_Arrow.blue {
+        color: blue; /* Color on mouseover */
+        cursor: pointer; /* Change cursor to pointer */
+    }
+
+
+    .silver_arrow {
+        color: green; /* Default color */
+        cursor: pointer; /* Change cursor to pointer */
+
+    }
+    .silver_arrow.red {
+        color: red; /* Color on mouseover */
+        cursor: pointer; /* Change cursor to pointer */
+    }
+
+
+
+
+
+
+
+
+
+
+.main-div_overlay {
+  background-color: lightblue;
+  width: 200px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.overlay_overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.small-div_overlay {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.close_overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+<div style="display: flex; flex-wrap: wrap; padding-left: 100px;">
+
+    <div class="fix_me" style="flex: 1; overflow-x: auto;">
+        <table class="table table-hover" style="width: 100%;"id="dynamicTable"> <!-- Increased the table width by 1000px -->
+            <thead>
+                <tr>
+                    <th style="width: auto">Product Image</th> <!-- Increased the width by 1000px -->
+                    <th style="width: auto;">Product Name</th> <!-- Increased the width by 1000px -->
+
+                    <th style="width: auto;">Product Meal Offer</th> <!-- Increased the width by 1000px -->
+                    <th style="width: auto;">Product Meal Type</th> <!-- Increased the width by 1000px -->
+                    <th style="width: auto;">Product Side Dishes</th> <!-- Increased the width by 1000px -->
+                    <th style="width: auto;">Product Additions Type</th> <!-- Increased the width by 1000px -->
+                    <th style="width: auto;">Product Total Price</th> <!-- Increased the width by 1000px -->
+                </tr>
+            </thead>
+            <tbody>
+                <!-- {% if all_from_Card %}
+                {% for i in all_from_Card %}
+                <tr>
+                    <td>
+                         <div style="background-image: url('{{ i.uoc_prod.image.url }}'); width: 100px; height: 100px; background-size: cover; background-color: transparent;"></div>
+                    </td>
+                    <td>{{ i.uoc_prod.title }}</td>
+                    {% if i.user_meal_type == "Default" %}
+                    <td>{{ i.user_meal_type }} and quantity is {{ i.quantity }} </td>
+                    <td>{{ i.MealType }}</td>
+                    <td>{{ i.MealSideDishes }}</td>
+                    <td>{{ i.MealAdditions }}</td>
+                    <td>{{ i.total_price_for_all }} L.E</td>
+
+                    {% else %}
+                    <td>
+                    Special
+                    </td>
+                    <td>
+                        [
+                        {% for p in i.MealType %}
+                        {
+                            'Meal Type': '{{ p.product_meal_type }}',
+                            'quantity': '{{ p.quantity }}'
+                        }{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                        ]
+                    </td>
+                    <td>
+                        [
+                        {% for p in i.MealSideDishes %}
+                        {
+                            'Meal Type': '{{ p.product_side_dish }}',
+                            'quantity': '{{ p.quantity }}'
+                        }{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                        ]
+                    </td>
+                    <td>
+                        [
+                        {% for p in i.MealAdditions %}
+                        {
+                            'Meal Type': '{{ p.additionName }}',
+                            'quantity': '{{ p.quantity }}'
+                        }{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                        ]
+                    </td>
+                    <td>{{ i.total_price_for_all }} L.E</td>
+
+
+                     {% endif %}
+
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {% endif %}
+                
+                Additional rows here
+               
+            </tbody> -->
+            
+        </table>
+        
+        <div style="align-content: center; background-color: #ccc;">
+            {% if all_from_Card %}
+
+            <h1  style="text-align: center;">Total Price: <span style="display: inline; color: red;" id="Subtotal_table">{{ total_price }} L.E</span></h1>
+            {% else %}
+            <h1 style="text-align: center;">Total Price: <span style="display: inline; color: green;">FREE</span></h1>
+
+
+
+            {% endif %}
+         </div>
+</div>
+
+<div  style="flex: 1;">
+<div style="background-color: snow; width: 600px; height: 600px; position: absolute; right: 25px;">
+<div style="background-color: rgba(242, 249, 255, 255); height: 50px; padding-left: 5px; float: left;padding-top: 5px; width: 100%; ">
+    <div style="float: left; padding-top: 5px; background-color: rgba(242, 249, 255, 255);; ">
+    <h4>Short Order Description</h4>
+</div>
+
+<div style="background-color: red; width: 25px; height: 25px; float: left; top: 5px; position: relative; margin-left: 10px; display: flex; align-items: center; justify-content: center;">
+    <span style="font-size: 25px; color: white;">&#9733;</span>
+</div>
+
+<div style="background-color: red; width: 25px; height: 25px; float: left; top: 5px; position: relative; margin-left: 15px; display: flex; align-items: center; justify-content: center;">
+    <span style="font-size: 25px; color: white;">&#9733;</span>
+</div>
+<div style="background-color: red; width: 25px; height: 25px; float: left; top: 5px; position: relative; margin-left: 15px; display: flex; align-items: center; justify-content: center;">
+    <span style="font-size: 25px; color: white;">&#9733;</span>
+</div>
+<div style="background-color: red; width: 25px; height: 25px; float: left; top: 5px; position: relative; margin-left: 15px; display: flex; align-items: center; justify-content: center;">
+    <span style="font-size: 25px; color: white;">&#9733;</span>
+</div>
+<div style="background-color: red; width: 25px; height: 25px; float: left; top: 5px; position: relative; margin-left: 15px; display: flex; align-items: center; justify-content: center;">
+    <span style="font-size: 25px; color: white;">&#9733;</span>
+</div>
+<div style="background-color: red; width: 25px; height: 25px; float: left; top: 5px; position: relative; margin-left: 15px; display: flex; align-items: center; justify-content: center;">
+    <span style="font-size: 25px; color: white;">&#9733;</span>
+</div>
+<div style="background-color: red; width: 25px; height: 25px; float: left; top: 5px; position: relative; margin-left: 15px; display: flex; align-items: center; justify-content: center;">
+    <span style="font-size: 25px; color: white;">&#9733;</span>
+</div>
+<div style="background-color: red; width: 25px; height: 25px; float: left; top: 5px; position: relative; margin-left: 15px; display: flex; align-items: center; justify-content: center;">
+    <span style="font-size: 25px; color: white;">&#9733;</span>
+</div>
+<div>
+    <!-- Main Content -->
+     <div>
+        <div style="height: 80px; width: 98%; background-color: snowwhite; margin-top:50px;     border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px 0px rgba(7, 159, 179, 0.589);">
+            <p>&nbsp;</p>
+          
+            <div style="display: flex; align-items: center;">
+                <img style="width: 50px; height: 50px; margin-left: 10px; margin-top: -25px;" src="{% static 'assets/imgs/home_checkout.png' %}">
+                <a id="Get_My_Location" style="text-decoration: none; border-color: transparent; max-width: fit-content; height: fit-content; display: flex; align-items: center;">
+
+                <h4 style="color: rgba(1, 122, 254, 255); margin-left: 10px; margin-top: -20px;">Choose Delivery Site</h4>
+                <h4 class="hover_choose_site_Arrow" onmouseover="this.classList.add('blue')" onmouseout="this.classList.remove('blue')" style="margin-top: -15px; font-size: 30px; margin-left: 220px; margin-right: 15px;">&#10148;</h4>
+                </a>
+            </div>
+        </div>
+        <!-- <div style="height: 80px; width: 98%; background-color: snow; margin-top:25px;    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px 0px rgba(7, 159, 179, 0.589);">
+
+        <div onclick="openSmallDiv_Coupon()" style="display: flex; align-items: center;">
+            <a id="Get_Coupon" style="text-decoration: none; border-color: transparent; max-width: fit-content; height: fit-content; display: flex; align-items: center;">
+
+            <img style="width: 50px; height: 50px; margin-left: 10px; margin-top: 15px;" src="{% static 'assets/imgs/discount_coupon.png' %}">
+
+            <h4  style="color: rgba(1, 122, 254, 255); margin-left: 10px; margin-top: 15px;">Apply Coupon</h4>
+            <h4 class="silver_arrow" onmouseover="this.classList.add('red')" onmouseout="this.classList.remove('red')" style="margin-top: 15px; font-size: 30px; margin-left: 287px; margin-right: 15px;">&#10148;</h4>
+            </a>
+        </div>
+    </div> -->
+    <div style="height: 80px; width: 98%; background-color: snow; margin-top:12px;    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px 0px rgba(7, 159, 179, 0.589);">
+<div style="display: flex; align-items: center;">
+
+    <h6 style="color: rgba(1, 122, 254, 255); margin-left: 10px; margin-top: 15px; color: black;">Subtotal</h6>
+
+    <!-- Add h5 element here -->
+     {% if total_price %}  
+    <h5 id="Subtotal_mini_card" style="margin-left: auto; margin-top: 15px;  font-weight: bold; margin-right: 10px; color: red;">{{ total_price }} L.E</h5>
+    {% endif %}
+</div>
+
+    </div>
+    <div style="height: 80px; width: 98%; background-color: snow; margin-top:12px;    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px 0px rgba(7, 159, 179, 0.589);">
+
+        <div style="display: flex; align-items: center; margin-top: 15px;">
+            <h6 style="color: rgba(1, 122, 254, 255); margin-left: 10px; margin-top: 15px; color: black;">Delivery Fees</h6>
+            <h5 style="display: inline-block; margin-left: auto;  margin-right: 10px; color: red; font-weight: bold;">25.00 L.E</h5>
+            <h5 style="display: inline-block; color: red; font-weight: bold; margin-right: 10px; margin-left: 10px;">To</h5>
+            <h5 style="display: inline-block; color: red; font-weight: bold; margin-right: 10px;">50.00 L.E</h5>
+        </div>
+    </div>
+
+
+    
+        
+            
+            <div class="overlay_overlay" onclick="closeSmallDiv_Location()"></div>
+             <div class="small-div_overlay" id="smallDiv_location">
+            <span onclick="closeSmallDiv_Location()" class="close_overlay">&times;</span>
+            <label for="Address1">Address 1</label>
+
+            <input type="text" id="Address1" name="Address 1" required>
+            <label for="Address2">Address 2</label>
+
+            <input type="text" id="Address2" name="Address 2" required>
+            <label for="Mobile">Mobile Number </label>
+
+            <input type="text" id="Mobile" name="Mobile" required>
+            <button id="my_click_button_to_save" style=" width: 100%; height: 100%;  font-weight: bold; color:white; background-color: red; text-align: center; font-size: 25px;"> Save</button>
+
+            </div>
+
+
+
+        
+            <!-- <div class="overlay_overlay" onclick="closeSmallDiv_Coupon()"></div>
+             <div class="small-div_overlay" id="closeSmallDiv_Coupon__">
+            <span onclick="closeSmallDiv_Coupon()" class="close_overlay">&times;</span>
+            <label for="Address1">Address 1</label>
+
+            <input type="text" id="Address1" name="Address 1">
+            <label for="Address2">Address 2</label>
+
+            <input type="text" id="Address2" name="Address 1">
+            <label for="Mobile">Mobile Number </label>
+
+            <input type="text" id="Mobile" name="Address 1">
+            <button onclick="closeSmallDiv_Coupon()" style=" width: 100%; height: 100%;  font-weight: bold; color:white; background-color: red; text-align: center; font-size: 25px;"> Save</button>
+            </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <input type="text" id="get_location_status"  value="None" data-getlocation="" hidden>
+  
+            <p style="width: 80%;
+            border: none;
+            height: 1px;
+            background-color: black; 
+            margin: 20px auto; "></p>
+<div style="height: 80px; width: 98%; background-color: snow; margin-top: 12px; border: 1px solid #ccc; box-shadow: 0px 0px 10px 0px rgba(7, 159, 179, 0.589);">
+
+    <div style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
+
+        <!-- First row -->
+        <div style="display: flex; align-items: center;">
+            <h6 style="color: rgba(1, 122, 254, 255); margin-left: 10px; color: black;">Total</h6>
+            <h5 style="margin-left: auto; margin-right: 10px; color: red; font-weight: bold;">
+                {{ total_price_for_all_with_Delivery | floatformat:2 }} L.E
+            </h5>
+        </div>
+
+        <!-- Second row -->
+        <h6 style="margin-left: 10px; margin-top: 5px;"> <span style="color: red;">Note:</span> Max Price Delivery is Applied</h6>
+
+    </div>
+
+</div>
+
+
+    <div style="height: 20px;"></div>
+    <form id="orderForm" method="POST" action="/core/place_order/">
+        {% csrf_token  %}
+        <input type="text" id="latitude" name="latitude" data-latitude="" hidden>
+        <input type="text" id="longitude"  name="longitude" data-longitude="" hidden>
+  
+        <div class="_miniViewCart_1qirm_133">
+            <div class="_checkoutSection_1qirm_51">
+                <div class="_cartAmount_1qirm_87">
+                    <h5><span>{{ total_price_for_all_with_Delivery| floatformat:2 }}</span><span>EGP</span></h5>
+                    <p>* All prices are VAT Inclusive</p>
+                </div>
+                <div class="_checkoutButton_1qirm_110" id="placeOrderButton">
+                    <span class="_label_1qirm_120">Place Order</span>
+                    <span class="_chevron_1qirm_125">
+                        <input type="text" id="address_1" name="address_1" hidden>
+                        <input type="text" id="mobile_number" name="mobile_number" hidden>
+                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 20 20" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+
+</div>
+</div>
+</div>
+</div>
+<script src="{% static 'assets/js/vendor/jquery-3.6.0.min.js' %}"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+function openSmallDiv_Location() {
+  document.getElementById("smallDiv_location").style.display = "block";
+  document.querySelector('.overlay_overlay').style.display = 'block';
+
+}
+function closeSmallDiv_Location() {
+  document.getElementById("smallDiv_location").style.display = "none";
+  document.querySelector('.overlay_overlay').style.display = 'none';
+//   document.getElementById("closeSmallDiv_Coupon__").style.display = "none";
+
+}
+
+function openSmallDiv_Coupon() {
+  document.getElementById("closeSmallDiv_Coupon__").style.display = "block";
+  document.querySelector('.overlay_overlay').style.display = 'block';
+  
+}
+
+function closeSmallDiv_Coupon() {
+    document.getElementById("smallDiv_location").style.display = "none";
+  document.querySelector('.overlay_overlay').style.display = 'none';
+//   document.getElementById("closeSmallDiv_Coupon__").style.display = "none";
+
+}
+
+
+
+    $(document).ready(function() {
+
+        
+        var latitude = "";
+    var longitude = "";
+    var locationStatus = "";
+
+    // Getter method for latitude
+    function getLatitude() {
+        return latitude;
+    }
+
+    // Setter method for latitude
+    function setLatitude(lat) {
+        latitude = lat;
+    }
+
+    // Getter method for longitude
+    function getLongitude() {
+        return longitude;
+    }
+
+    // Setter method for longitude
+    function setLongitude(long) {
+        longitude = long;
+    }
+
+    // Getter method for location status
+    function getLocationStatus() {
+        return locationStatus;
+    }
+
+    // Setter method for location status
+    function setLocationStatus(status) {
+        locationStatus = status;
+    }
+
+    function getLocation() {
+        console.log("getLocation called");
+        if (navigator.geolocation) {
+            console.log("Geolocation is supported");
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
+            console.log("Geolocation is not supported by this browser");
+            $("#get_location_status").val("Geolocation is not supported by this browser.");
+        }
+    }
+
+
+
+    function showPosition(position) {
+        console.log("showPosition called");
+        $("#get_location_status").val("Success");
+        $("#latitude").val(position.coords.latitude.toString());
+        $("#longitude").val(position.coords.longitude.toString());
+
+        // alert("Status: " + $("#get_location_status").val());
+        // alert("Latitude: " + $("#latitude").val());
+        // alert("Longitude: " + $("#longitude").val());
+        
+        console.log("Latitude: " + position.coords.latitude);
+        console.log("Longitude: " + position.coords.longitude);
+        setLatitude(position.coords.latitude.toString());
+        setLongitude(position.coords.longitude.toString());
+        setLocationStatus("Success")
+        console.log("Latitude: " + getLatitude());
+        console.log("Longitude: " + getLongitude());
+        console.log("Longitude: " + getLocationStatus());
+        openSmallDiv_Location();
+
+
+    }
+
+    function showError(error) {
+        console.log("showError called");
+        var errorMessage = "";
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+            openSmallDiv_Location();
+                errorMessage = "User denied the request for Geolocation.";
+                break;
+            case error.POSITION_UNAVAILABLE:
+                errorMessage = "Location information is unavailable.";
+                break;
+            case error.TIMEOUT:
+                errorMessage = "The request to get user location timed out.";
+                break;
+            case error.UNKNOWN_ERROR:
+                errorMessage = "An unknown error occurred.";
+                break;
+        }
+        $("#get_location_status").val(errorMessage);
+        setLocationStatus(errorMessage);
+
+        // alert(errorMessage);
+        console.log(errorMessage);
+    }
+
+
+
+
+    // Listen for clicks on the "Get My Location" link
+    $("#Get_My_Location").on("click", function(event) {
+        event.preventDefault(); // Prevent the default behavior of the link
+        console.log("Get My Location link clicked");
+        getLocation();
+    });
+
+    
+    
+    $("#my_click_button_to_save").on('click', function(){
+        if($("#Address1").val() =="" || $("#Address2").val() =="" ||  $("#Mobile").val() =="" ){
+            alert("please Put Address 1 and 2 an phone number")
+            openSmallDiv_Location();
+        }else{
+            closeSmallDiv_Location()
+            $("#address_1").val($("#Address1").val()+" , "+$("#Address2").val())
+            document.getElementById('orderForm').submit();
+
+
+        }
+    })
+    // Add an event listener to the button or clickable element
+    document.getElementById('placeOrderButton').addEventListener('click', function() {
+        // Trigger form submission
+        $("#address_1").val($("#Address1").val()+" , "+$("#Address2").val())
+        $("#mobile_number").val($("#Mobile").val())
+        if($("#Address1").val() =="" || $("#Address2").val() =="" ||  $("#Mobile").val() =="" ){
+            // alert("please Put Address 1 and 2 an phone number")
+            getLocation();
+        }else
+        {
+            document.getElementById('orderForm').submit();
+
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
+    </script>
+     <script>
+
+$(document).ready(function() {
+    const tbody = $('#dynamicTable tbody');
+    var total_price_table=$("#Subtotal_mini_card")
+    var Subtotal_mini_card_= $("#Subtotal_table")
+    function loadTableData() {
+        $.ajax({
+            url: '/core/ajax/', // Ensure this URL matches your view endpoint
+            method: 'GET',
+            dataType: 'json',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest' // Set the X-Requested-With header
+            },
+            success: function(data) {
+                tbody.empty(); // Clear any existing rows
+                total_price_sub=parseFloat(data.total_price).toFixed(2).toString()
+                // alert(total_price_sub)
+    
+                $("#Subtotal_mini_card").html(total_price_sub+" L.E")
+                $("#Subtotal_table").html(total_price_sub+" L.E")
+                if (data.items.length > 0) {
+                    data.items.forEach(function(i) {
+                        let row = '<tr>';
+                            console.log(data.items)
+                            console.log(parseFloat(i.total_price_for_all.toFixed(2)).toString())
+                            console.log(parseFloat(i.total_price_for_all.toFixed(2)).toString())
+                            console.log(parseFloat(i.total_price_for_all.toFixed(2)).toString())
+                            console.log(parseFloat(i.total_price_for_all.toFixed(2)).toString())
+
+                            // Image Cell
+                        row += '<td><div style="background-image: url(\'' + '/media/' + i.image_url + '\'); width: 100px; height: 100px; background-size: cover; background-color: transparent;"></div></td>';
+                        
+                        // Title Cell
+                        row += '<td>' + i.uoc_prod__title + '</td>';
+                        
+                        if (i.user_meal_type === "Default") {
+                            // Default Meal Type
+                            row += '<td>' + i.user_meal_type + ' and quantity is ' + i.quantity + '</td>';
+                            row += '<td>' + i.MealType + '</td>';
+                            row += '<td>' + i.MealSideDishes + '</td>';
+                            row += '<td>' + i.MealAdditions + '</td>';
+                            row += '<td>' + parseFloat(i.total_price_for_all).toFixed(2).toString() + ' L.E</td>';
+                        } else {
+                            // Special Meal Type
+                            row += '<td>Special</td>';
+                            row += '<td>';
+row += '[';
+i.MealType.forEach(function(p, index) {
+    row += '{\'Meal Type\': \'' + p.product_meal_type + '\', \'quantity\': ' + p.quantity + '}';
+    if (index < i.MealType.length - 1) row += ', ';
+});
+row += ']';
+row += '</td>';
+
+row += '<td>';
+row += '[';
+i.MealSideDishes.forEach(function(p, index) {
+    row += '{\'Meal Type\': \'' + p.product_side_dish + '\', \'quantity\': ' + p.quantity + '}';
+    if (index < i.MealSideDishes.length - 1) row += ', ';
+});
+row += ']';
+row += '</td>';
+
+row += '<td>';
+row += '[';
+i.MealAdditions.forEach(function(p, index) {
+    row += '{\'Meal Type\': \'' + p.additionName + '\', \'quantity\': ' + p.quantity + '}';
+    if (index < i.MealAdditions.length - 1) row += ', ';
+});
+row += ']';
+row += '</td>';
+
+row += '<td>' + parseFloat(i.total_price_for_all).toFixed(2).toString() + ' L.E</td>';
+
+                        }
+                        
+                        row += '</tr>';
+                        tbody.append(row);
+                    });
+                } else {
+                    // If no data, insert empty rows
+                    tbody.append('<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
+                }
+            },
+            error: function(error) {
+                console.error('Error fetching data', error);
+                tbody.empty()
+                total_price_table.html("0.00 L.E")
+                Subtotal_mini_card_.html("0.00 L.E")
+            }
+        });
+    }
+    
+    loadTableData();
+
+    // Load table data on page load
+    // setInterval(loadTableData,5000)
+    // loadTableData();
+});
+
+
+     </script>
+</div>
+
+{% endblock content %}

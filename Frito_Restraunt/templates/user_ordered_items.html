@@ -1,0 +1,106 @@
+{% extends 'partials/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="fix_me" style="flex: 1; overflow-x: auto;">
+    <table class="table table-hover" style="width: 100%;"id="dynamicTable"> <!-- Increased the table width by 1000px -->
+        <thead>
+            <tr>
+                <th style="width: auto">Product Image</th> <!-- Increased the width by 1000px -->
+                <th style="width: auto;">Product Name</th> <!-- Increased the width by 1000px -->
+
+                <th style="width: auto;">Product Meal Offer</th> <!-- Increased the width by 1000px -->
+                <th style="width: auto;">Product Meal Type</th> <!-- Increased the width by 1000px -->
+                <th style="width: auto;">Product Side Dishes</th> <!-- Increased the width by 1000px -->
+                <th style="width: auto;">Product Additions Type</th> <!-- Increased the width by 1000px -->
+                <th style="width: auto;">Product Total Price</th> <!-- Increased the width by 1000px -->
+            </tr>
+        </thead>
+        <tbody>
+             {% if my_ordered_items %}
+            {% for i in my_ordered_items %}
+            <tr>
+                <td>
+                     <div style="background-image: url('{{ i.uoc_prod.image.url }}'); width: 100px; height: 100px; background-size: cover; background-color: transparent;"></div>
+                </td>
+                <td>{{ i.uoc_prod.title }}</td>
+                {% if i.user_meal_type == "Default" %}
+                <td>{{ i.user_meal_type }} and quantity is {{ i.quantity }} </td>
+                <td>{{ i.MealType }}</td>
+                <td>{{ i.MealSideDishes }}</td>
+                <td>{{ i.MealAdditions }}</td>
+                <td>{{ i.total_price_for_all }} L.E</td>
+
+                {% else %}
+                <td>
+                Special
+                </td>
+                <td>
+                    [
+                    {% for p in i.MealType %}
+                    {
+                        'Meal Type': '{{ p.product_meal_type }}',
+                        'quantity': '{{ p.quantity }}'
+                    }{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                    ]
+                </td>
+                <td>
+                    [
+                    {% for p in i.MealSideDishes %}
+                    {
+                        'Meal Type': '{{ p.product_side_dish }}',
+                        'quantity': '{{ p.quantity }}'
+                    }{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                    ]
+                </td>
+                <td>
+                    [
+                    {% for p in i.MealAdditions %}
+                    {
+                        'Meal Type': '{{ p.additionName }}',
+                        'quantity': '{{ p.quantity }}'
+                    }{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                    ]
+                </td>
+                <td>{{ i.total_price_for_all }} L.E</td>
+
+
+                 {% endif %}
+
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            {% endif %}
+            
+            <!-- Additional rows here -->
+           
+        </tbody> 
+        
+    </table>
+    
+    <div style="align-content: center; background-color: #ccc;">
+        {% if total_price %}
+
+        <h1  style="text-align: center;">Total Price: <span style="display: inline; color: red;" id="Subtotal_table">{{ total_price }} L.E</span></h1>
+        {% else %}
+        <h1 style="text-align: center;">Total Price: <span style="display: inline; color: green;">FREE</span></h1>
+
+
+
+        {% endif %}
+     </div>
+</div>
+{% endblock content %}

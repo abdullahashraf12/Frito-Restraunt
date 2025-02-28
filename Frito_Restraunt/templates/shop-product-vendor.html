@@ -1,0 +1,573 @@
+﻿{% extends 'partials/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<style>
+    /* The container */
+    .container__ {
+      display: block;
+      position: relative;
+      padding-left: 35px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      font-size: 22px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    
+    /* Hide the browser's default radio button */
+    .container__ input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+    
+    /* Create a custom radio button */
+    .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 25px;
+      width: 25px;
+      background-color: #eee;
+      border-radius: 50%;
+    }
+    
+    /* On mouse-over, add a grey background color */
+    .container__:hover input ~ .checkmark {
+      background-color: #ccc;
+    }
+    
+    /* When the radio button is checked, add a blue background */
+    .container__ input:checked ~ .checkmark {
+      background-color: #2196F3;
+    }
+    
+    /* Create the indicator (the dot/circle - hidden when not checked) */
+    .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+    
+    /* Show the indicator (dot/circle) when checked */
+    .container__ input:checked ~ .checkmark:after {
+      display: block;
+    }
+    
+    /* Style the indicator (dot/circle) */
+    .container__ .checkmark:after {
+         top: 9px;
+        left: 9px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: white;
+    }
+    
+    </style>
+<div id="Add_To_Prod_Status">
+    <!-- <div class="alert alert-success" style="margin-left: 100px; width: 500px;" role="alert">
+        This is a success alert—check it out!
+    </div> -->
+</div>
+<main class="main">
+    <button style="position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    background-color: #dc3545;
+    color: #fff;
+    border: 1px solid #dc3545;
+    border-radius: 0.25rem;
+    z-index: 9999; " name="close-btn" id="button_close_iframe" hidden="hidden">X</button>
+
+   
+    <div id="Add_To_Prod_Status"></div>
+    <div id="Add_To_Prod_wish_list_Status"></div>
+
+    <div class="container mb-30" style="background-color:white;">
+        <div class="row">
+            <div class="col-xl-11 col-lg-12 m-auto">
+                <div class="row">
+                    <div class="col-xl-9">
+                        <div class="product-detail accordion-detail">
+                            <div class="row mb-50 mt-30">
+                                <div class="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5" style="max-width: 35%;">
+                                    <div class="detail-gallery">
+                                        <span class="zoom-icon"><i class="fi-rs-search"></i></span>
+                                        <!-- MAIN SLIDES -->
+                                        <div class="product-image-slider">
+                                            
+                                            <figure class="border-radius-10">
+                                                <img src="{{ product.image.url }}" alt="product image"/>
+                                            </figure>
+                                            {% for p in p_images %}
+                                            <figure class="border-radius-10">
+                                                <img src="{{p.images.url}}" alt="product image" />
+                                            </figure>
+                                            {% endfor %}
+
+
+                                        </div>
+                                        <!-- THUMBNAILS -->
+                                        <div class="slider-nav-thumbnails">
+                                            <div><img src="{{product.image.url}}" alt="product image" /></div>
+                                            {% for p in p_images %}
+                                            
+                                            <div><img src="{{ p.images.url }}" alt="product image" /></div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <!-- End Gallery -->
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <div class="detail-info pr-30 pl-30">
+                                        <form method="POST" id="add-to-cart-form" action="{% url 'core:add_to_cart' %}">
+                                            {% csrf_token %}
+
+                                        <span class="stock-status out-stock"> Sale Off </span>
+                                        <h2 class="title-detail">{{ product.title }}</h2>
+                                        <div class="product-detail-rating">
+                                            <!-- <div class="product-rate-cover text-end">
+                                                <div class="product-rate d-inline-block">
+                                                    <div class="product-rating" style="width: 90%"></div>
+                                                </div>
+                                                <span class="font-small ml-5 text-muted"> (32 reviews)</span>
+                                            </div> -->
+                                        </div>
+                                        <div class="clearfix product-price-cover">
+                                            <div class="product-price primary-color float-left">
+                                                <span class="current-price text-brand">{{product.price}} L.E</span>
+                                                <span>
+                                                    <span class="save-price font-md color3 ml-15">{{product.precentage|floatformat}} Off</span>
+                                                    <span class="old-price font-md ml-15">{{product.old_Price}} L.E</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    
+                                       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        <div class="detail-extralink mb-50">
+                                           
+                                            <div class="detail-qty border radius">
+                                                <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
+                                                <input name="prod_quantity_n" class="qty-val" value="1"/>
+                                                <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                                            </div>
+
+
+                                            <div class="product-extra-link2">
+                                                    <!-- <div class="short-desc mb-30">
+                                                        <p class="font-lg">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam rem officia, corrupti reiciendis minima nisi modi, quasi, odio minus dolore impedit fuga eum eligendi.</p>
+                                                    </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                    
+                                                 
+
+
+                                                <input name="product_pid_to_card" value="{{ product.pid }}" hidden/>
+                                                <input type="hidden" name="prod_ven" value="Default">
+
+                                                <button type="submit" class="button button-add-to-cart">
+                                                    <i class="fi-rs-shopping-cart"></i>Add to cart
+                                                </button>
+                                                <!-- <div> -->
+                                                    <!-- <div style="margin-left: 10%; margin-top: 50%; float: left;">
+                                                        <h6>Meal Type</h6>
+                                                        {% for i in ProductMealTYPE %}
+
+                                                            <label class="container__"> {{ i.product_Meal_TYPE }}
+                                                                <input type="radio" name="radio1">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        {% endfor %}
+                                                    </div> -->
+                                                    <!-- <div style=" margin-left: 25%; margin-top: 40%; float: left;">
+                                                        <h6>Meal Type</h6>
+                                                        {% for i in ProductSideDish %}
+                                                            <label class="container__" style="width: 25%;"> {{ i.product_SIDE_DISH }}
+                                                                <input type="checkbox" name="radio2">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        {% endfor %}
+                                                    </div> -->
+                                                    <!-- <div style=" margin-left: 25%; margin-top: 40%; float: left;">
+                                                        <h6>Meal Type</h6>
+                                                        {% for i in ProdutsAdditions %}
+                                                            <label class="container__" style="width: 25%;"> {{ i.product_additions }}
+                                                                <input type="checkbox" name="radio3">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        {% endfor %}
+                                                    </div>  -->
+                                                <!-- </div> -->
+                                                
+
+                                            </form>
+                                            <div style="display: flex;">
+                                                <!-- <a aria-label="Quick view" class="action-btn open_iframe" data-src="{% url 'core:get_products' product.pid %}">
+                                                    <i class="fi-rs-eye"></i>
+                                                </a> -->
+                                            
+                                         
+                                                
+                                            </div>
+                                            
+                                            </div>
+                                        </div>
+
+
+                                        
+                                    </div>
+                                    <!-- Detail Info -->
+                                    <!-- <form method="POST">
+                                        {% csrf_token %}
+                                        <input name="product_pid_to_card" value="{{ product.pid }}" hidden/>
+                                        <a type="submit" aria-label="Add To Wishlist" class="action-btn" name="add_to_wishcard">
+                                            <i class="fi-rs-heart"></i>
+                                        </a>
+                                    </form> -->
+                                    <!-- Writeing Default Here -->
+                                    <!--  -->
+
+
+
+
+                                    <div>
+                                        <!-- Product Meal Type -->
+                                        <!-- First row -->
+                                        <div style="float: left;">
+                                            <h2 style="display: inline-block; margin-right: 10px;">Meal Type:</h2>
+                                            {% for i in ProductMealType %}
+                                                {% if i.default %}
+                                                    <h3 style="display: inline-block; margin-right: 1px;">{{ i.product_Meal_TYPE }}</h3>
+                                                    <img src="{{ i.images.url }}" width="50px" height="50px" style="display: inline-block; border-radius: 50%;">
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+
+                                        <!-- Clear float to ensure next div starts on a new line -->
+                                        <div style="clear: both;"></div>
+
+                                        <!-- Second row -->
+                                        <div>
+                                            
+                                            <h2 style="display: inline-block; margin-right: 0px;">Side Dishes:</h2>
+                                            {% for i in ProductSideDish %}
+                                                {% if i.default %}
+                                                    <h3 style="display: inline-block; margin-right: 1px;">{{ i.product_SIDE_DISH }}</h3>
+                                                    <img src="{{ i.images.url }}" width="50px" height="50px" style="display: inline-block; border-radius: 50%;">
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                        <div style="clear: both;"></div>
+                                        <div>
+                                            <h2 style="display: inline-block; margin-right: 10px;">Product Additions:</h2>
+                                            {% for i in ProdutsAdditions %}
+                                                {% if i.default %}
+                                                    <h3 style="display: inline-block; margin-right: 1px;">{{ i.product_additions }}</h3>
+                                                    <img src="{{ i.images.url }}" width="50px" height="50px" style="display: inline-block; border-radius: 50%;">
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                        <div>
+                                            <h2 style="display: inline-block; margin-right: 10px;">Applied Offer:</h2>
+                                                {% if offer_name %}
+                                                    <h3 style="display: inline-block; margin-right: 1px;">{{ offer_name }}</h3>
+                                                    <img src="{{ offer_image }}" width="50px" height="50px" style="display: inline-block; border-radius: 50%;">
+                                                {% endif %}
+                                        </div>
+
+                                    
+                                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                </div>
+                                
+                            </div>
+                            
+                          
+                            <div class="row mt-60">
+                                {% if related_products %}
+
+                                <div class="col-12">
+                                    <h2 class="section-title style-1 mb-30">Related products</h2>
+                                </div>
+                                {% endif %}
+                                <!-- <div class="col-12">
+                                    <div class="row related-products">
+                                        {% for i  in related_products %}
+                                        <div class="col-lg-3 col-md-4 col-12 col-sm-6">
+                                            <div class="product-cart-wrap hover-up">
+                                                <div class="product-img-action-wrap">
+                                                    <div class="product-img product-img-zoom">
+                                                        <a href="{% url 'core:get_products' i.pid %}" tabindex="0">
+                                                            <img class="default-img" src="{{i.image.url }}" alt="" />
+                                                            <img class="hover-img" src="{{ i.image.url }}" alt="" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="product-action-1">
+                                                                  
+                                    <div style="display: flex;">
+                                       
+                                    
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <input name="product_pid_to_card" value="{{ i.pid }}" hidden/>
+                                            <a type="submit" aria-label="Add To Wishlist" class="action-btn" name="add_to_wishcard">
+                                                <i class="fi-rs-heart"></i>
+                                            </a>
+                                        </form>
+                                        
+                                    </div>
+                                    
+                            
+                                                    </div>
+                                                    <div class="product-badges product-badges-position product-badges-mrg">
+                                                        <span class="hot">{{ i.precentage|floatformat }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="product-content-wrap">
+                                                    <h2><a href="{% url 'core:get_products' i.pid %}"" tabindex="0">{{ i.title }}</a></h2>
+                                                    <div class="rating-result" title="90%">
+                                                        <span> </span>
+                                                    </div>
+                                                    <div class="product-price">
+                                                        <span>{{i.price}} L.E</span>
+                                                        <span class="old-price">{{i.old_Price}} L.E</span>
+                                                    </div>
+
+
+                                                    <div class="product-card-bottom">
+                                                      
+                                                        <div class="add-cart">
+                                                            <form method="POST">
+                                                                {% csrf_token %}
+                                                                <input name="prod_quantity_n" value="1" hidden="hidden"/>
+                                                                <input name="product_pid_to_card" value="{{ p.pid }}" hidden/>
+                                                                <button type="submit" name="prod_ven" class="prod_ven add" style="color: #dc3545;"><i class="fi-rs-shopping-cart mr-5" style="color: blueviolet;"></i>Add</button>
+                                                            </form>
+                                                            
+                                                        </div>
+                                                    </div>
+
+
+
+                                                </div>
+
+
+
+
+
+                                                
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                        
+                                    </div>
+                                </div> -->
+
+
+                            
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                   
+                    <div class="row">
+     
+                        <div class="" data-wow-delay=".4s">
+                            <div class="tab-content" id="myTabContent-1">
+                                <div class="tab-pane fade show active" id="tab-one-1" role="tabpanel" aria-labelledby="tab-one-1">
+                                    <div class="carausel-4-columns-cover arrow-center position-relative">
+                                        <div class="slider-arrow slider-arrow-2 carausel-4-columns-arrow" id="carausel-4-columns-arrows"></div>
+                                        <div class="carausel-4-columns carausel-arrow-center" id="carausel-4-columns">
+                                            {% for i in  related_products %}
+                                            <div class="product-cart-wrap" style="max-height: 50% !important; max-width: 50% !important;">
+                                                <!-- width: 600px !important; height: 600px !important; -->
+                                                <div >
+                                                    <div class="image-link">
+                                                        <a href="{% url 'core:get_products' i.pid %}" class="image-link-anchor">
+                                                            {% if  "product.jpg" in i.back_image.url %}
+                                                            <img class="card-img-top img-fluid" src="{{ i.image.url }}" data-original-image="{{ i.image.url }}" data-back-image="{{ i.image.url }}" alt="{{ i.title }}">
+                                                            {% else %}
+                                                            <img class="card-img-top img-fluid" src="{{ i.image.url }}" data-original-image="{{ i.image.url }}" data-back-image="{{ i.back_image.url }}" alt="{{ i.title }}">
+                
+                                                            {% endif %}
+                                                        </a>
+                                                    </div>
+                                                    <div class="product-badges product-badges-position product-badges-mrg">
+                                                      <span class="hot">-{{i.precentage|floatformat}}%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="product-content-wrap" style="flex-grow: 0; margin-top: 50px;">
+                                                    <h2><a href="{% url 'core:get_products' i.pid %}">{{ i.title }}</a></h2>
+                                                    <div class="product-price mt-10">
+                                                        <span>{{i.price}} L.E</span>
+                                                        <span class="old-price">{{i.old_Price}} L.E</span>
+                                                    </div>
+                                                    <div class="add-cart" style="text-align: center;">
+                                                        <h2><a href="{% url 'core:get_products' i.pid %}" style="text-decoration: none; color: darkblue;">View Product</a></h2>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            {% endfor %}
+                                      
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End tab-pane-->
+                            
+                            </div>
+                            <!--End tab-content-->
+                        </div>
+                        <!--End Col-lg-9-->
+                    </div>
+                    
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'assets/js/vendor/jquery-3.6.0.min.js' %}"></script>
+
+    <script>
+        $(document).ready(function() {
+            var zoomContainer__2 = null; // Initialize zoomContainer__2 to store copied HTML
+        
+            // Function to copy HTML of .zoomContainer and its children
+            function copyHtmlContent(element) {
+                if (element.length === 0) {
+                    return ''; // Return empty string if element does not exist
+                }
+                var containerHtml = element[0].outerHTML; // Get outer HTML of the element
+                return containerHtml; // Return the HTML content as string
+            }
+        
+            // Function to initialize ElevateZoom on an image
+            function initializeZoom(imgElement) {
+                $(imgElement).elevateZoom({
+                    zoomType: "inner",
+                    cursor: "crosshair",
+                    zoomWindowFadeIn: 500,
+                    zoomWindowFadeOut: 750
+                });
+            }
+        
+            // Event handler for .categories-button-active click
+            $('.categories-button-active').on('click', function() {
+                var targetElement = $(this);
+                var zoomContainer__1 = $('.zoomContainer');
+        
+                // Check if zoomContainer__2 is null or not defined, copy .zoomContainer HTML
+                if (zoomContainer__2 === null || typeof zoomContainer__2 === 'undefined') {
+                    zoomContainer__2 = copyHtmlContent(zoomContainer__1);
+                }
+        
+                if (targetElement.hasClass('open')) {
+                    console.log('The "open" class has been added!');
+                    // Remove zoomContainer__1 from the body tag
+                    zoomContainer__1.remove();
+                } else {
+                    console.log('The "open" class has been removed!');
+                    // Re-add zoomContainer__2 to the body tag
+                    $('body').append(zoomContainer__2);
+                                // Event handler for .product-image-slider beforeChange event
+            $('.product-image-slider').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+                var img = $(slick.$slides[nextSlide]).find("img");
+                $('.zoomWindowContainer, .zoomContainer').remove();
+                if ($(window).width() > 768) {
+                    initializeZoom(img);
+                }
+            });
+        
+            // Initialize zoom on page load for initial image
+            var initialImg = $('.product-image-slider').find("img").first();
+            initializeZoom(initialImg);
+                    
+                }
+        
+                // Toggle the 'open' class on targetElement
+                // targetElement.toggleClass('open');
+            });
+        
+            // Event handler for .product-image-slider beforeChange event
+            // $('.product-image-slider').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+            //     var img = $(slick.$slides[nextSlide]).find("img");
+            //     $('.zoomWindowContainer, .zoomContainer').remove();
+            //     if ($(window).width() > 768) {
+            //         initializeZoom(img);
+            //     }
+            // });
+        
+            // // Initialize zoom on page load for initial image
+            // var initialImg = $('.product-image-slider').find("img").first();
+            // initializeZoom(initialImg);
+        
+        });
+        </script>
+        
+</main>
+    {% endblock content %}

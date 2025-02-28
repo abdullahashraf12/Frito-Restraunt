@@ -1,0 +1,421 @@
+{% extends 'partials/base.html' %}
+
+{% load static %}
+
+
+{% block content %}
+<style>
+    /* Define your custom button styles here */
+    .slider-container {
+      position: relative; /* Ensure that .slider-container is a positioned ancestor for .custom-buttons-container */
+    }
+    .custom-buttons-container {
+      position: absolute;
+      bottom: 20px; /* Adjust as needed */
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      z-index: 1;
+    }
+    .custom-prev{
+        background-color: #333;
+      color: #fff;
+      padding: 10px;
+      cursor: pointer;
+      background-color: transparent;
+      background-image: url("{% static 'assets/imgs2/arrows/left.png' %}");
+      width: 50px;
+      height: 50px;
+      background-size: contain;
+      border-color: transparent;
+      margin-left: 100px;
+      margin-bottom: 100px;
+      background-repeat: no-repeat;
+
+    }
+    .custom-next {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      cursor: pointer;
+      background-color: transparent;
+      background-image: url("{% static 'assets/imgs2/arrows/right.png' %}");
+      width: 50px;
+      height: 50px;
+      background-size: contain;
+      border-color: transparent;
+      padding-left: 100px;
+      margin-bottom: 100px;
+      background-repeat: no-repeat;
+    }
+    
+
+
+
+
+
+
+
+    .overlay_overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.small-div_overlay {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.close_overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+
+  </style>
+
+
+<div style="height: 20px;"></div>
+  <div>
+
+<section class="section_gall_categ__">
+  <div class="multiple-items__">
+    
+    {% for i in offers %}
+    {% if i.gallery_image.url != '/media/product.jpg' %}
+
+    <div>
+      <img src="{{ i.gallery_image.url }}" width="100%" height="100%" alt="Slide 1">
+    </div>
+    {% endif %}
+    {% endfor %}
+    <!-- <div>
+      <img src="{% static 'assets/slider/img2.jpg' %}" width="100%" height="100%" alt="Slide 2">
+    </div>
+    <div>
+      <img src="{% static 'assets/slider/img3.jpg' %}" width="100%" height="100%" alt="Slide 3">
+    </div>
+    <div>
+        <img src="{% static 'assets/slider/img4.jpg' %}" width="100%" height="100%" alt="Slide 4">
+      </div> -->
+      
+    </div>
+</section>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="mt-3" style="margin-left:110px; margin-right:200px;">
+  {% if offers %}
+    <div class="section-title">
+        <h3 class="">Our Offers</h3>
+    </div>
+    {% endif %}
+    </div>
+
+
+
+
+    <div class="mt-3" style="position: relative;">
+        
+
+         <div class="row responsive justify-content-center container" style="margin-left: 200px; max-width: 85%; margin-top: -50px;">
+            {% for i in offers %}
+            {% if i.offer_image.url != '/media/product.jpg' %}
+
+        <div class="col-lg-3 d-flex justify-content-center">
+            <div class="card" style="border-color: transparent; background-color: transparent; max-width: 400px;">
+                <a href="{% url 'core:offers_product_list_view' i.oid %}" style="text-decoration: none;">
+
+                <img class="card-img-top" src="{{ i.offer_image.url }}" alt="Card image" style="width:70%">
+                <div class="card-body">
+                    <h4 class="card-title" style="color: black;">{{ i.product_offers }}</h4>
+                </div>
+            </a>
+
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        <!-- <div class="col-lg-3 d-flex justify-content-center">
+            <div class="card" style="border-color: transparent; background-color: transparent; max-width: 400px;">
+                <img class="card-img-top" src="{% static 'assets/imgs2/slider2/For_One_19122023.png' %}" alt="Card image" style="width:70%">
+                <div class="card-body">
+                    <h4 class="card-title" style="color: black;">For 1 Person</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 d-flex justify-content-center">
+            <div class="card" style="border-color: transparent; background-color: transparent; max-width: 400px;">
+                <img class="card-img-top" src="{% static 'assets/imgs2/slider2/For_Sharing_19122023.png' %}" alt="Card image" style="width:70%">
+                <div class="card-body">
+                    <h4 class="card-title" style="color: black;">For Share</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 d-flex justify-content-center">
+            <div class="card" style="border-color: transparent; background-color: transparent; max-width: 400px;">
+                <img class="card-img-top" src="{% static 'assets/imgs2/slider2/Sides_19122023.png' %}" alt="Card image" style="width:70%">
+                <div class="card-body">
+                    <h4 class="card-title" style="color: black;">Side dishes and desserts</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 d-flex justify-content-center">
+            <div class="card" style="border-color: transparent; background-color: transparent; max-width: 400px;">
+                <img class="card-img-top" src="{% static 'assets/imgs2/slider2/Beverages_19122023.png' %}" alt="Card image" style="width:70%">
+                <div class="card-body">
+                    <h4 class="card-title" style="color: black;">Beverages</h4>
+                </div>
+            </div>
+        </div> -->
+   
+    </div>
+    <div class="custom-buttons-container">
+        <button type="button" class="custom-prev" ></button>
+        <button type="button" class="custom-next" ></button>
+      </div>
+
+
+      </div>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+  <div class="row responsive justify-content-center container" style="margin-left: 200px; width: 500px; height: 500px;">
+    <div class="col-lg-3 d-flex justify-content-center">
+      <div class="card" style="border-color: transparent; background-color: transparent; max-width: 250px;">
+        <img class="card-img-top" src="https://kfcprodimages-ehcsdud6a5a5eqcm.z01.azurefd.net/cmsimages/kfc/imagestemp/desktop/Exclusive_Deals_19122023.png" alt="Card image" style="width:100%">
+        <div class="card-body">
+          <h4 class="card-title" style="color: black;">Exclusive Offers</h4>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 d-flex justify-content-center">
+      <div class="card" style="border-color: transparent; max-width: 250px;">
+        <img class="card-img-top" src="https://kfcprodimages-ehcsdud6a5a5eqcm.z01.azurefd.net/cmsimages/kfc/imagestemp/desktop/For_One_19122023.png" alt="Card image" style="width:100%">
+        <div class="card-body">
+          <h4 class="card-title">For 1 Person</h4>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 d-flex justify-content-center">
+      <div class="card" style="border-color: transparent; max-width: 250px;">
+        <img class="card-img-top" src="https://kfcprodimages-ehcsdud6a5a5eqcm.z01.azurefd.net/cmsimages/kfc/imagestemp/desktop/For_Sharing_19122023.png" alt="Card image" style="width:100%">
+        <div class="card-body">
+          <h4 class="card-title">For Share</h4>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 d-flex justify-content-center">
+      <div class="card" style="border-color: transparent; max-width: 250px;">
+        <img class="card-img-top" src="https://kfcprodimages-ehcsdud6a5a5eqcm.z01.azurefd.net/cmsimages/kfc/imagestemp/desktop/Sides_19122023.png" alt="Card image" style="width:100%">
+        <div class="card-body">
+          <h4 class="card-title">Side dishes and desserts</h4>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 d-flex justify-content-center">
+      <div class="card" style="border-color: transparent; max-width: 250px;">
+        <img class="card-img-top" src="https://kfcprodimages-ehcsdud6a5a5eqcm.z01.azurefd.net/cmsimages/kfc/imagestemp/desktop/Beverages_19122023.png" alt="Card image" style="width:100%">
+        <div class="card-body">
+          <h4 class="card-title">Beverages</h4>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+</div>
+
+  <section>
+    <div style="margin-left:200px; margin-right:200px;">
+      {% if all_products_featured %}
+        <div class="section-title">
+            <h3 class="">Daily Best Meals Sells</h3>
+        </div>
+        {% endif %}
+        <div class="row">
+     
+            <div class="" data-wow-delay=".4s">
+                <div class="tab-content" id="myTabContent-1">
+                    <div class="tab-pane fade show active" id="tab-one-1" role="tabpanel" aria-labelledby="tab-one-1">
+                        <div class="carausel-4-columns-cover arrow-center position-relative">
+                            <div class="slider-arrow slider-arrow-2 carausel-4-columns-arrow" id="carausel-4-columns-arrows"></div>
+                            <div class="carausel-4-columns carausel-arrow-center" id="carausel-4-columns" >
+                                {% for i in  all_products_featured %}
+                                <!-- <div class="product-cart-wrap" style="width: 600px !important ; height: 500px !important;" >
+                                    <div class="product-img-action-wrap" >
+                                        <div class="product-img product-img-zoom" style="max-width: 500px; max-height: 400px;">
+                                            <a href="{% url 'core:get_products' i.pid %}">
+                                                <img class="default-img" src="{{ i.image.url }}" height="250px" width="220px" alt="" />
+                                            </a>
+                                        </div>
+                                        
+                                        <div class="product-badges product-badges-position product-badges-mrg">
+                                            <span class="hot">-{{i.precentage|floatformat}}%</span>
+                                        </div>
+                                    </div>
+                                    <div class="product-content-wrap">
+                     
+                                        <h2><a href="{% url 'core:get_products' i.pid %}">{{ i.title }}</a></h2>
+                                   
+                                        <div class="product-price mt-10">
+                                            <span>{{i.price}} L.E</span>
+                                            <span class="old-price">{{i.old_Price}} L.E</span>
+                                        </div>
+                                          <div class="add-cart" style="text-align: center;">
+                                                  <h2><a href="{% url 'core:get_products' i.pid %}" style="text-decoration: none; color: darkblue;">View Product</a></h2>
+                                          </div>
+
+                                    </div>
+                                </div> -->
+
+                                <div class="product-cart-wrap" style=" display: flex; flex-direction: column; justify-content: space-between;">
+                                  <!-- width: 600px !important; height: 600px !important; -->
+                                  <div class="">
+                                      <div >
+                                      
+                                          <div class="image-link">
+                                            <a href="{% url 'core:get_products' i.pid %}" class="image-link-anchor">
+                                                {% if  "product.jpg" in i.back_image.url %}
+                                                <img class="card-img-top img-fluid" src="{{ i.image.url }}" data-original-image="{{ i.image.url }}" data-back-image="{{ i.image.url }}" alt="{{ i.title }}">
+                                                {% else %}
+                                                <img class="card-img-top img-fluid" src="{{ i.image.url }}" data-original-image="{{ i.image.url }}" data-back-image="{{ i.back_image.url }}" alt="{{ i.title }}">
+    
+                                                {% endif %}
+                                            </a>
+                                        </div>
+                                      </div>
+                                      <div class="product-badges product-badges-position product-badges-mrg">
+                                        <span class="hot">-{{i.precentage|floatformat}}%</span>
+                                      </div>
+                                  </div>
+                                  <div class="product-content-wrap" style="flex-grow: 0; margin-top: 50px;">
+                                      <h2><a href="{% url 'core:get_products' i.pid %}">{{ i.title }}</a></h2>
+                                      <div class="product-price mt-10">
+                                          <span>{{i.price}} L.E</span>
+                                          <span class="old-price">{{i.old_Price}} L.E</span>
+                                      </div>
+                                      <div class="add-cart" style="text-align: center;">
+                                          <h2><a href="{% url 'core:get_products' i.pid %}" style="text-decoration: none; color: darkblue;">View Product</a></h2>
+                                      </div>
+                                  </div>
+                              </div>
+                           
+                              
+
+
+
+
+
+
+
+
+
+
+
+
+                                {% endfor %}
+                          
+                            </div>
+                        </div>
+                    </div>
+                    <!--End tab-pane-->
+                
+                </div>
+                <!--End tab-content-->
+            </div>
+            <!--End Col-lg-9-->
+        </div>
+    </div>
+</section>
+<div id="mainDiv">
+  {% for i in offers %}
+    {% if i.is_valid_today %}
+      <div class="overlay_overlay" onclick="closeSmallDiv_Location()"></div>
+      <div class="small-div_overlay" id="smallDiv_location">
+        <span onclick="closeSmallDiv_Location()" class="close_overlay">&times;</span>
+        <a href="{% url 'core:offers_product_list_view' i.oid %}" style="text-decoration: none;">
+          <img src="{{ i.offer_image_welcome.url }}" width="max-width" height="max-width">
+        </a>
+      </div>
+      <div style="height: 150px;"></div>
+      <script>
+        // Function to set a session cookie with the given name and value
+        function setSessionCookie(cookieName, cookieValue) {
+          document.cookie = cookieName + "=" + cookieValue + ";path=/";
+        }
+
+        // Function to get the value of a cookie by its name
+        function getCookie(cookieName) {
+          var name = cookieName + "=";
+          var decodedCookie = decodeURIComponent(document.cookie);
+          var cookieArray = decodedCookie.split(';');
+          for (var i = 0; i < cookieArray.length; i++) {
+            var cookie = cookieArray[i].trim();
+            if (cookie.indexOf(name) == 0) {
+              return cookie.substring(name.length, cookie.length);
+            }
+          }
+          return "";
+        }
+
+        function openSmallDiv_Location() {
+          document.getElementById("smallDiv_location").style.display = "block";
+          document.querySelector('.overlay_overlay').style.display = 'block';
+        }
+
+        function closeSmallDiv_Location() {
+          document.getElementById("smallDiv_location").style.display = "none";
+          document.querySelector('.overlay_overlay').style.display = 'none';
+          // Set a session cookie to remember that the user has seen the offer
+          setSessionCookie("seen_offer", "true");
+        }
+
+        // Check if the 'seen_offer' session cookie exists and its value is 'true'
+        var seenOfferCookie = getCookie("seen_offer");
+        if (seenOfferCookie == "true") {
+          // openSmallDiv_Location(); // Show the div if the user has already seen the offer
+        }else{
+          openSmallDiv_Location();
+        }
+      </script>
+    {% endif %}
+  {% endfor %}
+</div>
+
+{% endblock content %}

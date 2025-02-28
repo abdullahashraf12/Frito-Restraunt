@@ -1,0 +1,24 @@
+[ req ]
+default_bits       = 2048
+default_keyfile    = privkey.pem
+distinguished_name  = req_distinguished_name
+req_extensions      = v3_req
+prompt              = no
+
+[ req_distinguished_name ]
+countryName         = US
+stateOrProvinceName = Egypt
+localityName        = Giza
+organizationName    = Frito-Restraunt
+commonName          = *.frito-restraunt.com  # Wildcard for all subdomains
+
+[ v3_req ]
+basicConstraints    = CA:FALSE
+keyUsage            = digitalSignature, keyEncipherment
+subjectAltName      = @alt_names
+
+[ alt_names ]
+DNS.1 = www.frito-restraunt.com
+DNS.2 = *.frito-restraunt.com
+DNS.3 = frito-restraunt.com
+IP.1  = 192.168.1.100

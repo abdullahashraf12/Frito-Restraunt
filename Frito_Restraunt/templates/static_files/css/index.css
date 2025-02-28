@@ -1,0 +1,107 @@
+body {
+    font-family: Arial, sans-serif; /* Specify your desired font family */
+    background-color: black;
+    background-image: url('static_files/img.png');
+}
+.tight-bond {
+    margin: 0;
+    padding: 0;
+}
+
+ul.horizontal {
+width: 100%;
+float: left;
+margin: 0 0 3em 0;
+padding: 0;
+list-style: none;
+}
+ul.horizontal li {
+float: left;
+
+}
+ul.horizontal {
+width: 100%;
+float: left;
+margin: 0 0 3em 0;
+padding: 0;
+list-style: none;
+background-color: transparent;
+border-bottom: 1px solid #ccc;
+border-top: 1px solid #ccc;
+border-color: transparent;
+
+}
+ul.horizontal li a {
+display: block;
+padding: 8px 15px;
+text-decoration: none;
+font-weight: bold;
+color: white;
+border-right: 1px solid #ccc;
+border-color: transparent;
+
+}
+ul.horizontal li a:hover {
+color: green;
+background-color: transparent;
+border-color: transparent;
+
+}
+ul.horizontal li a.active {
+background-color: transparent;
+border-color: transparent;
+
+}
+.Auth:hover {
+background-color: transparent;
+color: red;
+text-decoration: none; /* Remove underline on hover */
+border-color: transparent;
+font-weight: bold;
+}
+.Auth{
+color: yellow;
+border-color: transparent;
+font-weight: bold;
+text-decoration: none; /* Remove underline on hover */
+
+}
+.Wish_And_Card{
+position: relative;
+
+color: yellow;
+border-color: transparent;
+font-weight: bold;
+text-decoration: none; /* Remove underline on hover */
+
+}
+.Wish_And_Card:hover{
+position: relative;
+
+color: red;
+border-color: transparent;
+font-weight: bold;
+text-decoration: none; /* Remove underline on hover */
+
+}
+
+.card-container {
+position: relative;
+display: inline-block;
+}
+
+.product-count {
+position: absolute;
+top: -10px;
+right: -10px;
+background-color: red;
+color: white;
+border-radius: 50%;
+padding: 5px;
+font-size: 12px;
+}
+.listoption{
+color: red;
+background-color: yellow;
+font-weight: bold;
+}

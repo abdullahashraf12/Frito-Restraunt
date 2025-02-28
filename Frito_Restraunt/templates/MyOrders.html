@@ -1,0 +1,72 @@
+<!-- templates/MyOrders.html -->
+
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h2>Your Ordered Items</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Order Number</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Meal Type</th>
+                <th>Meal Side Dishes</th>
+                <th>Meal Additions</th>
+                <th>Client Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in user_ordered_items %}
+            <tr>
+                <td>{{ item.order_number }}</td>
+                <td>{{ item.uoc_prod.title }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.total_price_for_all }} L.E</td>
+                <td>{{ item.user_meal_type }}</td>
+                <td>
+                    {% for dish in item.MealSideDishes %}
+                        {% for key, value in dish.items %}
+                            {% if key != 'side_image' %}
+                                {{ key }}: {{ value }}
+                            {% endif %}
+                        {% endfor %}
+                        {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                
+                <td>
+                    {% for addition in item.MealAdditions %}
+                        {% for key, value in addition.items %}
+                            {% if key != 'addition_image' %}
+                                {{ key }}: {{ value }}
+                            {% endif %}
+                        {% endfor %}
+                        {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                                <td>{{ item.cashier_table.client_status }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8">No items found.</td>
+            </tr>
+            {% endfor %}
+            
+        </tbody>
+    </table>
+
+
+</div>
+{% if total_price %}  
+<div style=" margin-left: 220px; background-color: cyan; width: 100vw; height: 100px; display: flex; justify-content: center; align-items: center;">
+    <h5 style="font-weight: bold; color: black; margin: 0;">
+        Total Price: <span id="Subtotal_mini_card" style="color: red;">{{ total_price }} L.E</span>
+    </h5>
+</div>
+
+{% endif %}
+{% endblock content %}

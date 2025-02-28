@@ -1,0 +1,86 @@
+/* Update your CSS */
+.slick-prev,
+.slick-next {
+    z-index: 1; /* Ensure the arrows are above other elements */
+}
+
+/* Keep your existing CSS */
+.slick-slide {
+    margin: 0 10px;
+}
+
+.slick-prev:before{
+    color: white;
+    background-color: blue;
+    font-size: 30px !important;
+    border-radius: 50%;
+    font-weight: bolder;
+}
+.slick-next:before {
+    color: white;
+    background-color: blue;
+    font-size: 30px !important;
+    border-radius: 50%;
+    font-weight: bolder;
+}
+.slick-prev {
+    font-size: xx-large !important;
+    margin-right: 0.001px !important; /* Increase the margin */
+    z-index: 1; /* Ensure the arrow is above other elements */
+}
+
+.slick-next {
+    font-size: xx-large !important;
+    margin-left: 0.001px !important; /* Adjust the margin */
+    z-index: 1; /* Ensure the arrow is above other elements */
+}
+
+/* .slick-slide {
+    margin: 0 10px;
+}
+
+.slick-prev:before,
+.slick-next:before {
+    color: blue;
+    background-color: transparent;
+    font-size: xx-large !important;
+}
+
+.slick-prev{
+    font-size: xx-large !important;
+    margin-left: 100px !important;
+}
+.slick-next {
+    font-size: xx-large !important;
+
+} */
+
+/* .slick-slide {
+        margin: 0 10px;
+    }
+  
+  .slick-prev:before
+  {
+  color:blue;
+  background-color: transparent;
+  font-size: xx-large;
+
+
+  }
+  
+  .slick-next:before{
+    color:blue;
+    background-color: transparent;
+    font-size: xx-large;
+
+
+
+  }
+.slick-prev {
+    font-size: xx-large;
+
+}
+.slick-next {
+    font-size: xx-large;
+
+} */
