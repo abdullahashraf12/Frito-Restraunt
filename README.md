@@ -45,6 +45,7 @@
 - **Other Tools**:
   - WebSockets: Real-time communication for updates.
   - SSL: Secure website communication.
+  - Redis: (Remote Dictionary Server) is an in-memory data store used for various purposes.
 
 ---
 
